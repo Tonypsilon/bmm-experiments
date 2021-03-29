@@ -1,5 +1,6 @@
-package de.berlinerschachverband.bmm.seasons;
+package de.berlinerschachverband.bmm.seasons.facade;
 
+import de.berlinerschachverband.bmm.seasons.service.SeasonsService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,9 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SeasonsController {
 
+    private final SeasonsService seasonsService;
+
+    public SeasonsController(SeasonsService seasonsService) {
+        this.seasonsService = seasonsService;
+    }
+
     @GetMapping(value = "/seasons")
     public String getSeasons() {
-        return "all seasons";
+        return seasonsService.getAllSeasons();
     }
 
     @GetMapping(value = "/season")
