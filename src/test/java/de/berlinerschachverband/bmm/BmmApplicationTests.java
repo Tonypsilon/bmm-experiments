@@ -29,7 +29,7 @@ class BmmApplicationTests {
         this.mockMvc
                 .perform(get("/season").param("name", name))
                 .andExpect(status().isOk())
-                .andExpect(content().string("only season " + name));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("2001-02")));
     }
 
     @Test
@@ -37,7 +37,8 @@ class BmmApplicationTests {
         this.mockMvc
                 .perform(get("/seasons"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("all seasons"));
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("<td>Season 1</td>")))
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("<td>Season 2</td>")));
     }
 
 }
