@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SeasonsService {
@@ -19,7 +20,7 @@ public class SeasonsService {
     }
 
     public List<SeasonData> getAllSeasons() {
-        return List.of(new SeasonData("Season 1"), new SeasonData("Season 2"));
+        return seasonRepository.findAll().stream().map(this::toSeasonData).collect(Collectors.toList());
     }
 
     public SeasonData getSeason(String name) {
@@ -32,4 +33,8 @@ public class SeasonsService {
         seasonRepository.saveAndFlush(season);
     }
 
+    private SeasonData toSeasonData(Season season) {
+        SeasonData seasonData = new SeasonData(season.getName());
+        return seasonData;
+    }
 }

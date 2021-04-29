@@ -3,10 +3,9 @@ package de.berlinerschachverband.bmm.seasons.facade;
 import de.berlinerschachverband.bmm.seasons.service.SeasonsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.websocket.server.PathParam;
 
 @Controller
 public class SeasonsController {
@@ -24,13 +23,13 @@ public class SeasonsController {
         return "seasons";
     }
 
-    @GetMapping(value = "/season")
-    public String getSeason(@RequestParam final String name, final Model model) {
-        model.addAttribute("season", seasonsService.getSeason(name));
+    @GetMapping(value = "/season/{seasonName}")
+    public String getSeason(@PathVariable final String seasonName, final Model model) {
+        model.addAttribute("season", seasonsService.getSeason(seasonName));
         return "season";
     }
 
-    @PostMapping("/createSeason")
+    @GetMapping("/createSeason")
     public String createSeason(@RequestParam final String name) {
 
         seasonsService.createSeason(name);

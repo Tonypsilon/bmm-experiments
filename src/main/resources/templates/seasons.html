@@ -4,22 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>All seasons</title>
+
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
     <link th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
-
 </head>
 <body>
 <h1> All seasons overview</h1>
+
 <table>
     <thead>
-        <tr>
-            <th>Season name</th>
-        </tr>
+    <tr>
+        <th>Season name</th>
+    </tr>
     </thead>
     <tbody>
-        <tr th:each="season : ${seasons}">
-            <td th:text="${season.name}">name</td>
-        </tr>
+    <tr th:each="season : ${seasons}">
+        <td th:text="${season.name}">name</td>
+    </tr>
     </tbody>
 </table>
 
