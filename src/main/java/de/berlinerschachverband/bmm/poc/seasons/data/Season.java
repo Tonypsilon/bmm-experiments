@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.seasons.data;
+package de.berlinerschachverband.bmm.poc.seasons.data;
 
 import org.springframework.lang.NonNull;
 

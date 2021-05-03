@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All seasons</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body>
+<h1> All seasons overview</h1>
+
+<table>
+
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="container-fluid">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home"><strong>Home</strong></a>
+                </li>
+                <li th:each="seasonData : ${seasons}" class="nav-item">
+                    <a class="nav-link" th:href="@{/season/{seasonName}(seasonName=${seasonData.name})}"><p th:text="${seasonData.name}"></p></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <thead>
+    <tr>
+        <th>Season name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="season : ${seasons}">
+        <td th:text="${season.name}">name</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="container"><br/>
+    <div class="alert alert-success">
+        <strong>Success!</strong> It is working as we expected.
+    </div>
+</div>
+
+</body>
+</html>

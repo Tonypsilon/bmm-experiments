@@ -1,6 +1,6 @@
-package de.berlinerschachverband.bmm.web;
+package de.berlinerschachverband.bmm.poc.seasons.web;
 
-import de.berlinerschachverband.bmm.seasons.service.SeasonsService;
+import de.berlinerschachverband.bmm.poc.seasons.service.SeasonsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +16,12 @@ public class IndexController {
 
     @GetMapping(value = {"/", "/index.html"})
     public String toHome() {
-        return "redirect:/home";
+        return "redirect:/poc/home";
     }
 
     @GetMapping(value = "/home")
     public String home(final Model model) {
         model.addAttribute("seasons", seasonsService.getAllSeasons());
-        return "home";
+        return "poc/home";
     }
 }

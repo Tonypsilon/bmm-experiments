@@ -1,12 +1,10 @@
-package de.berlinerschachverband.bmm.seasons.service;
+package de.berlinerschachverband.bmm.poc.seasons.service;
 
-import de.berlinerschachverband.bmm.seasons.data.Season;
-import de.berlinerschachverband.bmm.seasons.data.SeasonData;
-import de.berlinerschachverband.bmm.seasons.data.SeasonRepository;
+import de.berlinerschachverband.bmm.poc.seasons.data.Season;
+import de.berlinerschachverband.bmm.poc.seasons.data.SeasonData;
+import de.berlinerschachverband.bmm.poc.seasons.data.SeasonRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
