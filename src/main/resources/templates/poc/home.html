@@ -6,22 +6,11 @@
     <title>BMM</title>
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <link th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+    <link th:href="@{../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
 </head>
 <body>
 
-<nav class="navbar navbar-expand navbar-light bg-light">
-    <div class="container-fluid">
-        <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/home"><strong>Home</strong></a>
-            </li>
-            <li th:each="seasonData : ${seasons}" class="nav-item">
-                <a class="nav-link" th:href="@{/season/{seasonName}(seasonName=${seasonData.name})}"><p th:text="${seasonData.name}"></p></a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<nav th:replace="~{poc/navbar :: navbar}"/>
 
 
 <!-- Placeholder for a warm welcome-->

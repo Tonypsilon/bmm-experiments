@@ -1,19 +1,19 @@
 package de.berlinerschachverband.bmm.poc.seasons.service;
 
-import de.berlinerschachverband.bmm.poc.seasons.data.Season;
+import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.poc.seasons.data.SeasonData;
-import de.berlinerschachverband.bmm.poc.seasons.data.SeasonRepository;
+import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SeasonsService {
+public class PocSeasonsService {
 
     private SeasonRepository seasonRepository;
 
-    public SeasonsService(SeasonRepository seasonRepository) {
+    public PocSeasonsService(SeasonRepository seasonRepository) {
         this.seasonRepository = seasonRepository;
     }
 

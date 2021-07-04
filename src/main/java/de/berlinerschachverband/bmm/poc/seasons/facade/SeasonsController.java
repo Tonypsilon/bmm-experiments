@@ -1,6 +1,6 @@
 package de.berlinerschachverband.bmm.poc.seasons.facade;
 
-import de.berlinerschachverband.bmm.poc.seasons.service.SeasonsService;
+import de.berlinerschachverband.bmm.poc.seasons.service.PocSeasonsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,29 +8,29 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SeasonsController {
 
-    private final SeasonsService seasonsService;
+    private final PocSeasonsService pocSeasonsService;
 
-    public SeasonsController(SeasonsService seasonsService) {
-        this.seasonsService = seasonsService;
+    public SeasonsController(PocSeasonsService pocSeasonsService) {
+        this.pocSeasonsService = pocSeasonsService;
     }
 
-    @GetMapping(value = "/seasons")
+    @GetMapping(value = "/poc/seasons")
     public String getSeasons(final Model model
     ) {
-        model.addAttribute("seasons", seasonsService.getAllSeasons());
+        model.addAttribute("seasons", pocSeasonsService.getAllSeasons());
         return "poc/seasons";
     }
 
-    @GetMapping(value = "/season/{seasonName}")
+    @GetMapping(value = "/poc/season/{seasonName}")
     public String getSeason(@PathVariable final String seasonName, final Model model) {
-        model.addAttribute("season", seasonsService.getSeason(seasonName));
+        model.addAttribute("season", pocSeasonsService.getSeason(seasonName));
         return "poc/season";
     }
 
-    @GetMapping("/createSeason")
+    @GetMapping("/poc/createSeason")
     public String createSeason(@RequestParam final String name) {
 
-        seasonsService.createSeason(name);
+        pocSeasonsService.createSeason(name);
         return "redirect:/poc/seasons";
     }
 }
