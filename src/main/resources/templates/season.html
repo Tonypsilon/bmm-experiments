@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${season.name}"></title>
+
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+
+<body class="bg-light">
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div class="container" style="text-align: center">
+  <div th:each="level : ${divisions.keySet()}">
+    <div class="btn-group" role="group" style="padding: .1em">
+      <button type="button" class="btn btn-secondary"
+              th:each="divisionName : ${divisions.get(level)}"
+              th:text="${divisionName}"></button>
+    </div>
+  </div>
+</div>
+
+<div class="container"><br/>
+  <div class="alert alert-success">
+    <strong><p th:text="${season.name}">some text</p>
+    </strong> It is working as we expected.
+  </div>
+</div>
+
+</body>
+</html>

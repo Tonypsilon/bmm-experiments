@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SeasonsService {
+public class SeasonService {
 
-    private SeasonRepository seasonRepository;
+    private final SeasonRepository seasonRepository;
 
-    public SeasonsService(SeasonRepository seasonRepository) {
+    public SeasonService(SeasonRepository seasonRepository) {
         this.seasonRepository = seasonRepository;
     }
 

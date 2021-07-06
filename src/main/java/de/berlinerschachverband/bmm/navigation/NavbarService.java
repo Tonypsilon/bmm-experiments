@@ -1,18 +1,18 @@
 package de.berlinerschachverband.bmm.navigation;
 
-import de.berlinerschachverband.bmm.basedata.service.SeasonsService;
+import de.berlinerschachverband.bmm.basedata.service.SeasonService;
 import org.springframework.stereotype.Service;
 
 @Service
 public class NavbarService {
 
-    private SeasonsService seasonsService;
+    private SeasonService seasonService;
 
-    public NavbarService(SeasonsService seasonsService) {
-        this.seasonsService = seasonsService;
+    public NavbarService(SeasonService seasonService) {
+        this.seasonService = seasonService;
     }
 
     public NavbarData getNavbarData() {
-        return new NavbarData(seasonsService.getSeasonNames());
+        return new NavbarData(seasonService.getSeasonNames());
     }
 }

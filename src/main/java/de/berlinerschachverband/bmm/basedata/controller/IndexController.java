@@ -1,5 +1,6 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
+import de.berlinerschachverband.bmm.navigation.NavbarService;
 import de.berlinerschachverband.bmm.poc.seasons.service.PocSeasonsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +11,11 @@ public class IndexController {
 
     private final PocSeasonsService pocSeasonsService;
 
-    public IndexController(PocSeasonsService pocSeasonsService) {
+    private final NavbarService navbarService;
+
+    public IndexController(PocSeasonsService pocSeasonsService, NavbarService navbarService) {
         this.pocSeasonsService = pocSeasonsService;
+        this.navbarService = navbarService;
     }
 
     @GetMapping(value = {"/", "/index.html"})
@@ -21,7 +25,7 @@ public class IndexController {
 
     @GetMapping(value = "/home")
     public String home(final Model model) {
-        model.addAttribute("seasons", pocSeasonsService.getAllSeasons());
+        model.addAttribute("navbarData", navbarService.getNavbarData());
         return "home";
     }
 }

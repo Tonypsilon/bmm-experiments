@@ -6,11 +6,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-public class SeasonsController {
+public class PocSeasonsController {
 
     private final PocSeasonsService pocSeasonsService;
 
-    public SeasonsController(PocSeasonsService pocSeasonsService) {
+    public PocSeasonsController(PocSeasonsService pocSeasonsService) {
         this.pocSeasonsService = pocSeasonsService;
     }
 
