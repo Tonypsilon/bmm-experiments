@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.4</version>
+        <version>2.4.8</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.berlinerschachverband</groupId>
@@ -15,6 +15,8 @@
     <description>Webapp for the organization of Berlin chess team championships.</description>
     <properties>
         <java.version>16</java.version>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version</maven.compiler.source>
     </properties>
     <dependencies>
         <dependency>
