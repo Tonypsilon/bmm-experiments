@@ -11,7 +11,12 @@ public class Club {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "season_id",
+            foreignKey = @ForeignKey(name = "SEASON_ID_FK"),
+            nullable = false)
+    private Season season;
 }

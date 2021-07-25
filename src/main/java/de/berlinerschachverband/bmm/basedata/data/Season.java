@@ -12,8 +12,7 @@ public class Season {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
     public Season() {
@@ -31,6 +30,7 @@ public class Season {
         return name;
     }
 
+    @NonNull
     public void setName(String name) {
         this.name = name;
     }

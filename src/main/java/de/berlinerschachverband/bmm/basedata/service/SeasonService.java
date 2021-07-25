@@ -6,6 +6,7 @@ import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,11 @@ public class SeasonService {
     }
 
     public SeasonData getSeason(String name) {
-        return new SeasonData(seasonRepository.findByName(name).get().getName());
+        Season foundSeason = seasonRepository.findByName(name)
+                .orElseThrow(() -> {
+                    return new RuntimeException("season could not be found");
+                });
+        return toSeasonData(foundSeason);
     }
 
     public void createSeason(SeasonData seasonData) {
@@ -36,7 +41,7 @@ public class SeasonService {
     }
 
     private SeasonData toSeasonData(Season season) {
-        SeasonData seasonData = new SeasonData(season.getName());
+        SeasonData seasonData = new SeasonData(season.getId(), season.getName());
         return seasonData;
     }
 }

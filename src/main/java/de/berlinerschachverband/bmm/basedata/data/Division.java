@@ -12,17 +12,16 @@ public class Division {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
-    @Column(unique = false)
+    @Column(unique = false, nullable = false)
     private String name;
 
-    @NonNull
-    @Column(unique = false)
+    @Column(unique = false, nullable = false)
     private Integer level;
 
-    @NonNull
     @ManyToOne
-    @JoinColumn(name = "season_id", foreignKey = @ForeignKey(name = "SEASON_ID_FK"))
+    @JoinColumn(name = "season_id",
+            foreignKey = @ForeignKey(name = "SEASON_ID_FK"),
+            nullable = false)
     private Season season;
 
     public Division() {
