@@ -14,13 +14,13 @@ public class Team {
 
     @ManyToOne
     @JoinColumn(name = "season_id",
-            foreignKey = @ForeignKey(name = "SEASON_ID_FK"),
+            foreignKey = @ForeignKey(name = "TEAM_SEASON_ID_FK"),
             nullable = false)
     private Season season;
 
     @ManyToOne
     @JoinColumn(name = "club_id",
-            foreignKey = @ForeignKey(name = "CLUB_ID_FK"),
+            foreignKey = @ForeignKey(name = "TEAM_CLUB_ID_FK"),
             nullable = false)
     private Club club;
 

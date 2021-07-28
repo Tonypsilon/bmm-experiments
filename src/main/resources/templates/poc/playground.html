@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Playground</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+
+<body>
+<div class="container"><br/>
+  <div class="alert alert-success">
+    <strong>Willkommen auf der Website der BMM!</strong>
+  </div>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Platz</th>
+            <th scope="col">Mannschaft</th>
+            <th scope="col">MP</th>
+            <th scope="col">BP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="regularTableDate : ${regularTableData}">
+            <td th:text="${regularTableDate.position}">position</td>
+            <td th:text="${regularTableDate.teamName}">teamName</td>
+            <td th:text="${regularTableDate.teamPoints}">teamPoints</td>
+            <td th:text="${regularTableDate.boardPoints}">boardPoints</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

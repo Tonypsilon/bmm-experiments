@@ -20,7 +20,7 @@ public class Division {
 
     @ManyToOne
     @JoinColumn(name = "season_id",
-            foreignKey = @ForeignKey(name = "SEASON_ID_FK"),
+            foreignKey = @ForeignKey(name = "DIVISION_SEASON_ID_FK"),
             nullable = false)
     private Season season;
 

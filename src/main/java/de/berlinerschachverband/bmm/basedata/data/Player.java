@@ -19,7 +19,7 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "team_id",
-            foreignKey = @ForeignKey(name = "TEAM_ID_FK"),
+            foreignKey = @ForeignKey(name = "PLAYER_TEAM_ID_FK"),
             nullable = false)
     private Team team;
 
