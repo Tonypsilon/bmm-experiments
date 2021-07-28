@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
+import de.berlinerschachverband.bmm.exceptions.BmmException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,9 +29,7 @@ public class SeasonService {
 
     public SeasonData getSeason(String name) {
         Season foundSeason = seasonRepository.findByName(name)
-                .orElseThrow(() -> {
-                    return new RuntimeException("season could not be found");
-                });
+                .orElseThrow(() -> new BmmException("season could not be found"));
         return toSeasonData(foundSeason);
     }
 
