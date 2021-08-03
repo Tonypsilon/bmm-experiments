@@ -9,5 +9,5 @@ public record TeamData(Long id,
                        Integer number,
                        Optional<TeamData> nextHigherTeam,
                        Optional<TeamData> nextLowerTeam,
-                       List<PlayerData> players) {
+                       DivisionData division) {
 }

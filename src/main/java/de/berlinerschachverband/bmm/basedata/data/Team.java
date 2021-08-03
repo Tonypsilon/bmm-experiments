@@ -24,6 +24,12 @@ public class Team {
             nullable = false)
     private Club club;
 
+    @ManyToOne
+    @JoinColumn(name = "division_id",
+    foreignKey = @ForeignKey(name = "TEAM_DIVISION_ID_FK"),
+    nullable = false)
+    private Division division;
+
     @Column(unique = false, nullable = false)
     private Integer number;
 
@@ -57,6 +63,15 @@ public class Team {
 
     public void setClub(@NonNull Club club) {
         this.club = club;
+    }
+
+    @NonNull
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(@NonNull Division division) {
+        this.division = division;
     }
 
     @NonNull

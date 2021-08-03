@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${season.name}"></title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body>
+<div th:if="${state == 'success'}" class="container"><br/>
+    <div class="alert alert-success">
+        <strong>Sasison <span th:text="${season.name}"></span> erfolgreich erstellt.</strong>
+    </div>
+</div>
+
+<div th:if="${state == 'failure'}" class="container"><br/>
+    <div class="alert alert-danger">
+        <strong>Die Saison konnte nicht erstellt werden.</strong>
+    </div>
+</div>
+</body>
+</html>

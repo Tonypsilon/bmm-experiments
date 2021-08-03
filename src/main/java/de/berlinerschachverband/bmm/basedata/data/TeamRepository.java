@@ -1,11 +1,12 @@
 package de.berlinerschachverband.bmm.basedata.data;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Set;
 
 @Repository
-public interface TeamRepository {
+public interface TeamRepository extends JpaRepository<Team, Long> {
 
-    List<Team> findBySeason_Id(Long seasonId);
+    Set<Team> findByDivision_Id(Long divisionId);
 }

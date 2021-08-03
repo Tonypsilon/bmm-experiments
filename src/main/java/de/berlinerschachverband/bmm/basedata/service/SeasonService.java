@@ -7,7 +7,6 @@ import de.berlinerschachverband.bmm.exceptions.BmmException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,13 +32,17 @@ public class SeasonService {
         return toSeasonData(foundSeason);
     }
 
-    public void createSeason(SeasonData seasonData) {
+    public SeasonData createSeason(String seasonName) {
+        if(seasonName.equals("hello")) {
+            throw new BmmException("just for test!");
+        }
         Season season = new Season();
-        season.setName(seasonData.name());
+        season.setName(seasonName);
         seasonRepository.saveAndFlush(season);
+        return getSeason(seasonName);
     }
 
-    private SeasonData toSeasonData(Season season) {
+    public SeasonData toSeasonData(Season season) {
         SeasonData seasonData = new SeasonData(season.getId(), season.getName());
         return seasonData;
     }
