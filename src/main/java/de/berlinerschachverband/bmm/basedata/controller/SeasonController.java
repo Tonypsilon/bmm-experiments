@@ -48,8 +48,6 @@ public class SeasonController {
             model.addAttribute("season", seasonService.createSeason(createSeasonData.getSeasonName()));
             model.addAttribute("state", "success");
         } catch(Exception ex) {
-            // Exception handling here.
-            model.addAttribute("season", new SeasonData(-1L, "undefined"));
             model.addAttribute("state", "failure");
         }
             return "seasonCreated";

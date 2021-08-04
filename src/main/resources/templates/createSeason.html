@@ -6,15 +6,22 @@
     <title>BMM</title>
 
     <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
-    <link th:href="@{webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
 </head>
 <body>
-<h1>Neue Saison</h1>
-<form action="#" th:action="@{/admin/createSeason}" th:object="${createSeasonData}" method="post">
-    <div class="form-group">
-        <label>Saison Name</label>
-        <input class="form-control" type="text" name="seasonName" th:field="*{seasonName}"/>
-    </div>
-</form>
+<div class="container">
+    <h1 >Neue Saison</h1>
+    <form th:action="@{/admin/createSeason}" th:object="${createSeasonData}" method="post">
+        <div class="form-group">
+            <label>Saison Name</label>
+            <input class="form-control" type="text" name="seasonName" th:field="*{seasonName}"/>
+        </div>
+    </form>
+</div>
+
+<div class="container"><br/>
+    <a class="btn btn-primary" href="../home" role="button">Home</a>
+</div>
+
 </body>
 </html>
