@@ -9,6 +9,9 @@
     <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
 </head>
 <body>
+
+<nav th:replace="~{navbar :: navbar}"/>
+
 <div class="container">
     <h1 >Neue Saison</h1>
     <form th:action="@{/admin/createSeason}" th:object="${createSeasonData}" method="post">

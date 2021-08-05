@@ -9,6 +9,9 @@
     <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
 </head>
 <body>
+
+<nav th:replace="~{navbar :: navbar}"/>
+
 <div th:if="${state == 'success'}" class="container"><br/>
     <div class="alert alert-success">
         <strong>Sasison <span th:text="${season.name}"></span> erfolgreich erstellt.</strong>
