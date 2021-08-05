@@ -32,7 +32,6 @@ public class SeasonController {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         model.addAttribute("season", seasonService.getSeason(seasonName));
         model.addAttribute("divisions", divisionService.getDivisionsOfSeasonByLevel(seasonName));
-        System.out.println(divisionService.getDivisionsOfSeasonByLevel(seasonName).keySet());
         return "season";
     }
 
