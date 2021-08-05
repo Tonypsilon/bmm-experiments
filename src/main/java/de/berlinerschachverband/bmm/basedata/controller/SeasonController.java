@@ -36,14 +36,14 @@ public class SeasonController {
         return "season";
     }
 
-    @GetMapping(value = "/admin/createSeason")
+    @GetMapping(value = "/administration/createSeason")
     public String createSeason(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         model.addAttribute("createSeasonData", new CreateSeasonData());
         return "createSeason";
     }
 
-    @PostMapping(value = "/admin/createSeason")
+    @PostMapping(value = "/administration/createSeason")
     public String createSeason(@ModelAttribute CreateSeasonData createSeasonData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         try {
