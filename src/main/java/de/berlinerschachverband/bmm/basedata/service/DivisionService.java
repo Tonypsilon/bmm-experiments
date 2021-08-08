@@ -7,8 +7,6 @@ import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.basedata.data.DivisionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-
 @Service
 public class DivisionService {
 

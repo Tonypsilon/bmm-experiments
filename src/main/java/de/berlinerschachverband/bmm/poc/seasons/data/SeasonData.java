@@ -1,14 +1,5 @@
 package de.berlinerschachverband.bmm.poc.seasons.data;
 
-public class SeasonData {
+public record SeasonData(String name) {
 
-    private final String name;
-
-    public SeasonData(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
 }

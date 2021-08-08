@@ -1,6 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
-import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
@@ -19,6 +18,8 @@ public class SeasonController {
     private final NavbarService navbarService;
     private final DivisionService divisionService;
 
+    private static final String NAVBAR_DATA = "navbarData";
+
     public SeasonController(SeasonService seasonService,
                             NavbarService navbarService,
                             DivisionService divisionService) {
@@ -29,7 +30,7 @@ public class SeasonController {
 
     @GetMapping(value = "/season/{seasonName}")
     public String getSeason(@PathVariable final String seasonName, final Model model) {
-        model.addAttribute("navbarData", navbarService.getNavbarData());
+        model.addAttribute(NAVBAR_DATA, navbarService.getNavbarData());
         model.addAttribute("season", seasonService.getSeason(seasonName));
         model.addAttribute("divisions", divisionService.getDivisionsOfSeasonByLevel(seasonName));
         return "season";
@@ -37,14 +38,14 @@ public class SeasonController {
 
     @GetMapping(value = "/administration/createSeason")
     public String createSeason(final Model model) {
-        model.addAttribute("navbarData", navbarService.getNavbarData());
+        model.addAttribute(NAVBAR_DATA, navbarService.getNavbarData());
         model.addAttribute("createSeasonData", new CreateSeasonData());
         return "createSeason";
     }
 
     @PostMapping(value = "/administration/createSeason")
     public String createSeason(@ModelAttribute CreateSeasonData createSeasonData, final Model model) {
-        model.addAttribute("navbarData", navbarService.getNavbarData());
+        model.addAttribute(NAVBAR_DATA, navbarService.getNavbarData());
         try {
             model.addAttribute("season", seasonService.createSeason(createSeasonData.getSeasonName()));
             model.addAttribute("state", "success");

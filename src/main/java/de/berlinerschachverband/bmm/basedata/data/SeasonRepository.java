@@ -1,6 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.data;
 
-import de.berlinerschachverband.bmm.basedata.data.Season;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

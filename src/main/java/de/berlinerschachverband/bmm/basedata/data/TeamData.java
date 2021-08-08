@@ -1,6 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.data;
 
-import java.util.List;
 import java.util.Optional;
 
 public record TeamData(Long id,

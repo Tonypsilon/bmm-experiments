@@ -15,9 +15,6 @@ public class Season {
     @Column(unique = true, nullable = false)
     private String name;
 
-    public Season() {
-    }
-
     public Long getId() {
         return id;
     }

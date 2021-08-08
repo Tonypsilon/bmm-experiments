@@ -24,9 +24,6 @@ public class Division {
             nullable = false)
     private Season season;
 
-    public Division() {
-    }
-
     public Long getId() {
         return id;
     }

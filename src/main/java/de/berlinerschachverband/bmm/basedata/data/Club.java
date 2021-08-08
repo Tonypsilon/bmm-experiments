@@ -1,7 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.data;
 
-import org.springframework.lang.NonNull;
-
 import javax.persistence.*;
 
 @Entity
