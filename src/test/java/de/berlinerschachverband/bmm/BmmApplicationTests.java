@@ -13,32 +13,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureMockMvc
 @SpringBootTest
 class BmmApplicationTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @Test
-    void testGetSeason() throws Exception {
-        String name = "2001-02";
-        this.mockMvc
-                .perform(post("/createSeason").param("name", name));
-        this.mockMvc
-                .perform(get("/season").param("name", name))
-                .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("2001-02")));
-    }
+    public void contextLoads() {
 
-    @Test
-    void testGetSeasons() throws Exception {
-        this.mockMvc
-                .perform(get("/seasons"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("<td>Season 1</td>")))
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("<td>Season 2</td>")));
     }
 
 }
