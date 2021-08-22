@@ -15,8 +15,8 @@
     <description>Webapp for the organization of Berlin chess team championships.</description>
     <properties>
         <java.version>16</java.version>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven.compiler.source>${java.version</maven.compiler.source>
+        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>16</maven.compiler.source>
     </properties>
     <dependencies>
         <dependency>
