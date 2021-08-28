@@ -25,7 +25,7 @@ class IndexControllerTest {
     private NavbarService navbarService;
 
     @Test
-    public void testRedirect() throws Exception{
+    void testRedirect() throws Exception{
 
         this.mockMvc.perform(get("/"))
                 .andExpect(status().isFound())
@@ -37,7 +37,7 @@ class IndexControllerTest {
     }
 
     @Test
-    public void testGetHome() throws Exception {
+    void testGetHome() throws Exception {
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
 
         this.mockMvc.perform(get("/home"))

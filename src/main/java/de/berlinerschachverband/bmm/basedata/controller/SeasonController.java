@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.controller;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
+import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +50,7 @@ public class SeasonController {
         try {
             model.addAttribute("season", seasonService.createSeason(createSeasonData.getSeasonName()));
             model.addAttribute("state", "success");
-        } catch(Exception ex) {
+        } catch(SeasonAlreadyExistsException ex) {
             model.addAttribute("state", "failure");
         }
             return "seasonCreated";

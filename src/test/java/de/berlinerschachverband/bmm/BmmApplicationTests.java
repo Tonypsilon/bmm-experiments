@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class BmmApplicationTests {
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
 
     }
 

@@ -25,7 +25,7 @@ class AdministrationControllerTest {
     private NavbarService navbarService;
 
     @Test
-    public void shouldReturnAdminPage() throws Exception {
+    void shouldReturnAdminPage() throws Exception {
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
 
         this.mockMvc.perform(get("/administration"))
