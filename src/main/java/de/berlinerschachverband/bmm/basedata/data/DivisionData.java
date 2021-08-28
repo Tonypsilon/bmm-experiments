@@ -1,7 +1,7 @@
 package de.berlinerschachverband.bmm.basedata.data;
 
 public record DivisionData(Long id,
-                           String divisionName,
+                           String name,
                            Integer level,
                            SeasonData season) {
 }

@@ -1,12 +1,11 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
-import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.navigation.NavbarData;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
@@ -43,7 +42,7 @@ class SeasonControllerTest {
 
     @Test
     void getSeasonShouldReturnSeason() throws Exception {
-        Multimap<Integer, String> divisions = ArrayListMultimap.create();
+        SortedSetMultimap<Integer, String> divisions = TreeMultimap.create();
         divisions.put(1, "division1");
         divisions.put(2, "division2a");
         divisions.put(2, "division2b");

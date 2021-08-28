@@ -2,6 +2,8 @@ package de.berlinerschachverband.bmm.basedata.service;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
 import de.berlinerschachverband.bmm.basedata.data.Division;
 import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.basedata.data.DivisionRepository;
@@ -19,8 +21,8 @@ public class DivisionService {
         this.seasonService = seasonService;
     }
 
-    public Multimap<Integer, String> getDivisionsOfSeasonByLevel(String seasonName) {
-        Multimap<Integer, String> divisionsByLevel = ArrayListMultimap.create();
+    public SortedSetMultimap<Integer, String> getDivisionsOfSeasonByLevel(String seasonName) {
+        SortedSetMultimap<Integer, String> divisionsByLevel = TreeMultimap.create();
         for(Division division : divisionRepository.findBySeason_Name(seasonName)) {
             divisionsByLevel.put(division.getLevel(), division.getName());
         }
