@@ -1,7 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import de.berlinerschachverband.bmm.basedata.data.Division;

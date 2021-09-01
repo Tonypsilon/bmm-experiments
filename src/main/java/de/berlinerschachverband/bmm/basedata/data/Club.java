@@ -17,4 +17,28 @@ public class Club {
             foreignKey = @ForeignKey(name = "CLUB_SEASON_ID_FK"),
             nullable = false)
     private Season season;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
+    }
 }

@@ -1,9 +1,6 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
-import de.berlinerschachverband.bmm.basedata.data.DivisionData;
-import de.berlinerschachverband.bmm.basedata.data.Team;
-import de.berlinerschachverband.bmm.basedata.data.TeamData;
-import de.berlinerschachverband.bmm.basedata.data.TeamRepository;
+import de.berlinerschachverband.bmm.basedata.data.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,9 +14,18 @@ public class TeamService {
 
     private final DivisionService divisionService;
 
-    public TeamService(TeamRepository teamRepository, DivisionService divisionService) {
+    private final SeasonService seasonService;
+
+    private final ClubService clubService;
+
+    public TeamService(TeamRepository teamRepository,
+                       DivisionService divisionService,
+                       SeasonService seasonService,
+                       ClubService clubService) {
         this.teamRepository = teamRepository;
         this.divisionService = divisionService;
+        this.seasonService = seasonService;
+        this.clubService = clubService;
     }
 
     public Set<TeamData> getTeamsOfDivision(DivisionData divisionData) {
@@ -31,8 +37,8 @@ public class TeamService {
 
     public TeamData toTeamData(Team team) {
         return new TeamData(team.getId(),
-                team.getSeason(),
-                team.getClub(),
+                seasonService.toSeasonData(team.getSeason()),
+                clubService.toClubData(team.getClub()),
                 team.getNumber(),
                 Optional.ofNullable(team.getNextHigherTeam() == null ? null : toTeamData(team.getNextHigherTeam())),
                 Optional.ofNullable(team.getNextLowerTeam() == null ? null : toTeamData(team.getNextLowerTeam())),
