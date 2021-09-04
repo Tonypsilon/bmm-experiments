@@ -32,7 +32,7 @@ public class SeasonController {
     @GetMapping(value = "/season/{seasonName}")
     public String getSeason(@PathVariable final String seasonName, final Model model) {
         model.addAttribute(NAVBAR_DATA, navbarService.getNavbarData());
-        model.addAttribute("season", seasonService.getSeason(seasonName));
+        model.addAttribute("season", seasonService.toSeasonData(seasonService.getSeason(seasonName)));
         model.addAttribute("divisions", divisionService.getDivisionsOfSeasonByLevel(seasonName));
         return "season";
     }

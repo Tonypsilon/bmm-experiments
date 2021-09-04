@@ -51,6 +51,7 @@ class SeasonControllerTest {
         season.setId(1L);
         season.setName("testSeason");
         when(seasonService.getSeason("testSeason")).thenReturn(season);
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
         when(divisionService.getDivisionsOfSeasonByLevel("testSeason")).thenReturn(divisions);
 
