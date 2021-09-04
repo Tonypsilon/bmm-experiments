@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
+import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.SeasonNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,8 +50,9 @@ class SeasonServiceTest {
         when(seasonRepository.findByName("zeason1")).thenReturn(Optional.of(season1));
         when(seasonRepository.findByName("blabla")).thenReturn(Optional.empty());
 
-        assertEquals(seasonService.getSeason("zeason1"), new SeasonData(season1.getId(), season1.getName()));
-        assertThrows(SeasonNotFoundException.class, () -> seasonService.getSeason("blabla"));
+        assertEquals(seasonService.getSeason("zeason1"), season1);
+        BmmException exception = assertThrows(SeasonNotFoundException.class, () -> seasonService.getSeason("blabla"));
+        assertEquals(exception.getMessage(), "blabla");
     }
 
     @Test
@@ -58,7 +60,8 @@ class SeasonServiceTest {
         when(seasonRepository.findByName("zeason1")).thenReturn(Optional.of(season1));
         when(seasonRepository.findByName("season2")).thenReturn(Optional.empty(), Optional.of(season2));
 
-        assertThrows(SeasonAlreadyExistsException.class, () -> seasonService.createSeason("zeason1"));
+        BmmException exception = assertThrows(SeasonAlreadyExistsException.class, () -> seasonService.createSeason("zeason1"));
+        assertEquals(exception.getMessage(), "zeason1");
 
         assertEquals(seasonService.createSeason("season2"), new SeasonData(season2.getId(), season2.getName()));
     }

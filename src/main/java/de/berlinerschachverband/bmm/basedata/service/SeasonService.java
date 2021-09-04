@@ -46,10 +46,9 @@ public class SeasonService {
      * @param name
      * @return
      */
-    public SeasonData getSeason(String name) {
-        Season foundSeason = seasonRepository.findByName(name)
+    public Season getSeason(String name) {
+        return seasonRepository.findByName(name)
                 .orElseThrow(() -> new SeasonNotFoundException(name));
-        return toSeasonData(foundSeason);
     }
 
     /**
@@ -65,7 +64,7 @@ public class SeasonService {
         Season season = new Season();
         season.setName(seasonName);
         seasonRepository.saveAndFlush(season);
-        return getSeason(seasonName);
+        return toSeasonData(getSeason(seasonName));
     }
 
     public SeasonData toSeasonData(Season season) {

@@ -2,6 +2,7 @@ package de.berlinerschachverband.bmm.basedata.controller;
 
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
+import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
@@ -46,7 +47,10 @@ class SeasonControllerTest {
         divisions.put(1, "division1");
         divisions.put(2, "division2a");
         divisions.put(2, "division2b");
-        when(seasonService.getSeason("testSeason")).thenReturn(new SeasonData(1L, "testSeason"));
+        Season season = new Season();
+        season.setId(1L);
+        season.setName("testSeason");
+        when(seasonService.getSeason("testSeason")).thenReturn(season);
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
         when(divisionService.getDivisionsOfSeasonByLevel("testSeason")).thenReturn(divisions);
 
