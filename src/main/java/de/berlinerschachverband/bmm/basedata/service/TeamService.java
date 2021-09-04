@@ -14,17 +14,13 @@ public class TeamService {
 
     private final DivisionService divisionService;
 
-    private final SeasonService seasonService;
-
     private final ClubService clubService;
 
     public TeamService(TeamRepository teamRepository,
                        DivisionService divisionService,
-                       SeasonService seasonService,
                        ClubService clubService) {
         this.teamRepository = teamRepository;
         this.divisionService = divisionService;
-        this.seasonService = seasonService;
         this.clubService = clubService;
     }
 
@@ -37,11 +33,8 @@ public class TeamService {
 
     public TeamData toTeamData(Team team) {
         return new TeamData(team.getId(),
-                seasonService.toSeasonData(team.getSeason()),
                 clubService.toClubData(team.getClub()),
-                team.getNumber(),
-                Optional.ofNullable(team.getNextHigherTeam() == null ? null : toTeamData(team.getNextHigherTeam())),
-                Optional.ofNullable(team.getNextLowerTeam() == null ? null : toTeamData(team.getNextLowerTeam())),
-                divisionService.toDivisionData(team.getDivision()));
+                Optional.ofNullable(divisionService.toDivisionData(team.getDivision())),
+                team.getNumber());
     }
 }

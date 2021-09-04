@@ -12,12 +12,6 @@ public class Club {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "season_id",
-            foreignKey = @ForeignKey(name = "CLUB_SEASON_ID_FK"),
-            nullable = false)
-    private Season season;
-
     public Long getId() {
         return id;
     }
@@ -32,13 +26,5 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Season getSeason() {
-        return season;
-    }
-
-    public void setSeason(Season season) {
-        this.season = season;
     }
 }

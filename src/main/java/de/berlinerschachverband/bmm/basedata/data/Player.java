@@ -23,6 +23,9 @@ public class Player {
             nullable = false)
     private Team team;
 
+    @Column(unique = false, nullable = false)
+    private Integer number;
+
     public Long getId() {
         return id;
     }
@@ -55,5 +58,14 @@ public class Player {
 
     public void setTeam(@NonNull Team team) {
         this.team = team;
+    }
+
+    @NonNull
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(@NonNull Integer number) {
+        this.number = number;
     }
 }
