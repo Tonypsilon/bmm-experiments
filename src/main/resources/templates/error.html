@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:fragment ="navbar" class="navbar navbar-expand navbar-light bg-light justify-content-between">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home"><strong>Home</strong></a>
+            </li>
+        </ul>
+    </div>
+    <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/administration"><strong>Administration</strong></a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container">
+<div class="alert alert-danger" role="alert">
+    <h2>Fehler</h2>
+    <p>Upps, hier ist etwas schiefgegangen. Wenn das Problem erneut auftritt, bite beschreibe es auf
+    <a class="alert-link" href="https://github.com/Tonypsilon/bmm/issues">dieser Seite</a>
+        oder sende eine E-Mail an <...>, damit es bald behoben werden kann.</p>
+    <hr>
+    <h2>Error</h2>
+    <p>Oops, something went wrong. If this problem continues to arise, please describe it at
+        <a class="alert-link" href="https://github.com/Tonypsilon/bmm/issues">this page</a>
+        or send an e-mail to <...>, so that it can be resolved soon.</p>
+</div>
+</div>
+
+</body>
+</html>

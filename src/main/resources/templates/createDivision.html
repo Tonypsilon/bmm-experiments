@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div class="container">
+    <h1 >Neue Staffel</h1>
+    <form th:action="@{/administration/createDivision}" th:object="${createDivisionData}" method="post">
+        <div class="form-group">
+            <label for="seasonSelect">Saison auswählen</label>
+            <select class="form-control" id="seasonSelect" th:field="*{seasonName}">
+                <option th:each="seasonName : ${navbarData.seasonNames}" th:value="${seasonName}"><p th:text="${seasonName}"></p></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="divisionLevelSelect">Level auswählen</label>
+            <select class="form-control" id="divisionLevelSelect" th:field="*{level}">
+                <option th:value="1">1</option>
+                <option th:value="2">2</option>
+                <option th:value="3">3</option>
+                <option th:value="4">4</option>
+                <option th:value="5">5</option>
+                <option th:value="6">6</option>
+                <option th:value="7">7</option>
+                <option th:value="8">8</option>
+                <option th:value="9">9</option>
+                <option th:value="10">10</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="divisionNameInput">Staffel Name</label>
+            <input class="form-control" type="text" id="divisionNameInput" name="divisionName" th:field="*{name}"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary" href="../home" role="button">Home</a>
+    </form>
+</div>
+
+</body>
+</html>

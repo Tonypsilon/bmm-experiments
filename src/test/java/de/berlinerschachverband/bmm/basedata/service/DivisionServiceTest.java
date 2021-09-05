@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 import com.google.common.collect.SortedSetMultimap;
 import com.google.common.collect.TreeMultimap;
 import de.berlinerschachverband.bmm.basedata.data.*;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.DivisionNotFoundException;
@@ -76,6 +77,16 @@ class DivisionServiceTest {
 
     @Test
     void testCreateDivision() {
+        CreateDivisionData createDivisionData1 = new CreateDivisionData();
+        createDivisionData1.setName("division2b");
+        createDivisionData1.setSeasonName("season");
+        createDivisionData1.setLevel(5);
+
+        CreateDivisionData createDivisionData2 = new CreateDivisionData();
+        createDivisionData2.setName("tivision2a");
+        createDivisionData2.setSeasonName("season");
+        createDivisionData2.setLevel(2);
+
         when(divisionRepository.findByNameAndSeason_Name("division2b", "season"))
                 .thenReturn(Optional.of(division2b));
         when(divisionRepository.findByNameAndSeason_Name("tivision2a", "season"))
@@ -84,14 +95,14 @@ class DivisionServiceTest {
         when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
 
         BmmException exception = assertThrows(DivisionAlreadyExistsException.class,
-                () -> divisionService.createDivision("division2b", 5, "season"));
+                () -> divisionService.createDivision(createDivisionData1));
         assertEquals(exception.getMessage(), "season: season, division: division2b");
 
         assertEquals(new DivisionData(division2a.getId(),
                         division2a.getName(),
                         division2a.getLevel(),
                         new SeasonData(division2a.getSeason().getId(), division2a.getSeason().getName())),
-                divisionService.createDivision("tivision2a", 2, "season"));
+                divisionService.createDivision(createDivisionData2));
     }
 
     @Test
