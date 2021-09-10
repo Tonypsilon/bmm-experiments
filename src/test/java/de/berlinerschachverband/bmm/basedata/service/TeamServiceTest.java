@@ -28,11 +28,11 @@ class TeamServiceTest {
         SeasonData season1 = new SeasonData(1L, "season1");
         Set<TeamData> expected = Set.of(
                 new TeamData(1L,
-                        new ClubData(1L, "club1"),
+                        new ClubData(1L, "club1", true),
                         Optional.of(new DivisionData(1L, "division1", 1, season1)),
                         1),
                 new TeamData(2L,
-                        new ClubData(2L, "club2"),
+                        new ClubData(2L, "club2", true),
                         Optional.of(new DivisionData(1L, "division1", 1, season1)),
                         1)
         );
@@ -60,8 +60,8 @@ class TeamServiceTest {
         team2.setDivision(division);
         team2.setNumber(1);
         when(teamRepository.findByDivision_Id(1L)).thenReturn(Set.of(team1, team2));
-        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1"));
-        when(clubService.toClubData(club2)).thenReturn(new ClubData(2L, "club2"));
+        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
+        when(clubService.toClubData(club2)).thenReturn(new ClubData(2L, "club2", true));
         when(divisionService.toDivisionData(division)).thenReturn(new DivisionData(1L, "division1", 1, season1));
 
         assertEquals(expected, teamService.getTeamsOfDivision(new DivisionData(1L, "division1", 1, season1)));

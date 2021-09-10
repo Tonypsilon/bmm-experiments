@@ -12,6 +12,9 @@ public class Club {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(unique = false, nullable = false)
+    private Boolean active;
+
     public Long getId() {
         return id;
     }
@@ -26,5 +29,13 @@ public class Club {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }
