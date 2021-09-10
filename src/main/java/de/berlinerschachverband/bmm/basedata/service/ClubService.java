@@ -57,7 +57,7 @@ public class ClubService {
      */
     public void activateClub(String clubName) {
         Club clubToActivate = getClub(clubName);
-        clubToActivate.setActive(false);
+        clubToActivate.setActive(true);
         clubRepository.saveAndFlush(clubToActivate);
     }
 
@@ -68,7 +68,7 @@ public class ClubService {
      */
     public void deactivateClub(String clubName) {
         Club clubToDeactivate = getClub(clubName);
-        clubToDeactivate.setActive(true);
+        clubToDeactivate.setActive(false);
         clubRepository.saveAndFlush(clubToDeactivate);
     }
 

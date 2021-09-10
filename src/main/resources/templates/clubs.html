@@ -21,6 +21,7 @@
         <tr>
             <th scope="col">Name</th>
             <th scope="col">Aktiv</th>
+            <th scope="col">Aktion</th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,16 @@
             <td th:text="${club.name}"></td>
             <td th:if="${club.active == true}" th:text="aktiv">aktiv</td>
             <td th:if="${club.active == false}" th:text="inaktiv">inaktiv</td>
+            <td th:if="${club.active == true}">
+                <form th:action="@{/club/deactivate/{clubName}(clubName=${club.name})}" method="post">
+                    <button type="submit" class="btn btn-primary">deaktivieren</button>
+                </form>
+            </td>
+            <td th:if="${club.active == false}">
+                <form th:action="@{/club/activate/{clubName}(clubName=${club.name})}" method="post">
+                    <button type="submit" class="btn btn-primary">aktivieren</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
