@@ -1,14 +1,12 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ClubController {
@@ -61,5 +59,18 @@ public class ClubController {
             model.addAttribute("state", "failure");
         }
         return "clubActivityChanged";
+    }
+
+    @GetMapping(value = "/club/create")
+    public String createClub(final Model model) {
+        model.addAttribute("navbarData", navbarService.getNavbarData());
+        model.addAttribute("createClubData", new CreateClubData());
+        return "createCLub";
+    }
+
+    @PostMapping(value = "/club/create")
+    public String createClub(@ModelAttribute CreateClubData createClubData, final Model model) {
+        model.addAttribute("navbarData", navbarService.getNavbarData());
+        return "clubCreated";
     }
 }

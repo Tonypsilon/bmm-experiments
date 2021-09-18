@@ -69,7 +69,8 @@ class SeasonControllerTest {
         this.mockMvc.perform(get("/administration/createSeason"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("createSeason"))
-                .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))));
+                .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
+                .andExpect(model().attributeExists("createSeasonData"));
     }
 
     @Test

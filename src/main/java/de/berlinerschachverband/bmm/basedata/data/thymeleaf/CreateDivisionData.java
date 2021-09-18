@@ -1,5 +1,7 @@
 package de.berlinerschachverband.bmm.basedata.data.thymeleaf;
 
+import java.util.Objects;
+
 public class CreateDivisionData {
 
     private String name;
@@ -29,4 +31,5 @@ public class CreateDivisionData {
     public void setSeasonName(String seasonName) {
         this.seasonName = seasonName;
     }
+
 }

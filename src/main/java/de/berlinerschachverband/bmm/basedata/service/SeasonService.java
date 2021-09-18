@@ -4,7 +4,7 @@ import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
-import de.berlinerschachverband.bmm.exceptions.SeasonNameBlankException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.exceptions.SeasonNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +60,7 @@ public class SeasonService {
      */
     public SeasonData createSeason(String seasonName) {
         if(seasonName.isBlank()) {
-            throw new SeasonNameBlankException();
+            throw new NameBlankException();
         }
         if(seasonRepository.findByName(seasonName).isPresent()) {
             throw new SeasonAlreadyExistsException(seasonName);

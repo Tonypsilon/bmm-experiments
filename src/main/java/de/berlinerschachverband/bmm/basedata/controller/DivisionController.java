@@ -22,7 +22,7 @@ public class DivisionController {
     }
 
     @GetMapping(value="/administration/createDivision")
-    public String createSeason(final Model model) {
+    public String createDivision(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         model.addAttribute("createDivisionData", new CreateDivisionData());
         return "createDivision";
