@@ -10,6 +10,7 @@ import de.berlinerschachverband.bmm.basedata.service.SeasonService;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.navigation.NavbarData;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,6 +42,11 @@ class SeasonControllerTest {
     @MockBean
     private DivisionService divisionService;
 
+    @BeforeEach
+    private void setUp() {
+        when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
+    }
+
     @Test
     void getSeasonShouldReturnSeason() throws Exception {
         SortedSetMultimap<Integer, String> divisions = TreeMultimap.create();
@@ -52,7 +58,6 @@ class SeasonControllerTest {
         season.setName("testSeason");
         when(seasonService.getSeason("testSeason")).thenReturn(season);
         when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
-        when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
         when(divisionService.getDivisionsOfSeasonByLevel("testSeason")).thenReturn(divisions);
 
         this.mockMvc.perform(get("/season/testSeason"))
@@ -65,7 +70,6 @@ class SeasonControllerTest {
 
     @Test
     void testGetCreateSeason() throws Exception{
-        when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
         this.mockMvc.perform(get("/administration/createSeason"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("createSeason"))
@@ -78,7 +82,6 @@ class SeasonControllerTest {
         CreateSeasonData createSeasonData = new CreateSeasonData();
         createSeasonData.setSeasonName("testSeason");
         when(seasonService.createSeason("testSeason")).thenReturn(new SeasonData(1L, "testSeason"));
-        when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
 
         this.mockMvc.perform(post("/administration/createSeason")
                         .flashAttr("createSeasonData", createSeasonData))
@@ -94,7 +97,6 @@ class SeasonControllerTest {
         CreateSeasonData createSeasonData = new CreateSeasonData();
         createSeasonData.setSeasonName("testSeason");
         when(seasonService.createSeason("testSeason")).thenThrow(new SeasonAlreadyExistsException("testSeason"));
-        when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
 
         this.mockMvc.perform(post("/administration/createSeason")
                         .flashAttr("createSeasonData", createSeasonData))
