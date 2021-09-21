@@ -1,5 +1,12 @@
 package de.berlinerschachverband.bmm;
 
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
+import de.berlinerschachverband.bmm.basedata.data.DivisionData;
+import de.berlinerschachverband.bmm.basedata.data.SeasonData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
+import de.berlinerschachverband.bmm.navigation.NavbarData;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +16,74 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 
-@SpringBootTest
-@ActiveProfiles("test")
+@SpringBootTest()
+@AutoConfigureMockMvc
 class BmmApplicationTests {
 
-    @Test
-    void contextLoads() {
+    @Autowired
+    private MockMvc mockMvc;
 
+    @Test
+    void bmmSystemTest() throws Exception {
+        CreateSeasonData createSeasonData = new CreateSeasonData();
+        createSeasonData.setSeasonName("season1");
+
+        // Step 1: Create a season.
+        this.mockMvc.perform(post("/administration/createSeason")
+                        .flashAttr("createSeasonData", createSeasonData))
+                .andExpect(status().isOk())
+                .andExpect(view().name("seasonCreated"))
+                .andExpect(model().attributeExists("navbarData"))
+                .andExpect(model().attribute("state", "success"))
+                .andExpect(model().attribute("season", new SeasonData(1L, "season1")));
+
+        // Step 2: Create another season.
+        createSeasonData.setSeasonName("season2");
+        this.mockMvc.perform(post("/administration/createSeason")
+                        .flashAttr("createSeasonData", createSeasonData))
+                .andExpect(status().isOk())
+                .andExpect(view().name("seasonCreated"))
+                .andExpect(model().attributeExists("navbarData"))
+                .andExpect(model().attribute("state", "success"))
+                .andExpect(model().attribute("season", new SeasonData(2L, "season2")));
+
+        // Step 3: Check the home page.
+        this.mockMvc.perform(get("/home"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("home"))
+                .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))));
+
+        // Step 4: Create a division for season1.
+        CreateDivisionData createDivisionData = new CreateDivisionData();
+        createDivisionData.setName("division1");
+        createDivisionData.setLevel(1);
+        createDivisionData.setSeasonName("season1");
+
+        this.mockMvc.perform(post("/administration/createDivision")
+                        .flashAttr("createDivisionData", createDivisionData))
+                .andExpect(status().isOk())
+                .andExpect(view().name("divisionCreated"))
+                .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
+                .andExpect(model().attribute("state", "success"))
+                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, new SeasonData(1L,"season1"))));
+
+        // Step 5: Check season1 for division.
+        SortedSetMultimap<Integer, String> divisions = TreeMultimap.create();
+        divisions.put(1, "division1");
+
+        this.mockMvc.perform(get("/season/season1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("season"))
+                .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
+                .andExpect(model().attribute("season", new SeasonData(1L, "season1")))
+                .andExpect(model().attribute("divisions", divisions));
     }
 
 }
