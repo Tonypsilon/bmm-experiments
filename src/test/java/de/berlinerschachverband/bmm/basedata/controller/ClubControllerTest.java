@@ -1,6 +1,7 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.navigation.NavbarData;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
@@ -16,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ClubController.class)
@@ -63,5 +65,21 @@ class ClubControllerTest {
                 .andExpect(model().attribute("clubs", List.of(
                         new ClubData(1L, "club1", true),
                         new ClubData(2L, "club2", true))));
+    }
+
+    @Test
+    void testPostCreateClubSuccess() throws Exception {
+        CreateClubData createClubData = new CreateClubData();
+        createClubData.setClubName("club1");
+        when(clubService.createClub("club1")).thenReturn(new ClubData(1L, "club1", true));
+
+        this.mockMvc.perform(post("/club/create")
+                .flashAttr("createClubData", createClubData))
+                .andExpect(status().isOk())
+                .andExpect(view().name("clubCreated"))
+                .andExpect(model().attributeExists("navbarData"))
+                .andExpect(model().attribute("state", "success"))
+                .andExpect(model().attribute("club", new ClubData(1L, "club1", true)));
+
     }
 }

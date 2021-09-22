@@ -3,7 +3,9 @@ package de.berlinerschachverband.bmm.basedata.service;
 import de.berlinerschachverband.bmm.basedata.data.Club;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.data.ClubRepository;
+import de.berlinerschachverband.bmm.exceptions.ClubAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -48,6 +50,26 @@ public class ClubService {
     public Club getClub(String name) {
         return clubRepository.findByName(name)
                 .orElseThrow(() -> new ClubNotFoundException(name));
+    }
+
+    /**
+     * Create a club by name. If a club with that name already exists,
+     * a ClubAlreadyExistsException is thrown.
+     * @param clubName
+     * @return
+     */
+    public ClubData createClub(String clubName) {
+        if(clubName.isBlank()) {
+            throw new NameBlankException();
+        }
+        if(clubRepository.findByName(clubName).isPresent()) {
+            throw new ClubAlreadyExistsException(clubName);
+        }
+        Club club = new Club();
+        club.setName(clubName);
+        club.setActive(true);
+        clubRepository.saveAndFlush(club);
+        return toClubData(getClub(clubName));
     }
 
     /**

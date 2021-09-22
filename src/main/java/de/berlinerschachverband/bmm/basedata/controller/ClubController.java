@@ -2,7 +2,9 @@ package de.berlinerschachverband.bmm.basedata.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
+import de.berlinerschachverband.bmm.exceptions.ClubAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,12 +67,18 @@ public class ClubController {
     public String createClub(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         model.addAttribute("createClubData", new CreateClubData());
-        return "createCLub";
+        return "createClub";
     }
 
     @PostMapping(value = "/club/create")
     public String createClub(@ModelAttribute CreateClubData createClubData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
+        try {
+            model.addAttribute("club", clubService.createClub(createClubData.getClubName()));
+            model.addAttribute("state", "success");
+        } catch (NameBlankException | ClubAlreadyExistsException ex ) {
+            model.addAttribute("state", "failure");
+        }
         return "clubCreated";
     }
 }

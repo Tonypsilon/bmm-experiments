@@ -84,6 +84,9 @@ class BmmApplicationTests {
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
                 .andExpect(model().attribute("season", new SeasonData(1L, "season1")))
                 .andExpect(model().attribute("divisions", divisions));
+
+        // Step 6: Create a club.
+
     }
 
 }

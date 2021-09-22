@@ -14,19 +14,19 @@
 
 <div th:if="${state == 'success'}" class="container"><br/>
     <div class="alert alert-success">
-        <strong>Saison <span th:text="${season.name}"></span> erfolgreich erstellt.</strong>
+        <strong>Verein <span th:text="${club.name}"></span> erfolgreich erstellt.</strong>
     </div>
 </div>
 
 <div th:if="${state == 'failure'}" class="container"><br/>
     <div class="alert alert-danger">
-        <strong>Die Saison konnte nicht erstellt werden.</strong>
+        <strong>Der Verein konnte nicht erstellt werden.</strong>
     </div>
 </div>
 
 <div class="container"><br/>
     <a class="btn btn-primary" href="../home" role="button">Home</a>
-    <a class="btn btn-secondary" href="createSeason" role="button">Neue Saison erstellen</a>
+    <a class="btn btn-secondary" href="/club/create" role="button">Neuen Verein erstellen</a>
 </div>
 
 </body>
