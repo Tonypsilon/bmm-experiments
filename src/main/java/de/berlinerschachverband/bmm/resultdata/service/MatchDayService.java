@@ -5,7 +5,7 @@ import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
-import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyHasMatchDaysException;
+import de.berlinerschachverband.bmm.exceptions.MatchDayAlreadyExistsException;
 import de.berlinerschachverband.bmm.resultdata.data.MatchDay;
 import de.berlinerschachverband.bmm.resultdata.data.MatchDayRepository;
 import org.springframework.stereotype.Service;
@@ -53,9 +53,9 @@ public class MatchDayService {
         for(DivisionData division : divisions) {
             try {
                 createMatchDaysForDivision(division, teamService.getNumberOfTeamsOfDivision(division)-1);
-            } catch (DivisionAlreadyHasMatchDaysException ex) {
+            } catch (MatchDayAlreadyExistsException ex) {
                 // TODO: Log warning properly.
-                System.out.println("WARNING: division " + division.name() + " already has match days - ignored this one.");
+                System.out.println("WARNING: " + ex.getMessage());
                 continue;
             }
         }
@@ -71,11 +71,11 @@ public class MatchDayService {
         if( numberOfMatchDays <1) {
             return;
         }
-        if( !matchDayRepository.findByDivision_Id(divisionData.id()).isEmpty()) {
-            throw new DivisionAlreadyHasMatchDaysException("");
-        }
         Division division = divisionService.getDivisionByNameAndSeasonName(divisionData.name(), divisionData.season().name());
         for(int matchDayNumber = 1; matchDayNumber <= numberOfMatchDays; matchDayNumber++) {
+            if(matchDayRepository.findByDivision_IdAndAndMatchDayNumber(divisionData.id(),matchDayNumber).isPresent()) {
+                throw new MatchDayAlreadyExistsException("division: " + divisionData.name() + ", matchDayNumber: " + matchDayNumber);
+            }
             MatchDay matchDay = new MatchDay();
             matchDay.setMatchDayNumber(matchDayNumber);
             matchDay.setDivision(division);

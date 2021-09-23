@@ -5,7 +5,6 @@ import de.berlinerschachverband.bmm.basedata.data.Division;
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"match_day_number", "division_id"}))
 public class MatchDay {
 
     @Id
