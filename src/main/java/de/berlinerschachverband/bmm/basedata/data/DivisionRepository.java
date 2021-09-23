@@ -9,5 +9,7 @@ public interface DivisionRepository extends JpaRepository<Division, Long> {
 
     List<Division> findBySeason_Name(String seasonName);
 
+    List<Division> findBySeason_Id(Long seasonId);
+
     Optional<Division> findByNameAndSeason_Name(String divisionName, String seasonName);
 }

@@ -31,6 +31,10 @@ public class TeamService {
                 .collect(Collectors.toSet());
     }
 
+    public Integer getNumberOfTeamsOfDivision(DivisionData divisionData) {
+        return teamRepository.findByDivision_Id(divisionData.id()).size();
+    }
+
     public TeamData toTeamData(Team team) {
         return new TeamData(team.getId(),
                 clubService.toClubData(team.getClub()),

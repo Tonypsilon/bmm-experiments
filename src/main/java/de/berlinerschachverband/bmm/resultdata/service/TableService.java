@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.resultdata;
+package de.berlinerschachverband.bmm.resultdata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.RegularDivisionTableData;

@@ -5,10 +5,14 @@ import com.google.common.collect.TreeMultimap;
 import de.berlinerschachverband.bmm.basedata.data.Division;
 import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.basedata.data.DivisionRepository;
+import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.DivisionNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
 public class DivisionService {
@@ -23,7 +27,7 @@ public class DivisionService {
     }
 
     /**
-     * Get all divisions of a season, structured by level.
+     * Get all divisions names of a season, structured by level.
      * @param seasonName
      * @return
      */
@@ -33,6 +37,18 @@ public class DivisionService {
             divisionsByLevel.put(division.getLevel(), division.getName());
         }
         return divisionsByLevel;
+    }
+
+    /**
+     * Get all divisions of a season
+     * @param seasonData
+     * @return
+     */
+    public Collection<DivisionData> getDivisionsOfSeason(SeasonData seasonData) {
+        return divisionRepository.findBySeason_Id(seasonData.id())
+                .stream()
+                .map(this::toDivisionData)
+                .collect(Collectors.toSet());
     }
 
     /**

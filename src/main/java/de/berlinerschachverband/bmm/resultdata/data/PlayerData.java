@@ -1,4 +1,6 @@
-package de.berlinerschachverband.bmm.basedata.data;
+package de.berlinerschachverband.bmm.resultdata.data;
+
+import de.berlinerschachverband.bmm.basedata.data.TeamData;
 
 import java.util.Optional;
 
