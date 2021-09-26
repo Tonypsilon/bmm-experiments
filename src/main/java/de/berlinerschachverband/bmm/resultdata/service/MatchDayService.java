@@ -52,7 +52,7 @@ public class MatchDayService {
     public void createRoundRobinMatchDaysForDivisions(Collection<DivisionData> divisions) {
         for(DivisionData division : divisions) {
             try {
-                createMatchDaysForDivision(division, teamService.getNumberOfTeamsOfDivision(division)-1);
+                createMatchDaysForDivision(division, numberOfMatchDays(teamService.getNumberOfTeamsOfDivision(division)));
             } catch (MatchDayAlreadyExistsException ex) {
                 // TODO: Log warning properly.
                 System.out.println("WARNING: " + ex.getMessage());
@@ -80,6 +80,14 @@ public class MatchDayService {
             matchDay.setMatchDayNumber(matchDayNumber);
             matchDay.setDivision(division);
             matchDayRepository.save(matchDay);
+        }
+    }
+
+    private Integer numberOfMatchDays(Integer numberOfTeams) {
+        if (numberOfTeams %2 == 0) {
+            return numberOfTeams -1;
+        }else {
+            return numberOfTeams;
         }
     }
 }
