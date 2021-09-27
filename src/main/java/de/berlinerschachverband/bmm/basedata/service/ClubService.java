@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ClubService {
@@ -39,6 +40,17 @@ public class ClubService {
         return  clubRepository.findByActiveTrue().stream()
                 .sorted(Comparator.comparing(Club::getName))
                 .map(this::toClubData)
+                .toList();
+    }
+
+    /**
+     * Get all names of clubs with status active, ordered alphabetically by their name.
+     * @return
+     */
+    public List<String> getAllActiveClubsNames() {
+        return clubRepository.findByActiveTrue().stream()
+                .sorted(Comparator.comparing(Club::getName))
+                .map(Club::getName)
                 .toList();
     }
 
