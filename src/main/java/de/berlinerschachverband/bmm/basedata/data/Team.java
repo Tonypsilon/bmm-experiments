@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.data;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Team {
@@ -43,12 +44,11 @@ public class Team {
         this.club = club;
     }
 
-    @NonNull
-    public Division getDivision() {
-        return division;
+    public Optional<Division> getDivision() {
+        return Optional.ofNullable(division);
     }
 
-    public void setDivision(@NonNull Division division) {
+    public void setDivision(Division division) {
         this.division = division;
     }
 

@@ -4,6 +4,7 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.navigation.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,10 +47,23 @@ public class TeamController {
     public String createTeam(@ModelAttribute CreateTeamData createTeamData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         try {
-            // create team
-        } catch (Exception ex) {
-            // TODO
+            teamService.createTeam(createTeamData);
+            model.addAttribute("state", "success");
+        } catch (BmmException ex) {
+            model.addAttribute("state", "failure");
         }
         return "teamCreated";
+    }
+
+    @PostMapping(value = "/teams/createTeams")
+    public String createTeams(@ModelAttribute CreateTeamsData createTeamsData, final Model model) {
+        model.addAttribute("navbarData", navbarService.getNavbarData());
+        try {
+            teamService.createTeams(createTeamsData);
+            model.addAttribute("state", "success");
+        } catch (BmmException ex) {
+            model.addAttribute("state", "failure");
+        }
+        return "teamsCreated";
     }
 }
