@@ -6,6 +6,8 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +29,12 @@ public class TeamService {
         this.clubService = clubService;
     }
 
+    /**
+     * Gets all teams of a particular division.
+     *
+     * @param divisionData
+     * @return
+     */
     public Set<TeamData> getTeamsOfDivision(DivisionData divisionData) {
         return teamRepository.findByDivision_Id(divisionData.id())
                 .stream()
@@ -34,6 +42,26 @@ public class TeamService {
                 .collect(Collectors.toSet());
     }
 
+    /**
+     * Gets all available teams (not having a division and hence a season yet)
+     * given the club name - ordered by team number.
+     *
+     * @param clubName
+     * @return
+     */
+    public List<TeamData> getTeamsOfClub(String clubName) {
+        return teamRepository.findByClub_NameAndDivisionIsNull(clubName).stream()
+                .map(this::toTeamData)
+                .sorted(Comparator.comparing(TeamData::number))
+                .toList();
+    }
+
+    /**
+     * Get the number of teams of a particular division.
+     *
+     * @param divisionData
+     * @return
+     */
     public Integer getNumberOfTeamsOfDivision(DivisionData divisionData) {
         return teamRepository.findByDivision_Id(divisionData.id()).size();
     }
@@ -61,7 +89,7 @@ public class TeamService {
                 createTeamData.setNumber(teamNumber);
                 createTeam(createTeamData);
             } catch(TeamAlreadyExistsException ex) {
-                continue;
+                //continue;
             }
         }
     }
@@ -69,7 +97,7 @@ public class TeamService {
     public TeamData toTeamData(Team team) {
         return new TeamData(team.getId(),
                 clubService.toClubData(team.getClub()),
-                team.getDivision().isPresent() ?  Optional.of(divisionService.toDivisionData(team.getDivision().get())) : Optional.empty(),
+                team.getDivision().isPresent() ? Optional.of(divisionService.toDivisionData(team.getDivision().get())) : Optional.empty(),
                 team.getNumber());
     }
 }

@@ -12,4 +12,6 @@ public interface TeamRepository extends JpaRepository<Team, Long> {
     Set<Team> findByDivision_Id(Long divisionId);
 
     Optional<Team> findByClub_NameAndNumberAndDivisionIsNull(String clubName, Integer number);
+
+    Set<Team> findByClub_NameAndDivisionIsNull(String clubName);
 }
