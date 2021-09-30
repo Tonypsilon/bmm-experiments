@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -63,6 +64,19 @@ class DivisionServiceTest {
     }
 
     @Test
+    void testGetDivisionsOfSeason() {
+        when(divisionRepository.findBySeason_Id(1L)).thenReturn(
+                List.of(division1, division2a)
+        );
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(1L, "season"));
+        assertEquals(Set.of(
+                new DivisionData(1L, "division1", 1, new SeasonData(1L, "season")),
+                new DivisionData(2L, "tivision2a", 2, new SeasonData(1L, "season"))
+        ),
+                divisionService.getDivisionsOfSeason(new SeasonData(1L, "season")));
+    }
+
+    @Test
     void testGetDivisionByNameAndSeasonName() {
         when(divisionRepository.findByNameAndSeason_Name("division1", "season1"))
                 .thenReturn(Optional.of(division1));
@@ -96,7 +110,7 @@ class DivisionServiceTest {
 
         BmmException exception = assertThrows(DivisionAlreadyExistsException.class,
                 () -> divisionService.createDivision(createDivisionData1));
-        assertEquals(exception.getMessage(), "season: season, division: division2b");
+        assertEquals("season: season, division: division2b", exception.getMessage());
 
         assertEquals(new DivisionData(division2a.getId(),
                         division2a.getName(),

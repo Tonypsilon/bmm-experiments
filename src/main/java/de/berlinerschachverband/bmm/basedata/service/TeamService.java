@@ -66,6 +66,14 @@ public class TeamService {
         return teamRepository.findByDivision_Id(divisionData.id()).size();
     }
 
+    /**
+     * Given the name of a club and a number, creates a team for that club with the
+     * given number, accordingly. Throws a TeamAlreadyExistsException if the club
+     * already has a team of the given number.
+     *
+     * @param createTeamData
+     * @return
+     */
     public TeamData createTeam(CreateTeamData createTeamData) {
         if(teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
                 createTeamData.getClubName(), createTeamData.getNumber()).isPresent()) {
@@ -81,6 +89,13 @@ public class TeamService {
         ).get());
     }
 
+    /**
+     * Given the name of a club and a number, creates this many teams for the club.
+     * Numbers of the teams goes from 1 up to the given number. If any of these
+     * teams already exists, they are skipped during creation process.
+     *
+     * @param createTeamsData
+     */
     public void createTeams(CreateTeamsData createTeamsData) {
         for (int teamNumber = 1; teamNumber <= createTeamsData.getNumberOfTeams(); teamNumber++) {
             try {
@@ -94,6 +109,12 @@ public class TeamService {
         }
     }
 
+    /**
+     * Convert a Team to TeamData.
+     *
+     * @param team
+     * @return
+     */
     public TeamData toTeamData(Team team) {
         return new TeamData(team.getId(),
                 clubService.toClubData(team.getClub()),
