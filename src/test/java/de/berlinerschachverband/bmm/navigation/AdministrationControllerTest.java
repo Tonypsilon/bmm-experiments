@@ -1,5 +1,6 @@
 package de.berlinerschachverband.bmm.navigation;
 
+import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,6 +22,9 @@ class AdministrationControllerTest {
 
     @MockBean
     private NavbarService navbarService;
+
+    @MockBean
+    private ClubService clubService;
 
     @Test
     void shouldReturnAdminPage() throws Exception {
