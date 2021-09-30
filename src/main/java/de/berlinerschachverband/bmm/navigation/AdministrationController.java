@@ -26,7 +26,7 @@ public class AdministrationController {
     @GetMapping(value = "/administration/club/{clubName}")
     public String clubAdmin(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        model.addAttribute("club", clubService.getClub(clubName));
+        model.addAttribute("club", clubService.toClubData(clubService.getClub(clubName)));
         return "clubAdministration";
     }
 }
