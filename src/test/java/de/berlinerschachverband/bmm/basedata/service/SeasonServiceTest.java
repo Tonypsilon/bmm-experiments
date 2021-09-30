@@ -4,6 +4,7 @@ import de.berlinerschachverband.bmm.basedata.data.Season;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonRepository;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.SeasonNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,6 +65,8 @@ class SeasonServiceTest {
         assertEquals(exception.getMessage(), "zeason1");
 
         assertEquals(seasonService.createSeason("season2"), new SeasonData(season2.getId(), season2.getName()));
+
+        assertThrows(NameBlankException.class, () -> seasonService.createSeason(""));
     }
 
 

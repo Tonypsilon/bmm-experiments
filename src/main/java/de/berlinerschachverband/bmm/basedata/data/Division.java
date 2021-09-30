@@ -59,16 +59,4 @@ public class Division {
         this.season = season;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Division division = (Division) o;
-        return id.equals(division.id) && name.equals(division.name) && level.equals(division.level) && season.equals(division.season);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, level, season);
-    }
 }
