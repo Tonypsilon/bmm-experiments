@@ -3,12 +3,13 @@ package de.berlinerschachverband.bmm.navigation;
 import de.berlinerschachverband.bmm.basedata.data.Club;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
-import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(AdministrationController.class)
+@AutoConfigureTestDatabase
 class AdministrationControllerTest {
 
     @Autowired
@@ -36,6 +38,7 @@ class AdministrationControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnAdminPage() throws Exception {
         this.mockMvc.perform(get("/administration"))
                 .andExpect(status().isOk())
@@ -44,6 +47,7 @@ class AdministrationControllerTest {
     }
 
     @Test
+    @WithMockUser
     void shouldReturnClubAdminPage() throws Exception {
         Club club1 = new Club();
         club1.setId(1L);

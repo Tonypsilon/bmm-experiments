@@ -12,12 +12,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,12 +33,14 @@ class BmmApplicationTests {
     private MockMvc mockMvc;
 
     @Test
+    @WithMockUser
     void bmmSystemTest() throws Exception {
         CreateSeasonData createSeasonData = new CreateSeasonData();
         createSeasonData.setSeasonName("season1");
 
         // Step 1: Create a season.
         this.mockMvc.perform(post("/administration/createSeason")
+                        .with(csrf())
                         .flashAttr("createSeasonData", createSeasonData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("seasonCreated"))
@@ -47,6 +51,7 @@ class BmmApplicationTests {
         // Step 2: Create another season.
         createSeasonData.setSeasonName("season2");
         this.mockMvc.perform(post("/administration/createSeason")
+                        .with(csrf())
                         .flashAttr("createSeasonData", createSeasonData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("seasonCreated"))
@@ -67,6 +72,7 @@ class BmmApplicationTests {
         createDivisionData.setSeasonName("season1");
 
         this.mockMvc.perform(post("/administration/createDivision")
+                        .with(csrf())
                         .flashAttr("createDivisionData", createDivisionData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("divisionCreated"))

@@ -1,5 +1,6 @@
 package de.berlinerschachverband.bmm.navigation;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

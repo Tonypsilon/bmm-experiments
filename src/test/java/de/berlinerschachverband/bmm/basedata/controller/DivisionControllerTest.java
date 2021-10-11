@@ -10,18 +10,22 @@ import de.berlinerschachverband.bmm.navigation.NavbarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(DivisionController.class)
+@AutoConfigureTestDatabase
 public class DivisionControllerTest {
 
     @Autowired
@@ -39,6 +43,7 @@ public class DivisionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testGetCreateDivision() throws Exception {
         this.mockMvc.perform(get("/administration/createDivision"))
                 .andExpect(status().isOk())
@@ -48,6 +53,7 @@ public class DivisionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testPostCreateDivisionSuccess() throws Exception {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
@@ -56,7 +62,8 @@ public class DivisionControllerTest {
         when(divisionService.createDivision(createDivisionData))
                 .thenReturn(new DivisionData(1L, "division1", 1, new SeasonData(1L, "testSeason")));
         this.mockMvc.perform(post("/administration/createDivision")
-                .flashAttr("createDivisionData", createDivisionData))
+                        .with(csrf())
+                        .flashAttr("createDivisionData", createDivisionData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("divisionCreated"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
@@ -65,6 +72,7 @@ public class DivisionControllerTest {
     }
 
     @Test
+    @WithMockUser
     void testPostCreateDivisionFailure() throws Exception {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
@@ -73,6 +81,7 @@ public class DivisionControllerTest {
         when(divisionService.createDivision(createDivisionData))
                 .thenThrow(new DivisionAlreadyExistsException("season: testSeason, division: division1"));
         this.mockMvc.perform(post("/administration/createDivision")
+                        .with(csrf())
                         .flashAttr("createDivisionData", createDivisionData))
                 .andExpect(status().isOk())
                 .andExpect(view().name("divisionCreated"))
