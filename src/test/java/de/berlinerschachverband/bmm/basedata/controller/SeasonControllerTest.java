@@ -8,8 +8,8 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
-import de.berlinerschachverband.bmm.navigation.NavbarData;
-import de.berlinerschachverband.bmm.navigation.NavbarService;
+import de.berlinerschachverband.bmm.navigation.data.NavbarData;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.mockito.Mockito.when;

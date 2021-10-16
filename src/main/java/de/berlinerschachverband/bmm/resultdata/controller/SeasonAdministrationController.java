@@ -1,9 +1,8 @@
 package de.berlinerschachverband.bmm.resultdata.controller;
 
-import de.berlinerschachverband.bmm.basedata.controller.SeasonController;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
-import de.berlinerschachverband.bmm.navigation.NavbarService;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.resultdata.service.MatchDayService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

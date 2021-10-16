@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:fragment ="navbar" class="navbar navbar-expand navbar-light bg-light justify-content-between">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home"><strong>Home</strong></a>
+            </li>
+        </ul>
+    </div>
+    <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/administration"><strong>Administration</strong></a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="alert alert-danger" role="alert">
+        <h2>Zugriff verweigert!</h2>
+        <p>Es liegt keine Berechtigung vor, die angefragte Seite einzusehen.</p>
+        <hr>
+        <h2>Access denied!</h2>
+        <p>Access to the requested page is denied.</p>
+    </div>
+</div>
+
+</body>
+</html>

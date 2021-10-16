@@ -5,7 +5,7 @@ import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.basedata.service.SeasonService;
 import de.berlinerschachverband.bmm.exceptions.SeasonAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.NameBlankException;
-import de.berlinerschachverband.bmm.navigation.NavbarService;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

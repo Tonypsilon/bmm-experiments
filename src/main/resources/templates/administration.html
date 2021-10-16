@@ -13,10 +13,11 @@
 <nav th:replace="~{navbar :: navbar}"/>
 
 <div class="container" style="text-align: center">
-    <a class="btn btn-primary" href="/administration/createSeason" role="button">Neue Saison erstellen</a>
-    <a class="btn btn-primary" href="/administration/createDivision" role="button">Neue Staffel erstellen</a>
-    <a class="btn btn-primary" href="/clubs" role="button">Alle Vereine anzeigen</a>
-    <a class="btn btn-primary" href="/club/create" role="button">Neuen Verein erstellen</a>
+    <a th:each="administrationButton : ${administrationButtons}"
+       class="btn btn-primary"
+       th:href="@{{url}(url=${administrationButton.url})}"
+       role="button"
+       th:text="${administrationButton.capture}">text</a>
 </div>
 
 </body>

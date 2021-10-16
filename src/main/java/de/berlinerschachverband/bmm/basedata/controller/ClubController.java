@@ -5,7 +5,7 @@ import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.exceptions.ClubAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
 import de.berlinerschachverband.bmm.exceptions.NameBlankException;
-import de.berlinerschachverband.bmm.navigation.NavbarService;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

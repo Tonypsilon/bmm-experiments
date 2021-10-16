@@ -1,6 +1,6 @@
-package de.berlinerschachverband.bmm.navigation;
+package de.berlinerschachverband.bmm.navigation.controller;
 
-import org.springframework.security.access.annotation.Secured;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

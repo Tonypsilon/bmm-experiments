@@ -1,5 +1,8 @@
 package de.berlinerschachverband.bmm.navigation;
 
+import de.berlinerschachverband.bmm.navigation.controller.IndexController;
+import de.berlinerschachverband.bmm.navigation.data.NavbarData;
+import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,7 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
