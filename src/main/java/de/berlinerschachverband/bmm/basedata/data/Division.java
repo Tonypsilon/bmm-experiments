@@ -24,11 +24,12 @@ public class Division {
             nullable = false)
     private Season season;
 
+    @NonNull
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NonNull Long id) {
         this.id = id;
     }
 

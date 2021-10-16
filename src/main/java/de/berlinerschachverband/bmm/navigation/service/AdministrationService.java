@@ -1,7 +1,9 @@
 package de.berlinerschachverband.bmm.navigation.service;
 
+import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.navigation.data.AdministrationButtonData;
 import de.berlinerschachverband.bmm.security.Roles;
+import de.berlinerschachverband.bmm.security.service.ClubAdminService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,16 +14,22 @@ import java.util.List;
 @Service
 public class AdministrationService {
 
-    public List<AdministrationButtonData> getAdministrationButtonData(Collection<String> roles) {
+    private final ClubAdminService clubAdminService;
+
+    public AdministrationService(ClubAdminService clubAdminService) {
+        this.clubAdminService = clubAdminService;
+    }
+
+    public List<AdministrationButtonData> getAdministrationButtonData(String username, Collection<String> roles) {
         List<AdministrationButtonData> administrationButtons = new ArrayList();
         if(roles.contains(Roles.administrator)) {
             administrationButtons.addAll(getAdministratorButtons());
         }
         if(roles.contains(Roles.clubAdmin)) {
-            administrationButtons.addAll(getClubAdminButtons());
+            administrationButtons.addAll(getClubAdminButtons(username));
         }
         if(roles.contains(Roles.teamAdmin)) {
-            administrationButtons.addAll(getTeamAdminButtons());
+            administrationButtons.addAll(getTeamAdminButtons(username));
         }
         return administrationButtons;
     }
@@ -35,11 +43,20 @@ public class AdministrationService {
         );
     }
 
-    private List<AdministrationButtonData> getClubAdminButtons() {
-        return Collections.emptyList();
+    private List<AdministrationButtonData> getClubAdminButtons(String username) {
+        return clubAdminService.findClubsByUsername(username).stream()
+                .map(this::constructClubAdminButtonFromClub)
+                .toList();
     }
 
-    private List<AdministrationButtonData> getTeamAdminButtons() {
+    private AdministrationButtonData constructClubAdminButtonFromClub(ClubData clubData) {
+        return new AdministrationButtonData(
+                String.format("/administration/club/%s", clubData.name()),
+                String.format("Verein %s verwalten", clubData.name())
+        );
+    }
+
+    private List<AdministrationButtonData> getTeamAdminButtons(String username) {
         return Collections.emptyList();
     }
 

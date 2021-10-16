@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.navigation;
+package de.berlinerschachverband.bmm.navigation.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.Club;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
@@ -9,8 +9,10 @@ import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.AdministrationService;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
+import de.berlinerschachverband.bmm.security.service.ClubAdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -40,10 +42,13 @@ class AdministrationControllerTest {
     @MockBean
     private AdministrationService administrationService;
 
+    @MockBean
+    private ClubAdminService clubAdminService;
+
     @BeforeEach
     private void setUp() {
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
-        when(administrationService.getAdministrationButtonData(List.of(Roles.administrator)))
+        when(administrationService.getAdministrationButtonData("user", List.of(Roles.administrator)))
                 .thenReturn(List.of(
                         new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
@@ -68,7 +73,7 @@ class AdministrationControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(username = "testuser", authorities = Roles.clubAdmin)
     void shouldReturnClubAdminPage() throws Exception {
         Club club1 = new Club();
         club1.setId(1L);
@@ -76,6 +81,8 @@ class AdministrationControllerTest {
         club1.setActive(true);
         when(clubService.getClub("club1")).thenReturn(club1);
         when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
+
+        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L, "club1", true)));
 
         this.mockMvc.perform(get("/administration/club/club1"))
                 .andExpect(status().isOk())

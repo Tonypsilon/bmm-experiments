@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.navigation;
+package de.berlinerschachverband.bmm.navigation.controller;
 
 import de.berlinerschachverband.bmm.navigation.controller.IndexController;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
