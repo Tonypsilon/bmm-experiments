@@ -2,7 +2,6 @@ package de.berlinerschachverband.bmm.navigation.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
-import de.berlinerschachverband.bmm.navigation.data.AdministrationButtonData;
 import de.berlinerschachverband.bmm.navigation.service.AdministrationService;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
@@ -16,9 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class AdministrationController {

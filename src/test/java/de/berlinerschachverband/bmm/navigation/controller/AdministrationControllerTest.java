@@ -3,7 +3,6 @@ package de.berlinerschachverband.bmm.navigation.controller;
 import de.berlinerschachverband.bmm.basedata.data.Club;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
-import de.berlinerschachverband.bmm.navigation.controller.AdministrationController;
 import de.berlinerschachverband.bmm.navigation.data.AdministrationButtonData;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.AdministrationService;
@@ -12,7 +11,6 @@ import de.berlinerschachverband.bmm.security.Roles;
 import de.berlinerschachverband.bmm.security.service.ClubAdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -74,7 +72,7 @@ class AdministrationControllerTest {
 
     @Test
     @WithMockUser(username = "testuser", authorities = Roles.clubAdmin)
-    void shouldReturnClubAdminPage() throws Exception {
+    void shouldReturnClubAdminPageWhenClubMatches() throws Exception {
         Club club1 = new Club();
         club1.setId(1L);
         club1.setName("club1");
@@ -89,5 +87,24 @@ class AdministrationControllerTest {
                 .andExpect(view().name("clubAdministration"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
                 .andExpect(model().attribute("club", new ClubData(1L, "club1", true)));
+
+        this.mockMvc.perform(get("/administration/club/otherClub"))
+                .andExpect(status().isForbidden());
     }
+
+    @Test
+    @WithMockUser(username = "testuser", authorities = Roles.user)
+    void shouldDenyAccessGetAdmin() throws Exception {
+        this.mockMvc.perform(get("/administration"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(username = "testuser", authorities = {Roles.user, Roles.teamAdmin, Roles.administrator})
+    void shouldDenyAccessGetClubAdmin() throws Exception {
+        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L,"myClub", true)));
+        this.mockMvc.perform(get("/administration/club/anyClub"))
+                .andExpect(status().isForbidden());
+    }
+
 }

@@ -1,6 +1,5 @@
 package de.berlinerschachverband.bmm.security.service;
 
-import de.berlinerschachverband.bmm.basedata.data.Club;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.security.data.ClubAdmin;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ClubAdminService {
@@ -35,6 +33,6 @@ public class ClubAdminService {
                 .map(ClubAdmin::getClub)
                 .map(clubService::toClubData)
                 .sorted(Comparator.comparing(ClubData::name))
-                .collect(Collectors.toList());
+                .toList();
     }
 }
