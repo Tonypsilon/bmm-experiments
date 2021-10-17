@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div th:if="${state == 'success'}" class="container"><br/>
+    <div class="alert alert-success">
+        <strong>Benutzer <span th:text="${username}"></span> erfolgreich erstellt.</strong>
+    </div>
+</div>
+
+<div th:if="${state == 'failure'}" class="container"><br/>
+    <div class="alert alert-danger">
+        <strong>Der Benutzer <span th:text="${username}"></span> konnte nicht erstellt werden.</strong>
+    </div>
+</div>
+
+<div class="container"><br/>
+    <a class="btn btn-primary" href="/home" role="button">Home</a>
+    <a class="btn btn-secondary" href="/administration/createUser" role="button">Neuen Benutzer erstellen</a>
+</div>
+
+</body>
+</html>
