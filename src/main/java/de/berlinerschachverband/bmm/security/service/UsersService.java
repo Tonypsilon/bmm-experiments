@@ -4,7 +4,6 @@ import de.berlinerschachverband.bmm.exceptions.UserAlreadyExistsException;
 import de.berlinerschachverband.bmm.navigation.data.CreateUserData;
 import de.berlinerschachverband.bmm.security.data.Users;
 import de.berlinerschachverband.bmm.security.data.UsersRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +20,7 @@ public class UsersService {
     }
 
     public void createUser(CreateUserData createUserData) {
-        if(usersRepository.existsByUsername(createUserData.getUsername())) {
+        if(Boolean.TRUE.equals(usersRepository.existsByUsername(createUserData.getUsername()))) {
             throw new UserAlreadyExistsException(createUserData.getUsername());
         }
         Users user = new Users();
