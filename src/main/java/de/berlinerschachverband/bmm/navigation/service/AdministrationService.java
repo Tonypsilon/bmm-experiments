@@ -22,13 +22,13 @@ public class AdministrationService {
 
     public List<AdministrationButtonData> getAdministrationButtonData(String username, Collection<String> roles) {
         List<AdministrationButtonData> administrationButtons = new ArrayList();
-        if(roles.contains(Roles.administrator)) {
+        if(roles.contains(Roles.ADMINISTRATOR)) {
             administrationButtons.addAll(getAdministratorButtons());
         }
-        if(roles.contains(Roles.clubAdmin)) {
+        if(roles.contains(Roles.CLUB_ADMIN)) {
             administrationButtons.addAll(getClubAdminButtons(username));
         }
-        if(roles.contains(Roles.teamAdmin)) {
+        if(roles.contains(Roles.TEAM_ADMIN)) {
             administrationButtons.addAll(getTeamAdminButtons(username));
         }
         return administrationButtons;

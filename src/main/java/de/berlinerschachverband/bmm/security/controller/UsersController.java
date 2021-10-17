@@ -24,7 +24,7 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @RolesAllowed(Roles.administrator)
+    @RolesAllowed(Roles.ADMINISTRATOR)
     @GetMapping("/administration/createUser")
     public String createUser(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
@@ -32,7 +32,7 @@ public class UsersController {
         return "createUser";
     }
 
-    @RolesAllowed(Roles.administrator)
+    @RolesAllowed(Roles.ADMINISTRATOR)
     @PostMapping("/administration/createUser")
     public String createUser(@ModelAttribute CreateUserData createUserData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());

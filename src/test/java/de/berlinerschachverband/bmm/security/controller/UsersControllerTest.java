@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -43,7 +42,7 @@ class UsersControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = Roles.administrator)
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testGetCreateUserShouldReturnCreateUserPage() throws Exception {
         this.mockMvc.perform(get("/administration/createUser"))
                 .andExpect(status().isOk())
@@ -53,14 +52,14 @@ class UsersControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {Roles.user, Roles.clubAdmin, Roles.teamAdmin})
+    @WithMockUser(authorities = {Roles.USER, Roles.CLUB_ADMIN, Roles.TEAM_ADMIN})
     void testGetCreateUserAccessDenied() throws Exception {
         this.mockMvc.perform(get("/administration/createUser"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(authorities = Roles.administrator)
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testPostCreateUserSuccess() throws Exception {
         CreateUserData createUserData = new CreateUserData();
         createUserData.setUsername("username");
@@ -79,7 +78,7 @@ class UsersControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = Roles.administrator)
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testPostCreateUserFailure() throws Exception {
         CreateUserData createUserDataEmptyPassword1 = new CreateUserData();
         createUserDataEmptyPassword1.setUsername("username");
@@ -141,7 +140,7 @@ class UsersControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = {Roles.user, Roles.clubAdmin, Roles.teamAdmin})
+    @WithMockUser(authorities = {Roles.USER, Roles.CLUB_ADMIN, Roles.TEAM_ADMIN})
     void testPostCreateUserAccessDenied() throws Exception {
         this.mockMvc.perform(post("/administration/createUser"))
                 .andExpect(status().isForbidden());

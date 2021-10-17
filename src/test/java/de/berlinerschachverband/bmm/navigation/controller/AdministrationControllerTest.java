@@ -46,7 +46,7 @@ class AdministrationControllerTest {
     @BeforeEach
     private void setUp() {
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
-        when(administrationService.getAdministrationButtonData("user", List.of(Roles.administrator)))
+        when(administrationService.getAdministrationButtonData("user", List.of(Roles.ADMINISTRATOR)))
                 .thenReturn(List.of(
                         new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
@@ -56,7 +56,7 @@ class AdministrationControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = Roles.administrator)
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void shouldReturnAdminPage() throws Exception {
         this.mockMvc.perform(get("/administration"))
                 .andExpect(status().isOk())
@@ -71,7 +71,7 @@ class AdministrationControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "testuser", authorities = Roles.clubAdmin)
+    @WithMockUser(username = "testuser", authorities = Roles.CLUB_ADMIN)
     void shouldReturnClubAdminPageWhenClubMatches() throws Exception {
         Club club1 = new Club();
         club1.setId(1L);
@@ -93,14 +93,14 @@ class AdministrationControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "testuser", authorities = Roles.user)
+    @WithMockUser(username = "testuser", authorities = Roles.USER)
     void shouldDenyAccessGetAdmin() throws Exception {
         this.mockMvc.perform(get("/administration"))
                 .andExpect(status().isForbidden());
     }
 
     @Test
-    @WithMockUser(username = "testuser", authorities = {Roles.user, Roles.teamAdmin, Roles.administrator})
+    @WithMockUser(username = "testuser", authorities = {Roles.USER, Roles.TEAM_ADMIN, Roles.ADMINISTRATOR})
     void shouldDenyAccessGetClubAdmin() throws Exception {
         when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L,"myClub", true)));
         this.mockMvc.perform(get("/administration/club/anyClub"))

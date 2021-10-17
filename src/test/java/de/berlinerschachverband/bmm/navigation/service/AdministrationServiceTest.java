@@ -35,7 +35,7 @@ class AdministrationServiceTest {
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
                 administrationService.getAdministrationButtonData("testuser", List.of(
-                        Roles.clubAdmin, Roles.teamAdmin, Roles.administrator)));
+                        Roles.CLUB_ADMIN, Roles.TEAM_ADMIN, Roles.ADMINISTRATOR)));
     }
 
     @Test
@@ -45,18 +45,18 @@ class AdministrationServiceTest {
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                         new AdministrationButtonData("/clubs/create", "Neuen Verein erstellen"),
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen")),
-                administrationService.getAdministrationButtonData("testuser", List.of(Roles.administrator)));
+                administrationService.getAdministrationButtonData("testuser", List.of(Roles.ADMINISTRATOR)));
     }
 
     @Test
     void testGetAdministrationButtonDataClubAdmin() {
         assertEquals(List.of(new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
-                administrationService.getAdministrationButtonData("testuser", List.of(Roles.clubAdmin)));
+                administrationService.getAdministrationButtonData("testuser", List.of(Roles.CLUB_ADMIN)));
     }
 
     @Test
     void testGetAdministrationButtonDataTeamAdmin() {
         assertEquals(Collections.emptyList(),
-                administrationService.getAdministrationButtonData("testuser", List.of(Roles.teamAdmin)));
+                administrationService.getAdministrationButtonData("testuser", List.of(Roles.TEAM_ADMIN)));
     }
 }

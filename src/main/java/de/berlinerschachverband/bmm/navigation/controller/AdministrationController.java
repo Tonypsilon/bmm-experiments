@@ -35,7 +35,7 @@ public class AdministrationController {
         this.clubAdminService = clubAdminService;
     }
 
-    @RolesAllowed({Roles.administrator, Roles.clubAdmin, Roles.teamAdmin})
+    @RolesAllowed({Roles.ADMINISTRATOR, Roles.CLUB_ADMIN, Roles.TEAM_ADMIN})
     @GetMapping(value = "/administration")
     public String admin(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
@@ -46,7 +46,7 @@ public class AdministrationController {
         return "administration";
     }
 
-    @RolesAllowed({Roles.clubAdmin})
+    @RolesAllowed({Roles.CLUB_ADMIN})
     @GetMapping(value = "/administration/club/{clubName}")
     public String clubAdmin(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());

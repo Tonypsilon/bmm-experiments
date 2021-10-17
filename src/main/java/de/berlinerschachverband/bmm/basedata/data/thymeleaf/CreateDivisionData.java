@@ -1,7 +1,5 @@
 package de.berlinerschachverband.bmm.basedata.data.thymeleaf;
 
-import java.util.Objects;
-
 public class CreateDivisionData {
 
     private String name;
