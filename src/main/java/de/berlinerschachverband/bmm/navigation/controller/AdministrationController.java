@@ -56,7 +56,7 @@ public class AdministrationController {
                 .map(ClubData::name)
                 .toList()
                 .contains(clubName)) {
-            throw new AccessDeniedException(String.format("User %s is no clubAdmin for club %s", username, clubName));
+            throw new AccessDeniedException("User %s is no clubAdmin for club %s".formatted(username, clubName));
         }
         model.addAttribute("club", clubService.toClubData(clubService.getClub(clubName)));
         return "clubAdministration";

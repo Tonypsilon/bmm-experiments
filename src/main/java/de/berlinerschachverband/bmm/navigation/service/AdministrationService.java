@@ -52,8 +52,8 @@ public class AdministrationService {
 
     private AdministrationButtonData constructClubAdminButtonFromClub(ClubData clubData) {
         return new AdministrationButtonData(
-                String.format("/administration/club/%s", clubData.name()),
-                String.format("Verein %s verwalten", clubData.name())
+                "/administration/club/%s".formatted(clubData.name()),
+                "Verein %s verwalten".formatted(clubData.name())
         );
     }
 

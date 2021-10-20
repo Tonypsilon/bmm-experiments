@@ -1,7 +1,7 @@
 package de.berlinerschachverband.bmm.security.controller;
 
 import de.berlinerschachverband.bmm.exceptions.UserAlreadyExistsException;
-import de.berlinerschachverband.bmm.navigation.data.CreateUserData;
+import de.berlinerschachverband.bmm.security.data.CreateUserData;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
