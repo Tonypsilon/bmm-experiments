@@ -15,3 +15,12 @@ Resultdata contains all entities that are created throughout a season.
 # news
 
 Uses github actions for automated tests.
+
+# Container image creation
+
+Spring Boots Maven plugin comes with a target to create container images.
+The image will have the name of the project - bmm - and the tag will be the version number.
+
+```bash
+mvn spring-boot:build-image
+```
