@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div class="container">
+    <h1 >Einem Benutzer eine Rolle zuweisen</h1>
+    <form th:action="@{/roles/addUserRole}" th:object="${addRoleData}" method="post">
+        <div class="form-group">
+            <label for="userSelect">Benutzer auswählen</label>
+            <select class="form-control" id="userSelect" th:field="*{username}">
+                <option th:each="username : ${usernames}" th:value="${username}"><p th:text="${username}"></p></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="roleSelect">Rolle auswählen</label>
+            <select class="form-control" id="roleSelect" th:field="*{roleNaturalName}">
+                <option th:each="role : ${roles}" th:value="${role}"><p th:text="${role}"></p></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a class="btn btn-secondary" href="../home" role="button">Home</a>
+    </form>
+</div>
+
+</body>
+</html>

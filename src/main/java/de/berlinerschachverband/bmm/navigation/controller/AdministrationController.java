@@ -61,4 +61,5 @@ public class AdministrationController {
         model.addAttribute("club", clubService.toClubData(clubService.getClub(clubName)));
         return "clubAdministration";
     }
+
 }

@@ -4,11 +4,15 @@ import de.berlinerschachverband.bmm.exceptions.UserAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.UserDoesNotExistException;
 import de.berlinerschachverband.bmm.exceptions.WrongPasswordException;
 import de.berlinerschachverband.bmm.security.data.ChangePasswordData;
-import de.berlinerschachverband.bmm.security.data.CreateUserData;
+import de.berlinerschachverband.bmm.security.data.thymeleaf.CreateUserData;
 import de.berlinerschachverband.bmm.security.data.Users;
 import de.berlinerschachverband.bmm.security.data.UsersRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsersService {
@@ -20,6 +24,24 @@ public class UsersService {
     public UsersService(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public Users getUser(String username) {
+        return usersRepository.findById(username).orElseThrow(
+                () -> new UserDoesNotExistException(username)
+        );
+    }
+
+    /**
+     * Provide a list of all users sorted alphabetically.
+     * @return
+     */
+    public List<String> getAllUserNames() {
+        return usersRepository.findAll()
+                .stream()
+                .map(Users::getUsername)
+                .sorted()
+                .toList();
     }
 
     public void createUser(CreateUserData createUserData) {

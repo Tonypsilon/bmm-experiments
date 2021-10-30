@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{../../webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div th:if="${state == 'success'}" class="container"><br/>
+    <div class="alert alert-success">
+        Die Rolle wurde dem Benutzer erfolgreich zugewiesen.
+    </div>
+</div>
+
+<div th:if="${state == 'failure'}" class="container"><br/>
+    <div class="alert alert-danger">
+        Die Rolle konnte dem Benutzer nicht zugewiesen werden.
+    </div>
+</div>
+
+<div class="container"><br/>
+    <a class="btn btn-primary" href="/home" role="button">Home</a>
+    <a class="btn btn-secondary" href="/roles/addUserRole" role="button">Einem Benutzer eine Rolle zuweisen</a>
+</div>
+
+</body>
+</html>

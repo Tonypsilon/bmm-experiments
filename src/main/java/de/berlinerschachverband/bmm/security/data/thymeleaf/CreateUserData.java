@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.security.data;
+package de.berlinerschachverband.bmm.security.data.thymeleaf;
 
 public class CreateUserData {
 

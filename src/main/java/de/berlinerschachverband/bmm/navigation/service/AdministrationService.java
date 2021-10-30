@@ -40,7 +40,9 @@ public class AdministrationService {
                 new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                 new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                 new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
-                new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen")
+                new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
+                new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
+                new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen")
         );
     }
 
