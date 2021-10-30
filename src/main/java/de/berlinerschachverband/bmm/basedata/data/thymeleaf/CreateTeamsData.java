@@ -3,7 +3,7 @@ package de.berlinerschachverband.bmm.basedata.data.thymeleaf;
 public class CreateTeamsData {
 
     private String clubName;
-    private Integer numberOfTeams;
+    private Integer numberOfTeamsToCreate;
 
     public String getClubName() {
         return clubName;
@@ -13,11 +13,11 @@ public class CreateTeamsData {
         this.clubName = clubName;
     }
 
-    public Integer getNumberOfTeams() {
-        return numberOfTeams;
+    public Integer getNumberOfTeamsToCreate() {
+        return numberOfTeamsToCreate;
     }
 
-    public void setNumberOfTeams(Integer numberOfTeams) {
-        this.numberOfTeams = numberOfTeams;
+    public void setNumberOfTeamsToCreate(Integer numberOfTeamsToCreate) {
+        this.numberOfTeamsToCreate = numberOfTeamsToCreate;
     }
 }

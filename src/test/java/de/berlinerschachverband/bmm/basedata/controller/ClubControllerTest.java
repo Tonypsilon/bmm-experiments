@@ -3,8 +3,11 @@ package de.berlinerschachverband.bmm.basedata.controller;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
+import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
+import de.berlinerschachverband.bmm.security.Roles;
+import de.berlinerschachverband.bmm.security.service.ClubAdminService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,13 +39,19 @@ class ClubControllerTest {
     @MockBean
     private ClubService clubService;
 
+    @MockBean
+    private ClubAdminService clubAdminService;
+
+    @MockBean
+    private TeamService teamService;
+
     @BeforeEach
     private void setUp() {
         when(navbarService.getNavbarData()).thenReturn(new NavbarData(List.of("testSeason", "testSeason2")));
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testGetClubs() throws Exception {
         when(clubService.getAllClubs())
                 .thenReturn(List.of(
@@ -73,7 +83,7 @@ class ClubControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testPostCreateClubSuccess() throws Exception {
         CreateClubData createClubData = new CreateClubData();
         createClubData.setClubName("club1");

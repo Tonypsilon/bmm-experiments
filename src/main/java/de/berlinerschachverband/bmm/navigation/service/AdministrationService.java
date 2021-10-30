@@ -39,7 +39,7 @@ public class AdministrationService {
                 new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                 new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                 new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
-                new AdministrationButtonData("/clubs/create", "Neuen Verein erstellen"),
+                new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                 new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen")
         );
     }

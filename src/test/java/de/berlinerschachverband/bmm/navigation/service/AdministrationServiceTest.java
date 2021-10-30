@@ -31,7 +31,7 @@ class AdministrationServiceTest {
         assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
-                        new AdministrationButtonData("/clubs/create", "Neuen Verein erstellen"),
+                        new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
                 administrationService.getAdministrationButtonData("testuser", List.of(
@@ -43,7 +43,7 @@ class AdministrationServiceTest {
         assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
-                        new AdministrationButtonData("/clubs/create", "Neuen Verein erstellen"),
+                        new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.ADMINISTRATOR)));
     }

@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +75,7 @@ public class TeamService {
      * @param createTeamData
      * @return
      */
-    public TeamData createTeam(CreateTeamData createTeamData) {
+    private TeamData createTeam(CreateTeamData createTeamData) {
         if(teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
                 createTeamData.getClubName(), createTeamData.getNumber()).isPresent()) {
             throw new TeamAlreadyExistsException("club: " + createTeamData.getClubName() + ", number: "
@@ -90,22 +91,33 @@ public class TeamService {
     }
 
     /**
-     * Given the name of a club and a number, creates this many teams for the club.
-     * Numbers of the teams goes from 1 up to the given number. If any of these
-     * teams already exists, they are skipped during creation process.
+     * Given the name of a club and a number, add this many teams for the club.
      *
      * @param createTeamsData
      */
     public void createTeams(CreateTeamsData createTeamsData) {
-        for (int teamNumber = 1; teamNumber <= createTeamsData.getNumberOfTeams(); teamNumber++) {
-            try {
-                CreateTeamData createTeamData = new CreateTeamData();
-                createTeamData.setClubName(createTeamsData.getClubName());
-                createTeamData.setNumber(teamNumber);
-                createTeam(createTeamData);
-            } catch(TeamAlreadyExistsException ex) {
-                //continue;
-            }
+        int currentNumberOfTeams = teamRepository.findByClub_NameAndDivisionIsNull(createTeamsData.getClubName()).size();
+        for (int teamNumber = 1; teamNumber <= createTeamsData.getNumberOfTeamsToCreate(); teamNumber++) {
+            Team team = new Team();
+            team.setClub(clubService.getClub(createTeamsData.getClubName()));
+            team.setNumber(teamNumber + currentNumberOfTeams);
+            teamRepository.saveAndFlush(team);
+        }
+    }
+
+    public void removeTeams(RemoveTeamsData removeTeamsData) {
+        int currentNumberOfTeams = teamRepository.findByClub_NameAndDivisionIsNull(removeTeamsData.getClubName()).size();
+        for(int teamNumber = currentNumberOfTeams;
+            teamNumber > currentNumberOfTeams - removeTeamsData.getNumberOfTeamsToDelete();
+            teamNumber--) {
+            teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
+                    removeTeamsData.getClubName(),
+                    teamNumber
+            ).ifPresent(
+                    team -> {
+                        teamRepository.delete(team);
+                        teamRepository.flush();
+                    });
         }
     }
 

@@ -17,7 +17,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class ClubServiceTest {
+class ClubServiceTest {
 
     private final ClubRepository clubRepository = mock(ClubRepository.class);
     private ClubService clubService;

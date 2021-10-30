@@ -1,10 +1,7 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
-import de.berlinerschachverband.bmm.exceptions.BmmException;
-import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -104,39 +101,12 @@ class TeamServiceTest {
         assertEquals(2, teamService.getNumberOfTeamsOfDivision(new DivisionData(1L, "division1", 1, season1)));
     }
 
-    @Test
-    void testCreateTeam() {
-        CreateTeamData createTeamData1 = new CreateTeamData();
-        createTeamData1.setClubName("club1");
-        createTeamData1.setNumber(1);
-
-        CreateTeamData createTeamData2 = new CreateTeamData();
-        createTeamData2.setClubName("club1");
-        createTeamData2.setNumber(2);
-
-        when(teamRepository.findByClub_NameAndNumberAndDivisionIsNull("club1", 1))
-                .thenReturn(Optional.of(team1));
-        when(teamRepository.findByClub_NameAndNumberAndDivisionIsNull("club1", 2))
-                .thenReturn(Optional.empty())
-                .thenReturn(Optional.of(team3));
-        when(clubService.getClub("club1")).thenReturn(club1);
-        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
-
-        BmmException exception = assertThrows(TeamAlreadyExistsException.class,
-                () -> teamService.createTeam(createTeamData1));
-        assertEquals("club: club1, number: 1", exception.getMessage());
-
-        assertEquals(new TeamData(3L,
-                new ClubData(1L, "club1", true),
-                Optional.empty(),
-                2), teamService.createTeam(createTeamData2));
-    }
 
     @Test
     void testCreateTeams() {
         CreateTeamsData createTeamsData = new CreateTeamsData();
         createTeamsData.setClubName("club1");
-        createTeamsData.setNumberOfTeams(2);
+        createTeamsData.setNumberOfTeamsToCreate(2);
 
         when(teamRepository.findByClub_NameAndNumberAndDivisionIsNull("club1", 1))
                 .thenReturn(Optional.of(team1));
@@ -146,8 +116,8 @@ class TeamServiceTest {
 
         teamService.createTeams(createTeamsData);
 
-        verify(teamRepository, times(1)).findByClub_NameAndNumberAndDivisionIsNull("club1", 1);
-        verify(teamRepository, times(2)).findByClub_NameAndNumberAndDivisionIsNull("club1", 2);
+        verify(teamRepository, times(1)).findByClub_NameAndDivisionIsNull("club1");
+        verify(teamRepository, times(2)).saveAndFlush(any());
     }
     
 }
