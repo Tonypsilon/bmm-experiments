@@ -8,16 +8,16 @@
                 <a class="nav-link" href="/home"><strong>Home</strong></a>
             </li>
             <li th:each="seasonName : ${navbarData.seasonNames}" class="nav-item">
-                <a class="nav-link" th:href="@{/season/{seasonName}(seasonName=${seasonName})}"><p th:text="${seasonName}"></p></a>
+                <a class="nav-link" th:href="@{/season/{seasonName}(seasonName=${seasonName})}"><span th:text="${seasonName}"></span></a>
             </li>
         </ul>
-    </div>
 
         <ul class="navbar-nav me-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/administration"><strong>Administration</strong></a>
             </li>
         </ul>
+    </div>
 </nav>
 </body>
 </html>
