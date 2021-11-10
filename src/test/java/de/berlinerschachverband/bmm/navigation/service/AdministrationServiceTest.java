@@ -28,7 +28,8 @@ class AdministrationServiceTest {
 
     @Test
     void testGetAdministrationButtonDataAllRoles() {
-        assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
+        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
+                        new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                         new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
@@ -42,7 +43,8 @@ class AdministrationServiceTest {
 
     @Test
     void testGetAdministrationButtonDataAdministrator() {
-        assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
+        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
+                        new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                         new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
@@ -54,13 +56,14 @@ class AdministrationServiceTest {
 
     @Test
     void testGetAdministrationButtonDataClubAdmin() {
-        assertEquals(List.of(new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
+        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
+                        new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.CLUB_ADMIN)));
     }
 
     @Test
     void testGetAdministrationButtonDataTeamAdmin() {
-        assertEquals(Collections.emptyList(),
+        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.TEAM_ADMIN)));
     }
 }

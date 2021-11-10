@@ -22,6 +22,7 @@ public class AdministrationService {
 
     public List<AdministrationButtonData> getAdministrationButtonData(String username, Collection<String> roles) {
         List<AdministrationButtonData> administrationButtons = new ArrayList();
+        administrationButtons.add(new AdministrationButtonData("/logout", "Logout"));
         if(roles.contains(Roles.ADMINISTRATOR)) {
             administrationButtons.addAll(getAdministratorButtons());
         }
