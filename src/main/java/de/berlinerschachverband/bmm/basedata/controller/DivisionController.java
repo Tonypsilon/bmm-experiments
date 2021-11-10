@@ -3,6 +3,7 @@ package de.berlinerschachverband.bmm.basedata.controller;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,7 @@ public class DivisionController {
         try {
             model.addAttribute("division", divisionService.createDivision(createDivisionData));
             model.addAttribute("state", "success");
-        } catch(DivisionAlreadyExistsException ex) {
+        } catch(DivisionAlreadyExistsException | NameBlankException ex) {
             model.addAttribute("state", "failure");
         }
         return "divisionCreated";

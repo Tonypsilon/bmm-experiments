@@ -9,6 +9,7 @@ import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.DivisionNotFoundException;
+import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -71,6 +72,9 @@ public class DivisionService {
      * @return
      */
     public DivisionData createDivision(CreateDivisionData createDivisionData) {
+        if(createDivisionData.getName().isBlank()) {
+            throw new NameBlankException();
+        }
         if(divisionRepository.findByNameAndSeason_Name(
                 createDivisionData.getName(),
                 createDivisionData.getSeasonName())

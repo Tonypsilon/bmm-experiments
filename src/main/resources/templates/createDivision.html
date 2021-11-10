@@ -37,6 +37,14 @@
             </select>
         </div>
         <div class="form-group">
+            <label for="numberOfBoardsSelect">Anzahl Bretter auswählen</label>
+            <select class="form-control" id="numberOfBoardsSelect" th:field="*{numberOfBoards}">
+                <option th:value="4">4</option>
+                <option th:value="6">6</option>
+                <option th:value="8">8</option>
+            </select>
+        </div>
+        <div class="form-group">
             <label for="divisionNameInput">Staffel Name</label>
             <input class="form-control" type="text" id="divisionNameInput" name="divisionName" th:field="*{name}"/>
         </div>

@@ -14,11 +14,10 @@
 
 <div class="container" style="text-align: center">
     <a th:each="administrationButton : ${administrationButtons}"
-       class="btn btn-primary"
+       class="btn btn-primary m-1"
        th:href="@{{url}(url=${administrationButton.url})}"
        role="button"
        th:text="${administrationButton.capture}">text</a>
-
 </div>
 
 </body>
