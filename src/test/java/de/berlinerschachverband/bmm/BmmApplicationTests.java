@@ -66,6 +66,7 @@ class BmmApplicationTests {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
         createDivisionData.setLevel(1);
+        createDivisionData.setNumberOfBoards(8);
         createDivisionData.setSeasonName("season1");
 
         this.mockMvc.perform(post("/administration/createDivision")
@@ -75,7 +76,7 @@ class BmmApplicationTests {
                 .andExpect(view().name("divisionCreated"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, new SeasonData(1L,"season1"))));
+                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, 8, new SeasonData(1L,"season1"))));
 
         // Step 5: Check season1 for division.
         SortedSetMultimap<Integer, String> divisions = TreeMultimap.create();

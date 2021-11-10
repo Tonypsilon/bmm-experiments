@@ -17,6 +17,9 @@ public class Division {
     @Column(unique = false, nullable = false)
     private Integer level;
 
+    @Column(unique = false, nullable = false)
+    private Integer numberOfBoards;
+
     @ManyToOne
     @JoinColumn(name = "season_id",
             foreignKey = @ForeignKey(name = "DIVISION_SEASON_ID_FK"),
@@ -59,4 +62,12 @@ public class Division {
         this.season = season;
     }
 
+    @NonNull
+    public Integer getNumberOfBoards() {
+        return this.numberOfBoards;
+    }
+
+    public void setNumberOfBoards(@NonNull Integer numberOfBoards) {
+        this.numberOfBoards = numberOfBoards;
+    }
 }

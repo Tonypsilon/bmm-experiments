@@ -58,9 +58,10 @@ public class DivisionControllerTest {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
         createDivisionData.setLevel(1);
+        createDivisionData.setNumberOfBoards(8);
         createDivisionData.setSeasonName("testSeason");
         when(divisionService.createDivision(createDivisionData))
-                .thenReturn(new DivisionData(1L, "division1", 1, new SeasonData(1L, "testSeason")));
+                .thenReturn(new DivisionData(1L, "division1", 1, 8, new SeasonData(1L, "testSeason")));
         this.mockMvc.perform(post("/administration/createDivision")
                         .with(csrf())
                         .flashAttr("createDivisionData", createDivisionData))
@@ -68,7 +69,7 @@ public class DivisionControllerTest {
                 .andExpect(view().name("divisionCreated"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, new SeasonData(1L,"testSeason"))));
+                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, 8, new SeasonData(1L,"testSeason"))));
     }
 
     @Test
@@ -77,6 +78,7 @@ public class DivisionControllerTest {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
         createDivisionData.setLevel(1);
+        createDivisionData.setNumberOfBoards(8);
         createDivisionData.setSeasonName("testSeason");
         when(divisionService.createDivision(createDivisionData))
                 .thenThrow(new DivisionAlreadyExistsException("season: testSeason, division: division1"));

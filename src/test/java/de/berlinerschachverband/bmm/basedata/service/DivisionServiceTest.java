@@ -38,16 +38,19 @@ class DivisionServiceTest {
         division1.setId(1L);
         division1.setLevel(1);
         division1.setSeason(season);
+        division1.setNumberOfBoards(6);
         division1.setName("division1");
         division2a = new Division();
         division2a.setId(2L);
         division2a.setLevel(2);
         division2a.setSeason(season);
+        division2a.setNumberOfBoards(8);
         division2a.setName("tivision2a");
         division2b = new Division();
         division2b.setId(3L);
         division2b.setLevel(2);
         division2b.setSeason(season);
+        division2b.setNumberOfBoards(8);
         division2b.setName("division2b");
     }
 
@@ -70,8 +73,8 @@ class DivisionServiceTest {
         );
         when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(1L, "season"));
         assertEquals(Set.of(
-                new DivisionData(1L, "division1", 1, new SeasonData(1L, "season")),
-                new DivisionData(2L, "tivision2a", 2, new SeasonData(1L, "season"))
+                new DivisionData(1L, "division1", 1, 6, new SeasonData(1L, "season")),
+                new DivisionData(2L, "tivision2a", 2, 8, new SeasonData(1L, "season"))
         ),
                 divisionService.getDivisionsOfSeason(new SeasonData(1L, "season")));
     }
@@ -115,6 +118,7 @@ class DivisionServiceTest {
         assertEquals(new DivisionData(division2a.getId(),
                         division2a.getName(),
                         division2a.getLevel(),
+                        division2a.getNumberOfBoards(),
                         new SeasonData(division2a.getSeason().getId(), division2a.getSeason().getName())),
                 divisionService.createDivision(createDivisionData2));
     }
@@ -125,6 +129,7 @@ class DivisionServiceTest {
         DivisionData actual = divisionService.toDivisionData(division1);
         assertEquals(actual.id(), division1.getId());
         assertEquals(actual.name(), division1.getName());
+        assertEquals(actual.numberOfBoards(), division1.getNumberOfBoards());
         assertEquals(actual.season(), new SeasonData(season.getId(), season.getName()));
     }
 

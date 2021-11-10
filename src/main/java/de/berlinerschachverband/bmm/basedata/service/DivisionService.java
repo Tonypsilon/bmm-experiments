@@ -83,6 +83,7 @@ public class DivisionService {
         division.setName(createDivisionData.getName());
         division.setSeason(seasonService.getSeason(createDivisionData.getSeasonName()));
         division.setLevel(createDivisionData.getLevel());
+        division.setNumberOfBoards(createDivisionData.getNumberOfBoards());
         divisionRepository.saveAndFlush(division);
         return toDivisionData(getDivisionByNameAndSeasonName(
                 createDivisionData.getName(), createDivisionData.getSeasonName()));
@@ -92,6 +93,7 @@ public class DivisionService {
         return new DivisionData(division.getId(),
                 division.getName(),
                 division.getLevel(),
+                division.getNumberOfBoards(),
                 seasonService.toSeasonData(division.getSeason()));
     }
 }
