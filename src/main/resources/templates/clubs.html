@@ -19,6 +19,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
+            <th scope="col">ZIP</th>
             <th scope="col">Name</th>
             <th scope="col">Aktiv</th>
             <th scope="col">Aktion</th>
@@ -26,6 +27,7 @@
         </thead>
         <tbody>
         <tr th:each="club : ${clubs}">
+            <td th:text="${club.zps}"></td>
             <td th:text="${club.name}"></td>
             <td th:if="${club.active == true}" th:text="aktiv">aktiv</td>
             <td th:if="${club.active == false}" th:text="inaktiv">inaktiv</td>

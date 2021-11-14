@@ -78,15 +78,15 @@ class AdministrationControllerTest {
         club1.setName("club1");
         club1.setActive(true);
         when(clubService.getClub("club1")).thenReturn(club1);
-        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
+        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true, 1));
 
-        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L, "club1", true)));
+        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L, "club1", true, 1)));
 
         this.mockMvc.perform(get("/administration/club/club1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("clubAdministration"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
-                .andExpect(model().attribute("club", new ClubData(1L, "club1", true)));
+                .andExpect(model().attribute("club", new ClubData(1L, "club1", true, 1)));
 
         this.mockMvc.perform(get("/administration/club/otherClub"))
                 .andExpect(status().isForbidden());
@@ -102,7 +102,7 @@ class AdministrationControllerTest {
     @Test
     @WithMockUser(username = "testuser", authorities = {Roles.USER, Roles.TEAM_ADMIN, Roles.ADMINISTRATOR})
     void shouldDenyAccessGetClubAdmin() throws Exception {
-        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L,"myClub", true)));
+        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L,"myClub", true, 1)));
         this.mockMvc.perform(get("/administration/club/anyClub"))
                 .andExpect(status().isForbidden());
     }

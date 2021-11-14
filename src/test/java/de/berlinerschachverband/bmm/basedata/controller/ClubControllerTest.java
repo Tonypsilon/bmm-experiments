@@ -55,15 +55,15 @@ class ClubControllerTest {
     void testGetClubs() throws Exception {
         when(clubService.getAllClubs())
                 .thenReturn(List.of(
-                        new ClubData(1L, "club1", true),
-                        new ClubData(2L, "club2", false)));
+                        new ClubData(1L, "club1", true, 1),
+                        new ClubData(2L, "club2", false, 2)));
         this.mockMvc.perform(get("/clubs"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("clubs"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
                 .andExpect(model().attribute("clubs", List.of(
-                        new ClubData(1L, "club1", true),
-                        new ClubData(2L, "club2", false))));
+                        new ClubData(1L, "club1", true, 1),
+                        new ClubData(2L, "club2", false, 2))));
     }
 
     @Test
@@ -71,15 +71,15 @@ class ClubControllerTest {
     void testGetAllActiveClubs() throws Exception {
         when(clubService.getAllActiveClubs())
                 .thenReturn(List.of(
-                        new ClubData(1L, "club1", true),
-                        new ClubData(2L, "club2", true)));
+                        new ClubData(1L, "club1", true, 1),
+                        new ClubData(2L, "club2", true, 2)));
         this.mockMvc.perform(get("/clubs/active"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("activeClubs"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
                 .andExpect(model().attribute("clubs", List.of(
-                        new ClubData(1L, "club1", true),
-                        new ClubData(2L, "club2", true))));
+                        new ClubData(1L, "club1", true, 1),
+                        new ClubData(2L, "club2", true, 2))));
     }
 
     @Test
@@ -87,7 +87,8 @@ class ClubControllerTest {
     void testPostCreateClubSuccess() throws Exception {
         CreateClubData createClubData = new CreateClubData();
         createClubData.setClubName("club1");
-        when(clubService.createClub("club1")).thenReturn(new ClubData(1L, "club1", true));
+        createClubData.setZps(1);
+        when(clubService.createClub("club1", 1)).thenReturn(new ClubData(1L, "club1", true, 1));
 
         this.mockMvc.perform(post("/club/create")
                         .with(csrf())
@@ -96,7 +97,7 @@ class ClubControllerTest {
                 .andExpect(view().name("clubCreated"))
                 .andExpect(model().attributeExists("navbarData"))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("club", new ClubData(1L, "club1", true)));
+                .andExpect(model().attribute("club", new ClubData(1L, "club1", true, 1)));
 
     }
 }

@@ -96,7 +96,7 @@ public class ClubController {
     public String createClub(@ModelAttribute CreateClubData createClubData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         try {
-            model.addAttribute("club", clubService.createClub(createClubData.getClubName()));
+            model.addAttribute("club", clubService.createClub(createClubData.getClubName(), createClubData.getZps()));
             model.addAttribute("state", "success");
         } catch (NameBlankException | ClubAlreadyExistsException ex ) {
             model.addAttribute("state", "failure");

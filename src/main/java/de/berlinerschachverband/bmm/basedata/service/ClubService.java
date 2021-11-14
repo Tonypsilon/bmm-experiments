@@ -69,7 +69,7 @@ public class ClubService {
      * @param clubName
      * @return
      */
-    public ClubData createClub(String clubName) {
+    public ClubData createClub(String clubName, Integer zps) {
         if(clubName.isBlank()) {
             throw new NameBlankException();
         }
@@ -79,6 +79,7 @@ public class ClubService {
         Club club = new Club();
         club.setName(clubName);
         club.setActive(true);
+        club.setZps(zps);
         clubRepository.saveAndFlush(club);
         return toClubData(getClub(clubName));
     }
@@ -106,6 +107,6 @@ public class ClubService {
     }
 
     public ClubData toClubData(Club club) {
-        return new ClubData(club.getId(), club.getName(), club.getActive());
+        return new ClubData(club.getId(), club.getName(), club.getActive(), club.getZps());
     }
 }

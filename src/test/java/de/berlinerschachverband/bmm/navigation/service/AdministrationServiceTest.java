@@ -23,7 +23,7 @@ class AdministrationServiceTest {
     @BeforeEach
     private void setUp() {
         administrationService = new AdministrationService(clubAdminService);
-        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L, "club", true)));
+        when(clubAdminService.findClubsByUsername("testuser")).thenReturn(List.of(new ClubData(1L, "club", true, 1)));
     }
 
     @Test

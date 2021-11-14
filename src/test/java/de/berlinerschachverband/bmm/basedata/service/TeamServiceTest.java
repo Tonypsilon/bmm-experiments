@@ -60,17 +60,17 @@ class TeamServiceTest {
     void testGetTeamsOfDivision() {
         Set<TeamData> expected = Set.of(
                 new TeamData(1L,
-                        new ClubData(1L, "club1", true),
+                        new ClubData(1L, "club1", true, 1),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
                         1),
                 new TeamData(2L,
-                        new ClubData(2L, "club2", true),
+                        new ClubData(2L, "club2", true, 2),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
                         1)
         );
         when(teamRepository.findByDivision_Id(1L)).thenReturn(Set.of(team1, team2));
-        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
-        when(clubService.toClubData(club2)).thenReturn(new ClubData(2L, "club2", true));
+        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true, 1));
+        when(clubService.toClubData(club2)).thenReturn(new ClubData(2L, "club2", true, 2));
         when(divisionService.toDivisionData(division)).thenReturn(new DivisionData(1L, "division1", 1, 8, season1));
 
         assertEquals(expected, teamService.getTeamsOfDivision(new DivisionData(1L, "division1", 1, 8, season1)));
@@ -78,17 +78,17 @@ class TeamServiceTest {
 
     @Test
     void testGetTeamsOfClub() {
-        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true));
+        when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true, 1));
         when(teamRepository.findByClub_NameAndDivisionIsNull("club1")).thenReturn(Set.of(team1, team3));
         when(divisionService.toDivisionData(division)).thenReturn(new DivisionData(1L, "division1", 1, 8, season1));
 
         assertEquals(List.of(
                 new TeamData(1L,
-                        new ClubData(1L, "club1", true),
+                        new ClubData(1L, "club1", true, 1),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
                         1),
                 new TeamData(3L,
-                        new ClubData(1L, "club1", true),
+                        new ClubData(1L, "club1", true, 1),
                         Optional.empty(),
                         2)
                 ),

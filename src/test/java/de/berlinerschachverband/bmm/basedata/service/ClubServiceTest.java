@@ -22,7 +22,7 @@ class ClubServiceTest {
     private final ClubRepository clubRepository = mock(ClubRepository.class);
     private ClubService clubService;
     private Club club1, club2;
-    private Club club3 = mock(Club.class);
+    private final Club club3 = mock(Club.class);
 
     @BeforeEach
     private void setUp() {
@@ -31,18 +31,20 @@ class ClubServiceTest {
         club1.setId(1L);
         club1.setName("club1");
         club1.setActive(true);
+        club1.setZps(1);
         club2 = new Club();
         club2.setId(2L);
         club2.setName("club2");
         club2.setActive(false);
+        club2.setZps(2);
     }
 
     @Test
     void testGetAllClubs() {
         when(clubRepository.findAll()).thenReturn(List.of(club2, club1));
         assertEquals(List.of(
-                new ClubData(1L, "club1", true),
-                new ClubData(2L, "club2", false)
+                new ClubData(1L, "club1", true, 1),
+                new ClubData(2L, "club2", false, 2)
                 ),
                 clubService.getAllClubs());
     }
@@ -50,7 +52,7 @@ class ClubServiceTest {
     @Test
     void testGetAllActiveClubs() {
         when(clubRepository.findByActiveTrue()).thenReturn(List.of(club1));
-        assertEquals(List.of(new ClubData(1L, "club1", true)),
+        assertEquals(List.of(new ClubData(1L, "club1", true, 1)),
                 clubService.getAllActiveClubs());
     }
 
@@ -73,16 +75,16 @@ class ClubServiceTest {
 
     @Test
     void testCreateClub() {
-        assertThrows(NameBlankException.class, () -> clubService.createClub(""));
+        assertThrows(NameBlankException.class, () -> clubService.createClub("",3));
 
         when(clubRepository.findByName("club1")).thenReturn(Optional.of(club1));
         when(clubRepository.findByName("club2"))
                 .thenReturn(Optional.empty())
                 .thenReturn(Optional.of(club2));
 
-        BmmException exception = assertThrows(ClubAlreadyExistsException.class, () -> clubService.createClub("club1"));
+        BmmException exception = assertThrows(ClubAlreadyExistsException.class, () -> clubService.createClub("club1", 1));
         assertEquals("club1", exception.getMessage());
-        assertEquals(new ClubData(2L, "club2", false), clubService.createClub("club2"));
+        assertEquals(new ClubData(2L, "club2", false, 2), clubService.createClub("club2", 2));
     }
 
     @Test
