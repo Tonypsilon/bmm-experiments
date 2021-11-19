@@ -12,11 +12,8 @@ public class AvailablePlayer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "zps",
-            foreignKey = @ForeignKey(name = "AVAILABLE_PLAYER_ZPS_FK"),
-            nullable = false)
-    private Club club;
+    @Column(nullable = false)
+    private Integer zps;
 
     @Column(nullable = false)
     private Integer memberNumber;
@@ -25,7 +22,10 @@ public class AvailablePlayer {
     private Character active;
 
     @Column(nullable = false)
-    private String name;
+    private java.lang.String fullName;
+
+    @Column(nullable = false)
+    private java.lang.String surname;
 
     @Column(nullable = false)
     private Integer birthYear;
@@ -37,7 +37,7 @@ public class AvailablePlayer {
     private Integer elo;
 
     @Column
-    private String title;
+    private java.lang.String title;
 
     @NonNull
     public Long getId() {
@@ -49,12 +49,12 @@ public class AvailablePlayer {
     }
 
     @NonNull
-    public Club getClub() {
-        return club;
+    public Integer getZps() {
+        return zps;
     }
 
-    public void setClub(@NonNull Club club) {
-        this.club = club;
+    public void setZps(@NonNull Integer zps) {
+        this.zps = zps;
     }
 
     @NonNull
@@ -76,12 +76,21 @@ public class AvailablePlayer {
     }
 
     @NonNull
-    public String getName() {
-        return name;
+    public java.lang.String getFullName() {
+        return fullName;
     }
 
-    public void setName(@NonNull String name) {
-        this.name = name;
+    public void setFullName(@NonNull java.lang.String name) {
+        this.fullName = name;
+    }
+
+    @NonNull
+    public java.lang.String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(@NonNull java.lang.String surname) {
+        this.surname = surname;
     }
 
     @NonNull
@@ -109,11 +118,11 @@ public class AvailablePlayer {
         this.elo = elo;
     }
 
-    public Optional<String> getTitle() {
+    public Optional<java.lang.String> getTitle() {
         return Optional.ofNullable(title);
     }
 
-    public void setTitle(String title) {
+    public void setTitle(java.lang.String title) {
         this.title = title;
     }
 }
