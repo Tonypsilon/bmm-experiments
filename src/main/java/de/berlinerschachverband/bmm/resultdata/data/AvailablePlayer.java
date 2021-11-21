@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.basedata.data;
+package de.berlinerschachverband.bmm.resultdata.data;
 
 import org.springframework.lang.NonNull;
 
@@ -22,10 +22,10 @@ public class AvailablePlayer {
     private Character active;
 
     @Column(nullable = false)
-    private java.lang.String fullName;
+    private String fullName;
 
     @Column(nullable = false)
-    private java.lang.String surname;
+    private String surname;
 
     @Column(nullable = false)
     private Integer birthYear;
@@ -37,7 +37,7 @@ public class AvailablePlayer {
     private Integer elo;
 
     @Column
-    private java.lang.String title;
+    private String title;
 
     @NonNull
     public Long getId() {

@@ -4,6 +4,7 @@ import de.berlinerschachverband.bmm.basedata.data.Team;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class Player {
@@ -13,7 +14,10 @@ public class Player {
     private Long id;
 
     @Column(unique = false, nullable = false)
-    private String name;
+    private String fullName;
+
+    @Column(unique = false, nullable = false)
+    private String surname;
 
     @Column(nullable = true)
     private String fideId;
@@ -25,7 +29,22 @@ public class Player {
     private Team team;
 
     @Column(unique = false, nullable = false)
-    private Integer number;
+    private Integer boardNumber;
+
+    @Column(unique = false, nullable = true)
+    private Integer dwz;
+
+    @Column(unique = false, nullable = true)
+    private Integer elo;
+
+    @Column(unique = false, nullable = true)
+    private String title;
+
+    @Column(unique = false, nullable = false)
+    private Integer zps;
+
+    @Column(unique = false, nullable = false)
+    private Integer memberNumber;
 
     public Long getId() {
         return id;
@@ -36,12 +55,21 @@ public class Player {
     }
 
     @NonNull
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setName(@NonNull String name) {
-        this.name = name;
+    public void setFullName(@NonNull String name) {
+        this.fullName = name;
+    }
+
+    @NonNull
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(@NonNull String surname) {
+        this.surname = surname;
     }
 
     public String getFideId() {
@@ -62,11 +90,53 @@ public class Player {
     }
 
     @NonNull
-    public Integer getNumber() {
-        return number;
+    public Integer getBoardNumber() {
+        return boardNumber;
     }
 
-    public void setNumber(@NonNull Integer number) {
-        this.number = number;
+    public void setBoardNumber(@NonNull Integer number) {
+        this.boardNumber = number;
+    }
+
+    public Optional<Integer> getDwz() {
+        return Optional.ofNullable(dwz);
+    }
+
+    public void setDwz(Integer dwz) {
+        this.dwz = dwz;
+    }
+
+    public Optional<Integer> getElo() {
+        return Optional.ofNullable(elo);
+    }
+
+    public void setElo(Integer elo) {
+        this.elo = elo;
+    }
+
+    public Optional<String> getTitle() {
+        return Optional.ofNullable(title);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @NonNull
+    public Integer getZps() {
+        return zps;
+    }
+
+    public void setZps(@NonNull Integer zps) {
+        this.zps = zps;
+    }
+
+    @NonNull
+    public Integer getMemberNumber() {
+        return memberNumber;
+    }
+
+    public void setMemberNumber(@NonNull Integer memberNumber) {
+        this.memberNumber = memberNumber;
     }
 }

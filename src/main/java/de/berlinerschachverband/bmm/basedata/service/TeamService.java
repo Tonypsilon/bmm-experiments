@@ -5,12 +5,11 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
+import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +40,13 @@ public class TeamService {
                 .stream()
                 .map(this::toTeamData)
                 .collect(Collectors.toSet());
+    }
+
+    public Team getTeamById(Long id) {
+        return teamRepository.findById(id).orElseThrow(
+                () -> {
+                   throw new TeamNotFoundException(id);
+                });
     }
 
     /**
@@ -119,6 +125,19 @@ public class TeamService {
                         teamRepository.flush();
                     });
         }
+    }
+
+    @NonNull
+    public Boolean isLastTeam(Long teamId) {
+        Team team = getTeamById(teamId);
+        Club club = team.getClub();
+        Collection<TeamData> allTeamsOfClub = getTeamsOfClub(club.getName());
+        Integer highestTeamNumber = allTeamsOfClub
+                .stream()
+                .map(TeamData::number)
+                .reduce(Integer::max)
+                .orElseThrow(); // should never happen as the originally provided team must always be part of the stream.
+        return highestTeamNumber.equals(team.getNumber());
     }
 
     /**
