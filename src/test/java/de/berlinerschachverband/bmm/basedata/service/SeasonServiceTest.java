@@ -30,9 +30,11 @@ class SeasonServiceTest {
         season1 = new Season();
         season1.setId(1L);
         season1.setName("zeason1"); // test alphabetical sorting as well
+        season1.setArchived(false);
         season2 = new Season();
         season2.setId(2L);
         season2.setName("season2");
+        season2.setArchived(false);
     }
 
     @Test
@@ -40,8 +42,8 @@ class SeasonServiceTest {
         when(seasonRepository.findAll()).thenReturn(List.of(season1, season2));
         List<SeasonData> actualGetAllSeasons = seasonService.getAllSeasons();
         assertEquals(actualGetAllSeasons,
-                List.of(new SeasonData(season2.getId(), season2.getName()),
-                        new SeasonData(season1.getId(), season1.getName())));
+                List.of(new SeasonData(season2.getId(), season2.getName(), season2.getArchived()),
+                        new SeasonData(season1.getId(), season1.getName(), season1.getArchived())));
         List<String> actualGetSeasonNames = seasonService.getSeasonNames();
         assertEquals(actualGetSeasonNames, List.of("season2", "zeason1"));
     }
@@ -64,7 +66,7 @@ class SeasonServiceTest {
         BmmException exception = assertThrows(SeasonAlreadyExistsException.class, () -> seasonService.createSeason("zeason1"));
         assertEquals(exception.getMessage(), "zeason1");
 
-        assertEquals(seasonService.createSeason("season2"), new SeasonData(season2.getId(), season2.getName()));
+        assertEquals(seasonService.createSeason("season2"), new SeasonData(season2.getId(), season2.getName(), season2.getArchived()));
 
         assertThrows(NameBlankException.class, () -> seasonService.createSeason(""));
     }

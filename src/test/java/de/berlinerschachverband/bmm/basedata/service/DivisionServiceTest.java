@@ -34,6 +34,7 @@ class DivisionServiceTest {
         season = new Season();
         season.setId(1L);
         season.setName("season");
+        season.setArchived(false);
         division1 = new Division();
         division1.setId(1L);
         division1.setLevel(1);
@@ -71,12 +72,12 @@ class DivisionServiceTest {
         when(divisionRepository.findBySeason_Id(1L)).thenReturn(
                 List.of(division1, division2a)
         );
-        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(1L, "season"));
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(1L, "season", false));
         assertEquals(Set.of(
-                new DivisionData(1L, "division1", 1, 6, new SeasonData(1L, "season")),
-                new DivisionData(2L, "tivision2a", 2, 8, new SeasonData(1L, "season"))
+                new DivisionData(1L, "division1", 1, 6, new SeasonData(1L, "season", false)),
+                new DivisionData(2L, "tivision2a", 2, 8, new SeasonData(1L, "season", false))
         ),
-                divisionService.getDivisionsOfSeason(new SeasonData(1L, "season")));
+                divisionService.getDivisionsOfSeason(new SeasonData(1L, "season", false)));
     }
 
     @Test
@@ -109,7 +110,7 @@ class DivisionServiceTest {
         when(divisionRepository.findByNameAndSeason_Name("tivision2a", "season"))
                 .thenReturn(Optional.empty(), Optional.of(division2a));
         when(seasonService.getSeason("season")).thenReturn(season);
-        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName(), season.getArchived()));
 
         BmmException exception = assertThrows(DivisionAlreadyExistsException.class,
                 () -> divisionService.createDivision(createDivisionData1));
@@ -119,18 +120,18 @@ class DivisionServiceTest {
                         division2a.getName(),
                         division2a.getLevel(),
                         division2a.getNumberOfBoards(),
-                        new SeasonData(division2a.getSeason().getId(), division2a.getSeason().getName())),
+                        new SeasonData(division2a.getSeason().getId(), division2a.getSeason().getName(), season.getArchived())),
                 divisionService.createDivision(createDivisionData2));
     }
 
     @Test
     void testToDivisionData() {
-        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName(), season.getArchived()));
         DivisionData actual = divisionService.toDivisionData(division1);
         assertEquals(actual.id(), division1.getId());
         assertEquals(actual.name(), division1.getName());
         assertEquals(actual.numberOfBoards(), division1.getNumberOfBoards());
-        assertEquals(actual.season(), new SeasonData(season.getId(), season.getName()));
+        assertEquals(actual.season(), new SeasonData(season.getId(), season.getName(), season.getArchived()));
     }
 
 }

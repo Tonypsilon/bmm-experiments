@@ -57,15 +57,16 @@ class SeasonControllerTest {
         Season season = new Season();
         season.setId(1L);
         season.setName("testSeason");
+        season.setArchived(false);
         when(seasonService.getSeason("testSeason")).thenReturn(season);
-        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName()));
+        when(seasonService.toSeasonData(season)).thenReturn(new SeasonData(season.getId(), season.getName(), season.getArchived()));
         when(divisionService.getDivisionsOfSeasonByLevel("testSeason")).thenReturn(divisions);
 
         this.mockMvc.perform(get("/season/testSeason"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("season"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
-                .andExpect(model().attribute("season", new SeasonData(1L, "testSeason")))
+                .andExpect(model().attribute("season", new SeasonData(1L, "testSeason", false)))
                 .andExpect(model().attribute("divisions", divisions));
     }
 
@@ -84,7 +85,7 @@ class SeasonControllerTest {
     void testPostCreateSeasonSuccess() throws Exception {
         CreateSeasonData createSeasonData = new CreateSeasonData();
         createSeasonData.setSeasonName("testSeason");
-        when(seasonService.createSeason("testSeason")).thenReturn(new SeasonData(1L, "testSeason"));
+        when(seasonService.createSeason("testSeason")).thenReturn(new SeasonData(1L, "testSeason", false));
 
         this.mockMvc.perform(post("/administration/createSeason")
                         .with(csrf())
@@ -93,7 +94,7 @@ class SeasonControllerTest {
                 .andExpect(view().name("seasonCreated"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("testSeason", "testSeason2"))))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("season", new SeasonData(1L, "testSeason")));
+                .andExpect(model().attribute("season", new SeasonData(1L, "testSeason", false)));
     }
 
     @Test

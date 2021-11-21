@@ -14,6 +14,9 @@ public class Season {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @Column(unique = false, nullable = false)
+    private Boolean archived;
+
     public Long getId() {
         return id;
     }
@@ -31,4 +34,12 @@ public class Season {
         this.name = name;
     }
 
+    @NonNull
+    public Boolean getArchived() {
+        return archived;
+    }
+
+    public void setArchived(@NonNull Boolean archived) {
+        this.archived = archived;
+    }
 }

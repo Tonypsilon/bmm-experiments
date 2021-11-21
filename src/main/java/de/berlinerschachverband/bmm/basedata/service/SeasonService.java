@@ -67,12 +67,13 @@ public class SeasonService {
         }
         Season season = new Season();
         season.setName(seasonName);
+        season.setArchived(false);
         seasonRepository.saveAndFlush(season);
         return toSeasonData(getSeason(seasonName));
     }
 
     public SeasonData toSeasonData(Season season) {
-        return new SeasonData(season.getId(), season.getName());
+        return new SeasonData(season.getId(), season.getName(), season.getArchived());
     }
 
 }

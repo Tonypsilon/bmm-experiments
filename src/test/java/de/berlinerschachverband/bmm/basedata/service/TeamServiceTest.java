@@ -27,7 +27,7 @@ class TeamServiceTest {
     @BeforeEach
     private void setUp() {
         teamService = new TeamService(teamRepository, divisionService, clubService);
-        season1 = new SeasonData(1L, "season1");
+        season1 = new SeasonData(1L, "season1", false);
         season = new Season();
         season.setName("season1");
         division = new Division();

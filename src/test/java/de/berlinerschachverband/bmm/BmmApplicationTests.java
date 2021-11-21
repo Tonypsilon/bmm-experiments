@@ -43,7 +43,7 @@ class BmmApplicationTests {
                 .andExpect(view().name("seasonCreated"))
                 .andExpect(model().attributeExists("navbarData"))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("season", new SeasonData(1L, "season1")));
+                .andExpect(model().attribute("season", new SeasonData(1L, "season1", false)));
 
         // Step 2: Create another season.
         createSeasonData.setSeasonName("season2");
@@ -54,7 +54,7 @@ class BmmApplicationTests {
                 .andExpect(view().name("seasonCreated"))
                 .andExpect(model().attributeExists("navbarData"))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("season", new SeasonData(2L, "season2")));
+                .andExpect(model().attribute("season", new SeasonData(2L, "season2", false)));
 
         // Step 3: Check the home page.
         this.mockMvc.perform(get("/home"))
@@ -76,7 +76,7 @@ class BmmApplicationTests {
                 .andExpect(view().name("divisionCreated"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
                 .andExpect(model().attribute("state", "success"))
-                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, 8, new SeasonData(1L,"season1"))));
+                .andExpect(model().attribute("division", new DivisionData(1L, "division1", 1, 8, new SeasonData(1L,"season1", false))));
 
         // Step 5: Check season1 for division.
         SortedSetMultimap<Integer, String> divisions = TreeMultimap.create();
@@ -86,7 +86,7 @@ class BmmApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name("season"))
                 .andExpect(model().attribute("navbarData", new NavbarData(List.of("season1", "season2"))))
-                .andExpect(model().attribute("season", new SeasonData(1L, "season1")))
+                .andExpect(model().attribute("season", new SeasonData(1L, "season1", false)))
                 .andExpect(model().attribute("divisions", divisions));
 
         // Step 6: Create a club.
