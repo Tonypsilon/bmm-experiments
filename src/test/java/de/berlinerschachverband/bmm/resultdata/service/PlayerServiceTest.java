@@ -3,14 +3,12 @@ package de.berlinerschachverband.bmm.resultdata.service;
 import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayer;
 import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
 import de.berlinerschachverband.bmm.resultdata.data.Player;
 import de.berlinerschachverband.bmm.resultdata.data.PlayerRepository;
 import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
