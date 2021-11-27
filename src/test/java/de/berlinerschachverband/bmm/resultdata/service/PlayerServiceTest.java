@@ -1,22 +1,21 @@
 package de.berlinerschachverband.bmm.resultdata.service;
 
-import de.berlinerschachverband.bmm.basedata.data.ClubData;
-import de.berlinerschachverband.bmm.basedata.data.Team;
-import de.berlinerschachverband.bmm.basedata.data.TeamData;
+import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayer;
 import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
+import de.berlinerschachverband.bmm.resultdata.data.Player;
 import de.berlinerschachverband.bmm.resultdata.data.PlayerRepository;
 import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PlayerServiceTest {
 
@@ -27,7 +26,8 @@ class PlayerServiceTest {
     private PlayerService playerService;
 
     private ClubData club;
-    AvailablePlayerData availablePlayerData;
+    private AvailablePlayerData availablePlayerData;
+    private Team team;
 
     @BeforeEach
     private void setUp() {
@@ -45,6 +45,8 @@ class PlayerServiceTest {
           Optional.empty(),
           Optional.empty()
         );
+        team = new Team();
+        team.setId(1L);
     }
 
     @Test
@@ -72,6 +74,49 @@ class PlayerServiceTest {
     }
 
     @Test
+    void testAssignPlayerToTeamAlreadyDivision() {
+        when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
+                .thenReturn(availablePlayerData);
+        team.setDivision(new Division());
+        when(teamService.getTeamById(1L)).thenReturn(team);
+
+        BmmException exception = assertThrows(BmmException.class,
+                () -> {
+            playerService.assignPlayerToTeam(
+                    new PlayerAssignmentData(1, 1, 1),
+                    new TeamData(1L,
+                            club,
+                            Optional.of(new DivisionData(
+                                    1L,
+                                    "division",
+                                    1,
+                                    8,
+                                    new SeasonData(1L, "season", false))),
+                            1)
+            );
+                });
+        assertEquals("Player can not be assigned to team that already is in a division.",exception.getMessage());
+    }
+
+    @Test
+    void testAssignPlayerToTeamNUmberAlreadyOnTeam() {
+        when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
+                .thenReturn(availablePlayerData);
+        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.of(new Player()));
+
+        BmmException exception = assertThrows(BmmException.class,
+                () -> {
+            playerService.assignPlayerToTeam(
+                    new PlayerAssignmentData(1, 1, 2),
+                    new TeamData(1L, club, Optional.empty(), 1)
+            );
+                });
+        assertEquals("Player with that number is already on the team.",
+                exception.getMessage());
+    }
+
+    @Test
     void testAssignPlayerToTeamGreater16NotLastTeam() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
@@ -87,6 +132,47 @@ class PlayerServiceTest {
                 });
         assertEquals("Only last team of club can have more than 16 members.",
                 exception.getMessage());
+    }
+
+    @Test
+    void testAssignPlayerToTeamNotInClub() {
+        when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
+                .thenReturn(availablePlayerData);
+        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
+
+        BmmException exception = assertThrows(BmmException.class,
+                () -> {
+                    playerService.assignPlayerToTeam(
+                            new PlayerAssignmentData(2, 1, 2),
+                            new TeamData(1L, club, Optional.empty(), 1)
+                    );
+                });
+        assertEquals("The player is not a member of the club.",
+                exception.getMessage());
+    }
+
+    @Test
+    void testAssignPlayerToTeamSuccess() {
+        when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
+                .thenReturn(availablePlayerData);
+        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
+
+        playerService.assignPlayerToTeam(
+                new PlayerAssignmentData(1,1,2),
+                new TeamData(1L, club, Optional.empty(), 1)
+        );
+        verify(playerRepository, times(1)).saveAndFlush(argThat(
+                player -> player.getZps().equals(1)
+        && player.getMemberNumber().equals(1)
+        && player.getFullName().equals("full name")
+        && player.getSurname().equals("name")
+        && player.getDwz().isPresent() && player.getDwz().get().equals(1234)
+        && player.getTeam().equals(team)
+        && player.getTitle().isEmpty()
+        && player.getElo().isEmpty()));
+
     }
 
 }

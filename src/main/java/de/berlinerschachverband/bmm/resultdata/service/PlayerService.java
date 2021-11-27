@@ -4,7 +4,6 @@ import de.berlinerschachverband.bmm.basedata.data.Team;
 import de.berlinerschachverband.bmm.basedata.data.TeamData;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayer;
 import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
 import de.berlinerschachverband.bmm.resultdata.data.Player;
 import de.berlinerschachverband.bmm.resultdata.data.PlayerRepository;
@@ -37,16 +36,16 @@ public class PlayerService {
                 playerAssignmentData.zps(), playerAssignmentData.memberNumber());
         Team team = teamService.getTeamById(teamData.id());
         if(team.getDivision().isPresent()) {
-            throw new BmmException("Player can not be assigned to team that already is in a division");
+            throw new BmmException("Player can not be assigned to team that already is in a division.");
         }
         if(Boolean.TRUE.equals(playerExistsByTeamIdAndNumber(teamData.id(), playerAssignmentData.boardNumber()))) {
-            throw new BmmException("Player with that number is already on team");
+            throw new BmmException("Player with that number is already on the team.");
         }
         if(playerAssignmentData.boardNumber() > 16 && Boolean.FALSE.equals(teamService.isLastTeam(teamData.id()))) {
             throw new BmmException("Only last team of club can have more than 16 members.");
         }
         if(!playerAssignmentData.zps().equals(teamData.clubData().zps())) {
-            throw new BmmException("Player is not member of the club");
+            throw new BmmException("The player is not a member of the club.");
         }
         Player player = new Player();
         player.setFullName(availablePlayerData.fullName());
