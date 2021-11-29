@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 
 /**
- * Match days are containers for matches basically, keeping track of round number and division
+ * Match days are containers for matches basically, keeping track of round boardNumber and division
  * that the matches belong to.
  */
 @Service
@@ -62,7 +62,7 @@ public class MatchDayService {
     }
 
     /**
-     * Given a division and a number of match days, create the match day entities. Fails if the division does not
+     * Given a division and a boardNumber of match days, create the match day entities. Fails if the division does not
      * exist or already has match days assigned. Does nothing if numberOfMatchDays is less than 1.
      * @param divisionData
      * @param numberOfMatchDays

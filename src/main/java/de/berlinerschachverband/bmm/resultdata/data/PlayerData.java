@@ -9,8 +9,10 @@ public record PlayerData(Long id,
                          String surname,
                          Optional<String> fideId,
                          TeamData team,
-                         Integer number,
+                         Integer boardNumber,
                          Optional<Integer> dwz,
                          Optional<Integer> elo,
-                         Optional<String> title) {
+                         Optional<String> title,
+                         Integer zps,
+                         Integer memberNumber) {
 }

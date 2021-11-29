@@ -55,7 +55,7 @@ class PlayerServiceTest {
                             new PlayerAssignmentData(1,1,0),
                             new TeamData(1L, club, Optional.empty(), 1));
                 });
-        assertEquals("board number < 1",
+        assertEquals("board boardNumber < 1",
                 exception.getMessage());
     }
 
@@ -67,7 +67,7 @@ class PlayerServiceTest {
                     new PlayerAssignmentData(1,1,33),
                     new TeamData(1L, club, Optional.empty(), 1));
                 });
-        assertEquals("board number > 32",
+        assertEquals("board boardNumber > 32",
                 exception.getMessage());
     }
 
@@ -110,7 +110,7 @@ class PlayerServiceTest {
                     new TeamData(1L, club, Optional.empty(), 1)
             );
                 });
-        assertEquals("Player with that number is already on the team.",
+        assertEquals("Player with that boardNumber is already on the team.",
                 exception.getMessage());
     }
 

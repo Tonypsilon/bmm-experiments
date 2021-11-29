@@ -6,9 +6,13 @@ import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
 import de.berlinerschachverband.bmm.resultdata.data.Player;
+import de.berlinerschachverband.bmm.resultdata.data.PlayerData;
 import de.berlinerschachverband.bmm.resultdata.data.PlayerRepository;
 import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
 import org.springframework.stereotype.Service;
+
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class PlayerService {
@@ -25,12 +29,20 @@ public class PlayerService {
         this.playerRepository = playerRepository;
     }
 
+    public List<PlayerData> getAllPlayersOfTeam(Long teamId) {
+        return playerRepository.findByTeam_Id(teamId)
+                .stream()
+                .map(this::toPlayerData)
+                .sorted(Comparator.comparing(PlayerData::boardNumber))
+                .toList();
+    }
+
     public void assignPlayerToTeam(PlayerAssignmentData playerAssignmentData, TeamData teamData) {
         if(playerAssignmentData.boardNumber() < 1) {
-            throw new BmmException("board number < 1");
+            throw new BmmException("board boardNumber < 1");
         }
         if(playerAssignmentData.boardNumber() > 32) {
-            throw new BmmException("board number > 32");
+            throw new BmmException("board boardNumber > 32");
         }
         AvailablePlayerData availablePlayerData = availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(
                 playerAssignmentData.zps(), playerAssignmentData.memberNumber());
@@ -39,7 +51,7 @@ public class PlayerService {
             throw new BmmException("Player can not be assigned to team that already is in a division.");
         }
         if(Boolean.TRUE.equals(playerExistsByTeamIdAndNumber(teamData.id(), playerAssignmentData.boardNumber()))) {
-            throw new BmmException("Player with that number is already on the team.");
+            throw new BmmException("Player with that boardNumber is already on the team.");
         }
         if(playerAssignmentData.boardNumber() > 16 && Boolean.FALSE.equals(teamService.isLastTeam(teamData.id()))) {
             throw new BmmException("Only last team of club can have more than 16 members.");
@@ -50,7 +62,6 @@ public class PlayerService {
         Player player = new Player();
         player.setFullName(availablePlayerData.fullName());
         player.setSurname(availablePlayerData.surname());
-        // TODO: Fide ID
         player.setTeam(team);
         player.setBoardNumber(playerAssignmentData.boardNumber());
         player.setDwz(availablePlayerData.dwz().orElse(null));
@@ -59,10 +70,26 @@ public class PlayerService {
         player.setZps(availablePlayerData.zps());
         player.setMemberNumber(availablePlayerData.memberNumber());
         playerRepository.saveAndFlush(player);
+        availablePlayerService.deleteAvailablePlayer(playerAssignmentData.zps(), playerAssignmentData.memberNumber());
     }
 
     public Boolean playerExistsByTeamIdAndNumber(Long teamId, Integer number) {
         return playerRepository.findByTeam_IdAndBoardNumber(teamId, number).isPresent();
+    }
+
+    public PlayerData toPlayerData(Player player) {
+        return new PlayerData(player.getId(),
+                player.getFullName(),
+                player.getSurname(),
+                player.getFideId(),
+                teamService.toTeamData(player.getTeam()),
+                player.getBoardNumber(),
+                player.getDwz(),
+                player.getElo(),
+                player.getTitle(),
+                player.getZps(),
+                player.getMemberNumber()
+        );
     }
 
 }

@@ -2,6 +2,7 @@ package de.berlinerschachverband.bmm.basedata.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
@@ -37,5 +38,22 @@ public class TeamController {
         model.addAttribute("club", clubService.getClub(clubName));
         model.addAttribute("teams", teamService.getTeamsOfClub(clubName));
         return "teamsOfClub";
+    }
+
+    @GetMapping(value = "club/{clubName}/teams/{teamNumber}/edit")
+    public String editTeamOfClub(@PathVariable final String clubName,
+                                 @PathVariable final Integer teamNumber,
+                                 final Model model) {
+        model.addAttribute("navbarData", navbarService.getNavbarData());
+        return "editTeam";
+    }
+
+    @PostMapping(value ="club/{clubName}/teams/{teamNumber}/edit")
+    public String editTeamOfClub(@PathVariable final String clubName,
+                                 @PathVariable final Integer teamNumber,
+                                 @ModelAttribute EditTeamData editTeamData,
+                                 final Model model) {
+        model.addAttribute("navbarData", navbarService.getNavbarData());
+        return "editedTeam";
     }
 }

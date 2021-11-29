@@ -4,8 +4,14 @@ import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
+import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
+import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
+import de.berlinerschachverband.bmm.resultdata.data.Player;
+import de.berlinerschachverband.bmm.resultdata.data.PlayerData;
+import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
+import de.berlinerschachverband.bmm.resultdata.service.PlayerService;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +57,7 @@ public class TeamService {
 
     /**
      * Gets all available teams (not having a division and hence a season yet)
-     * given the club name - ordered by team number.
+     * given the club name - ordered by team boardNumber.
      *
      * @param clubName
      * @return
@@ -64,7 +70,7 @@ public class TeamService {
     }
 
     /**
-     * Get the number of teams of a particular division.
+     * Get the boardNumber of teams of a particular division.
      *
      * @param divisionData
      * @return
@@ -74,9 +80,9 @@ public class TeamService {
     }
 
     /**
-     * Given the name of a club and a number, creates a team for that club with the
-     * given number, accordingly. Throws a TeamAlreadyExistsException if the club
-     * already has a team of the given number.
+     * Given the name of a club and a boardNumber, creates a team for that club with the
+     * given boardNumber, accordingly. Throws a TeamAlreadyExistsException if the club
+     * already has a team of the given boardNumber.
      *
      * @param createTeamData
      * @return
@@ -84,7 +90,7 @@ public class TeamService {
     private TeamData createTeam(CreateTeamData createTeamData) {
         if(teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
                 createTeamData.getClubName(), createTeamData.getNumber()).isPresent()) {
-            throw new TeamAlreadyExistsException("club: " + createTeamData.getClubName() + ", number: "
+            throw new TeamAlreadyExistsException("club: " + createTeamData.getClubName() + ", boardNumber: "
             + createTeamData.getNumber());
         }
         Team team = new Team();
@@ -97,7 +103,7 @@ public class TeamService {
     }
 
     /**
-     * Given the name of a club and a number, add this many teams for the club.
+     * Given the name of a club and a boardNumber, add this many teams for the club.
      *
      * @param createTeamsData
      */

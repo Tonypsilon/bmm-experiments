@@ -72,8 +72,8 @@ public class Player {
         this.surname = surname;
     }
 
-    public String getFideId() {
-        return fideId;
+    public Optional<String> getFideId() {
+        return Optional.ofNullable(fideId);
     }
 
     public void setFideId(String fideId) {
