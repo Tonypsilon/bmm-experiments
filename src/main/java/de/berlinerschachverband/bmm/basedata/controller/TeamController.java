@@ -5,6 +5,7 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.basedata.service.TeamValidationService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
@@ -23,20 +24,23 @@ public class TeamController {
     private final NavbarService navbarService;
     private final TeamService teamService;
     private final ClubService clubService;
+    private final TeamValidationService teamValidationService;
 
     public TeamController(NavbarService navbarService,
                           TeamService teamService,
-                          ClubService clubService) {
+                          ClubService clubService,
+                          TeamValidationService teamValidationService) {
         this.navbarService = navbarService;
         this.teamService = teamService;
         this.clubService = clubService;
+        this.teamValidationService = teamValidationService;
     }
 
     @GetMapping(value = "club/{clubName}/teams")
     public String getTeamsOfClub(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         model.addAttribute("club", clubService.getClub(clubName));
-        model.addAttribute("teams", teamService.getTeamsOfClub(clubName));
+        model.addAttribute("teams", teamValidationService.getTeamsOfClubValidated(clubName));
         return "teamsOfClub";
     }
 

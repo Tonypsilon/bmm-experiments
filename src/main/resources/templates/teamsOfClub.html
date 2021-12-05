@@ -20,12 +20,21 @@
         <tr>
             <th scope="col">Nummer</th>
             <th scope="col">Name</th>
+            <th scope="col">OK</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="team : ${teams}">
-            <td th:text="${team.number}"></td>
-            <td th:text="${team.name()}"></td>
+            <td th:text="${team.teamData.number}"></td>
+            <td >
+                <a class="link-primary"
+                   th:href="@{/club/{clubName}/teams/{teamNumber}/edit
+                     (clubName=${team.teamData.clubData.name},
+                      teamNumber=${team.teamData.number})}"
+                   th:text="${team.teamData.name}"></a>
+            </td>
+            <td th:if="${team.isValid == true}">&#10060;</td>
+            <td th:if="${team.isValid == false}">&#9989;</td>
         </tr>
         </tbody>
     </table>

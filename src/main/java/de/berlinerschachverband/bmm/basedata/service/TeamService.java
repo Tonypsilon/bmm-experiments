@@ -18,6 +18,11 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Creation, deletion and modification for teams can only happen as long as
+ * they don't have a division assigned. After they have a division assigned,
+ * the number of teams may no longer change.
+ */
 @Service
 public class TeamService {
 
@@ -70,7 +75,7 @@ public class TeamService {
     }
 
     /**
-     * Get the boardNumber of teams of a particular division.
+     * Get the number of teams of a particular division.
      *
      * @param divisionData
      * @return
@@ -80,30 +85,7 @@ public class TeamService {
     }
 
     /**
-     * Given the name of a club and a boardNumber, creates a team for that club with the
-     * given boardNumber, accordingly. Throws a TeamAlreadyExistsException if the club
-     * already has a team of the given boardNumber.
-     *
-     * @param createTeamData
-     * @return
-     */
-    private TeamData createTeam(CreateTeamData createTeamData) {
-        if(teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
-                createTeamData.getClubName(), createTeamData.getNumber()).isPresent()) {
-            throw new TeamAlreadyExistsException("club: " + createTeamData.getClubName() + ", boardNumber: "
-            + createTeamData.getNumber());
-        }
-        Team team = new Team();
-        team.setClub(clubService.getClub(createTeamData.getClubName()));
-        team.setNumber(createTeamData.getNumber());
-        teamRepository.saveAndFlush(team);
-        return toTeamData(teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
-                createTeamData.getClubName(), createTeamData.getNumber()
-        ).get());
-    }
-
-    /**
-     * Given the name of a club and a boardNumber, add this many teams for the club.
+     * Given the name of a club and a number, add this many teams for the club.
      *
      * @param createTeamsData
      */
@@ -117,6 +99,11 @@ public class TeamService {
         }
     }
 
+    /**
+     * Given a club and a number, removes this many teams for the club.
+     *
+     * @param removeTeamsData
+     */
     public void removeTeams(RemoveTeamsData removeTeamsData) {
         int currentNumberOfTeams = teamRepository.findByClub_NameAndDivisionIsNull(removeTeamsData.getClubName()).size();
         for(int teamNumber = currentNumberOfTeams;
