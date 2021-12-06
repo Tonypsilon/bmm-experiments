@@ -1,8 +1,7 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.ValidatedTeamData;
-import de.berlinerschachverband.bmm.resultdata.data.PlayerData;
-import de.berlinerschachverband.bmm.resultdata.service.PlayerService;
+import de.berlinerschachverband.bmm.basedata.data.PlayerData;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 

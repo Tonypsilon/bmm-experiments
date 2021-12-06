@@ -1,17 +1,9 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
-import de.berlinerschachverband.bmm.exceptions.BmmException;
-import de.berlinerschachverband.bmm.exceptions.TeamAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
-import de.berlinerschachverband.bmm.resultdata.data.Player;
-import de.berlinerschachverband.bmm.resultdata.data.PlayerData;
-import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
-import de.berlinerschachverband.bmm.resultdata.service.PlayerService;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 

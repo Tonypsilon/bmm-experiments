@@ -1,9 +1,9 @@
-package de.berlinerschachverband.bmm.resultdata.service;
+package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.exceptions.AvailablePlayerNotFoundException;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayer;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerRepository;
+import de.berlinerschachverband.bmm.basedata.data.AvailablePlayer;
+import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerData;
+import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerRepository;
 import org.springframework.stereotype.Service;
 
 @Service

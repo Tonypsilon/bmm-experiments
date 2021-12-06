@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.resultdata.data;
+package de.berlinerschachverband.bmm.basedata.data;
 
 import de.berlinerschachverband.bmm.basedata.data.Team;
 import org.springframework.lang.NonNull;

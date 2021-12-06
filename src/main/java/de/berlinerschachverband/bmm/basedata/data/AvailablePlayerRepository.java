@@ -1,4 +1,4 @@
-package de.berlinerschachverband.bmm.resultdata.data;
+package de.berlinerschachverband.bmm.basedata.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

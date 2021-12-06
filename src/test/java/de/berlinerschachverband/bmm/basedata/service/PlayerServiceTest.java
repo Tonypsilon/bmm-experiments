@@ -1,12 +1,14 @@
-package de.berlinerschachverband.bmm.resultdata.service;
+package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
+import de.berlinerschachverband.bmm.basedata.service.AvailablePlayerService;
+import de.berlinerschachverband.bmm.basedata.service.PlayerService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
-import de.berlinerschachverband.bmm.resultdata.data.AvailablePlayerData;
-import de.berlinerschachverband.bmm.resultdata.data.Player;
-import de.berlinerschachverband.bmm.resultdata.data.PlayerRepository;
-import de.berlinerschachverband.bmm.resultdata.data.thymeleaf.PlayerAssignmentData;
+import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerData;
+import de.berlinerschachverband.bmm.basedata.data.Player;
+import de.berlinerschachverband.bmm.basedata.data.PlayerRepository;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.PlayerAssignmentData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
