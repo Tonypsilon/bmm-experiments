@@ -45,7 +45,7 @@ public class ClubController {
         return "clubs";
     }
 
-
+    @RolesAllowed({Roles.ADMINISTRATOR})
     @GetMapping(value = "/clubs/active")
     public String getActiveClubs(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
@@ -108,7 +108,7 @@ public class ClubController {
     @GetMapping(value = "club/{clubName}/createTeams")
     public String createTeams(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        validateClubAdminHasClubAccess(clubName);
+        clubAdminService.validateClubAdminHasClubAccess(clubName);
         model.addAttribute("createTeamsData", new CreateTeamsData());
         model.addAttribute("club", clubName);
         return "createTeams";
@@ -120,7 +120,7 @@ public class ClubController {
                               @PathVariable final String clubName,
                               final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        validateClubAdminHasClubAccess(clubName);
+        clubAdminService.validateClubAdminHasClubAccess(clubName);
         try {
             createTeamsData.setClubName(clubName);
             teamService.createTeams(createTeamsData);
@@ -135,7 +135,7 @@ public class ClubController {
     @GetMapping(value = "club/{clubName}/removeTeams")
     public String removeTeams(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        validateClubAdminHasClubAccess(clubName);
+        clubAdminService.validateClubAdminHasClubAccess(clubName);
         model.addAttribute("removeTeamsData", new RemoveTeamsData());
         model.addAttribute("club", clubName);
         return "removeTeams";
@@ -147,7 +147,7 @@ public class ClubController {
                               @PathVariable final String clubName,
                               final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        validateClubAdminHasClubAccess(clubName);
+        clubAdminService.validateClubAdminHasClubAccess(clubName);
         try {
             removeTeamsData.setClubName(clubName);
             teamService.removeTeams(removeTeamsData);
@@ -156,18 +156,6 @@ public class ClubController {
             model.addAttribute("state", "failure");
         }
         return "teamsRemoved";
-    }
-
-
-    private void validateClubAdminHasClubAccess(String clubName) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        if(!clubAdminService.findClubsByUsername(username)
-                .stream()
-                .map(ClubData::name)
-                .toList()
-                .contains(clubName)) {
-            throw new AccessDeniedException("User %s is no clubAdmin for club %s".formatted(username, clubName));
-        }
     }
 
 }

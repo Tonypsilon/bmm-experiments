@@ -67,7 +67,7 @@ class ClubControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testGetAllActiveClubs() throws Exception {
         when(clubService.getAllActiveClubs())
                 .thenReturn(List.of(

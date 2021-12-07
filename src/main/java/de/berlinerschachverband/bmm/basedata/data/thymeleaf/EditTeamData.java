@@ -8,6 +8,14 @@ public class EditTeamData {
 
     private List<AddPlayerData> teamPlayers;
 
+    private String clubName;
+
+    private Integer teamNumber;
+
+    private Integer numberOfBoards;
+
+    private Boolean isLastTeam;
+
     public List<AddPlayerData> getAvailablePlayers() {
         return availablePlayers;
     }
@@ -26,5 +34,37 @@ public class EditTeamData {
 
     public void addTeamPlayer(AddPlayerData addPlayerData) {
         teamPlayers.add(addPlayerData);
+    }
+
+    public void setClubName(String clubName) {
+        this.clubName = clubName;
+    }
+
+    public String getClubName() {
+        return clubName;
+    }
+
+    public void setTeamNumber(Integer teamNumber) {
+        this.teamNumber = teamNumber;
+    }
+
+    public Integer getTeamNumber() {
+        return teamNumber;
+    }
+
+    public void setNumberOfBoards(Integer numberOfBoards) {
+        this.numberOfBoards = numberOfBoards;
+    }
+
+    public Integer getNumberOfBoards() {
+        return numberOfBoards;
+    }
+
+    public void setLastTeam(Boolean lastTeam) {
+        isLastTeam = lastTeam;
+    }
+
+    public Boolean getLastTeam() {
+        return isLastTeam;
     }
 }

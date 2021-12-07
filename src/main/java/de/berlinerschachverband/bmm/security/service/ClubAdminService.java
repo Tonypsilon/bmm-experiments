@@ -4,6 +4,8 @@ import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.security.data.ClubAdmin;
 import de.berlinerschachverband.bmm.security.data.ClubAdminRepository;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -34,5 +36,22 @@ public class ClubAdminService {
                 .map(clubService::toClubData)
                 .sorted(Comparator.comparing(ClubData::name))
                 .toList();
+    }
+
+    /**
+     * Call this from within a request to check if a user, given by name, is
+     * assigned to a club in the clubAdmin table.
+     * Does nothing if access is okay, throws an AccessDeniedException else.
+     * @param clubName
+     */
+    public void validateClubAdminHasClubAccess(String clubName) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!findClubsByUsername(username)
+                .stream()
+                .map(ClubData::name)
+                .toList()
+                .contains(clubName)) {
+            throw new AccessDeniedException("User %s is no clubAdmin for club %s".formatted(username, clubName));
+        }
     }
 }
