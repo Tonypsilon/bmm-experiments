@@ -2,12 +2,12 @@ package de.berlinerschachverband.bmm.basedata.controller;
 
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
+import de.berlinerschachverband.bmm.basedata.service.EditTeamService;
 import de.berlinerschachverband.bmm.basedata.service.TeamService;
 import de.berlinerschachverband.bmm.basedata.service.TeamValidationService;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
 import de.berlinerschachverband.bmm.security.service.ClubAdminService;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,17 +25,20 @@ public class TeamController {
     private final TeamService teamService;
     private final ClubService clubService;
     private final TeamValidationService teamValidationService;
+    private final EditTeamService editTeamService;
     private final ClubAdminService clubAdminService;
 
     public TeamController(NavbarService navbarService,
                           TeamService teamService,
                           ClubService clubService,
                           TeamValidationService teamValidationService,
+                          EditTeamService editTeamService,
                           ClubAdminService clubAdminService) {
         this.navbarService = navbarService;
         this.teamService = teamService;
         this.clubService = clubService;
         this.teamValidationService = teamValidationService;
+        this.editTeamService = editTeamService;
         this.clubAdminService = clubAdminService;
     }
 
@@ -56,7 +59,7 @@ public class TeamController {
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
-        model.addAttribute("editTeamData", new EditTeamData());//teamService.getTeamForEditing(clubName, teamNumber));
+        model.addAttribute("editTeamData", editTeamService.getTeamForEditing(clubName, teamNumber));
         return "editTeam";
     }
 

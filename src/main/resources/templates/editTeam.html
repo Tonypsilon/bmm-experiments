@@ -24,13 +24,13 @@
                      (clubName=${editTeamData.clubName},
                       teamNumber=${editTeamData.teamNumber})}" th:object="${editTeamData}" method="post">
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="radio8boards" id="radio8boards" th:field="*{numberOfBoards}" th:value="8" checked>
+      <input class="form-check-input" type="radio" name="radio8boards" id="radio8boards" checked th:field="*{numberOfBoards}" th:value="8">
       <label class="form-check-label" for="radio8boards">
         Mannschaft spielt an 8 Brettern.
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="radio" name="radio6boards" id="radio6boards" th:field="*{numberOfBoards}" th:value="8">
+      <input class="form-check-input" type="radio" name="radio6boards" id="radio6boards" th:field="*{numberOfBoards}" th:value="6">
       <label class="form-check-label" for="radio6boards">
         Mannschaft spielt an 6 Brettern.
       </label>

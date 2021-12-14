@@ -2,6 +2,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
 import org.springframework.lang.NonNull;
@@ -124,8 +125,6 @@ public class TeamService {
                 .orElseThrow(); // should never happen as the originally provided team must always be part of the stream.
         return highestTeamNumber.equals(team.getNumber());
     }
-
-
 
     /**
      * Convert a Team to TeamData.
