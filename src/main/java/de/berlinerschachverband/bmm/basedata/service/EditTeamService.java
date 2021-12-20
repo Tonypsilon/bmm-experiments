@@ -1,7 +1,9 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
+import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerData;
 import de.berlinerschachverband.bmm.basedata.data.PlayerData;
 import de.berlinerschachverband.bmm.basedata.data.TeamData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.AddPlayerData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
 import org.springframework.stereotype.Service;
@@ -29,5 +31,15 @@ public class EditTeamService {
         editTeamData.setClubName(clubName);
         editTeamData.setTeamNumber(teamNumber);
         return editTeamData;
+    }
+
+    private AddPlayerData toAddPlayerData(AvailablePlayerData availablePlayerData) {
+        AddPlayerData addPlayerData = new AddPlayerData();
+        addPlayerData.setZps(availablePlayerData.zps());
+        addPlayerData.setMemberNumber(availablePlayerData.memberNumber());
+        addPlayerData.setFullName(availablePlayerData.fullName());
+        addPlayerData.setSurname(addPlayerData.getSurname());
+        addPlayerData.setDwz(addPlayerData.getDwz().orElse(0));
+        return addPlayerData;
     }
 }

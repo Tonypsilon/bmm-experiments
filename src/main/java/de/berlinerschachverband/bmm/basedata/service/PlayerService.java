@@ -52,6 +52,9 @@ public class PlayerService {
         if(Boolean.TRUE.equals(playerExistsByTeamIdAndNumber(teamData.id(), playerAssignmentData.boardNumber()))) {
             throw new BmmException("Player with that boardNumber is already on the team.");
         }
+        if (Boolean.TRUE.equals(playerExistsByZpsAndNumber(playerAssignmentData.zps(), playerAssignmentData.memberNumber()))) {
+            throw new BmmException("This player is already on a team.");
+        }
         if(playerAssignmentData.boardNumber() > 16 && Boolean.FALSE.equals(teamService.isLastTeam(teamData.id()))) {
             throw new BmmException("Only last team of club can have more than 16 members.");
         }
@@ -69,11 +72,14 @@ public class PlayerService {
         player.setZps(availablePlayerData.zps());
         player.setMemberNumber(availablePlayerData.memberNumber());
         playerRepository.saveAndFlush(player);
-        availablePlayerService.deleteAvailablePlayer(playerAssignmentData.zps(), playerAssignmentData.memberNumber());
     }
 
-    public Boolean playerExistsByTeamIdAndNumber(Long teamId, Integer number) {
+    private Boolean playerExistsByTeamIdAndNumber(Long teamId, Integer number) {
         return playerRepository.findByTeam_IdAndBoardNumber(teamId, number).isPresent();
+    }
+
+    private Boolean playerExistsByZpsAndNumber(Integer zps, Integer memberNumber) {
+        return playerRepository.findByZpsAndAndMemberNumber(zps, memberNumber).isPresent();
     }
 
     public PlayerData toPlayerData(Player player) {

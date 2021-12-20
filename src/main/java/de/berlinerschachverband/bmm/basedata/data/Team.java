@@ -4,6 +4,7 @@ import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 public class Team {
@@ -26,6 +27,12 @@ public class Team {
 
     @Column(unique = false, nullable = false)
     private Integer number;
+
+    @Column(unique = false, nullable = false)
+    private Integer numberOfBoards;
+
+    @OneToMany(mappedBy = "team")
+    private Set<Player> players;
 
     public Long getId() {
         return id;
@@ -57,8 +64,20 @@ public class Team {
         return number;
     }
 
+    public void setNumberOfBoards(Integer numberOfBoards) {
+        this.numberOfBoards = numberOfBoards;
+    }
+
+    public Integer getNumberOfBoards() {
+        return numberOfBoards;
+    }
+
     public void setNumber(@NonNull Integer number) {
         this.number = number;
+    }
+
+    public Set<Player> getPlayers() {
+        return players;
     }
 
 }

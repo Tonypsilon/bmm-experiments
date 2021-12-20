@@ -45,15 +45,18 @@ class TeamServiceTest {
         team1.setClub(club1);
         team1.setDivision(division);
         team1.setNumber(1);
+        team1.setNumberOfBoards(8);
         team2 = new Team();
         team2.setId(2L);
         team2.setClub(club2);
         team2.setDivision(division);
         team2.setNumber(1);
+        team2.setNumberOfBoards(8);
         team3 = new Team();
         team3.setId(3L);
         team3.setClub(club1);
         team3.setNumber(2);
+        team3.setNumberOfBoards(8);
     }
 
     @Test
@@ -62,11 +65,13 @@ class TeamServiceTest {
                 new TeamData(1L,
                         new ClubData(1L, "club1", true, 1),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
-                        1),
+                        1,
+                        8),
                 new TeamData(2L,
                         new ClubData(2L, "club2", true, 2),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
-                        1)
+                        1,
+                        8)
         );
         when(teamRepository.findByDivision_Id(1L)).thenReturn(Set.of(team1, team2));
         when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true, 1));
@@ -86,11 +91,13 @@ class TeamServiceTest {
                 new TeamData(1L,
                         new ClubData(1L, "club1", true, 1),
                         Optional.of(new DivisionData(1L, "division1", 1, 8, season1)),
-                        1),
+                        1,
+                        8),
                 new TeamData(3L,
                         new ClubData(1L, "club1", true, 1),
                         Optional.empty(),
-                        2)
+                        2,
+                        8)
                 ),
                 teamService.getTeamsOfClub("club1"));
     }

@@ -52,7 +52,7 @@ class PlayerServiceTest {
                 () -> {
                     playerService.assignPlayerToTeam(
                             new PlayerAssignmentData(1,1,0),
-                            new TeamData(1L, club, Optional.empty(), 1));
+                            new TeamData(1L, club, Optional.empty(), 1, 8));
                 });
         assertEquals("board boardNumber < 1",
                 exception.getMessage());
@@ -64,7 +64,7 @@ class PlayerServiceTest {
                 () -> {
             playerService.assignPlayerToTeam(
                     new PlayerAssignmentData(1,1,33),
-                    new TeamData(1L, club, Optional.empty(), 1));
+                    new TeamData(1L, club, Optional.empty(), 1, 8));
                 });
         assertEquals("board boardNumber > 32",
                 exception.getMessage());
@@ -89,7 +89,8 @@ class PlayerServiceTest {
                                     1,
                                     8,
                                     new SeasonData(1L, "season", false))),
-                            1)
+                            1,
+                            8)
             );
                 });
         assertEquals("Player can not be assigned to team that already is in a division.",exception.getMessage());
@@ -106,7 +107,7 @@ class PlayerServiceTest {
                 () -> {
             playerService.assignPlayerToTeam(
                     new PlayerAssignmentData(1, 1, 2),
-                    new TeamData(1L, club, Optional.empty(), 1)
+                    new TeamData(1L, club, Optional.empty(), 1, 8)
             );
                 });
         assertEquals("Player with that boardNumber is already on the team.",
@@ -117,6 +118,7 @@ class PlayerServiceTest {
     void testAssignPlayerToTeamGreater16NotLastTeam() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
+        when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.empty());
         Team team = new Team();
         team.setId(1L);
         when(teamService.getTeamById(1L)).thenReturn(team);
@@ -124,7 +126,7 @@ class PlayerServiceTest {
                 () -> {
             playerService.assignPlayerToTeam(
                     new PlayerAssignmentData(1, 1,17),
-                    new TeamData(1L, club, Optional.empty(), 1)
+                    new TeamData(1L, club, Optional.empty(), 1, 8)
             );
                 });
         assertEquals("Only last team of club can have more than 16 members.",
@@ -137,15 +139,35 @@ class PlayerServiceTest {
                 .thenReturn(availablePlayerData);
         when(teamService.getTeamById(1L)).thenReturn(team);
         when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
+        when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.empty());
 
         BmmException exception = assertThrows(BmmException.class,
                 () -> {
                     playerService.assignPlayerToTeam(
                             new PlayerAssignmentData(2, 1, 2),
-                            new TeamData(1L, club, Optional.empty(), 1)
+                            new TeamData(1L, club, Optional.empty(), 1, 8)
                     );
                 });
         assertEquals("The player is not a member of the club.",
+                exception.getMessage());
+    }
+
+    @Test
+    void testAssignPlayerToTeamPlayerAlreadyAssigned() {
+        when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
+                .thenReturn(availablePlayerData);
+        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
+        when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.of(new Player()));
+
+        BmmException exception = assertThrows(BmmException.class,
+                () -> {
+                    playerService.assignPlayerToTeam(
+                            new PlayerAssignmentData(1, 1, 2),
+                            new TeamData(1L, club, Optional.empty(), 1, 8)
+                    );
+                });
+        assertEquals("This player is already on a team.",
                 exception.getMessage());
     }
 
@@ -158,7 +180,7 @@ class PlayerServiceTest {
 
         playerService.assignPlayerToTeam(
                 new PlayerAssignmentData(1,1,2),
-                new TeamData(1L, club, Optional.empty(), 1)
+                new TeamData(1L, club, Optional.empty(), 1, 8)
         );
         verify(playerRepository, times(1)).saveAndFlush(argThat(
                 player -> player.getZps().equals(1)

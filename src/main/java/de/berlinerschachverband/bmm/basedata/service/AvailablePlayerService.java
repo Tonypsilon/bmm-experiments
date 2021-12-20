@@ -6,6 +6,9 @@ import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerData;
 import de.berlinerschachverband.bmm.basedata.data.AvailablePlayerRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Service
 public class AvailablePlayerService {
 
@@ -20,6 +23,14 @@ public class AvailablePlayerService {
                 () -> {
                     throw new AvailablePlayerNotFoundException(zps, memberNumber);
                 }));
+    }
+
+    public List<AvailablePlayerData> getAvailablePlayersByZps(Integer zps) {
+        return availablePlayerRepository.findByZps(zps)
+                .stream()
+                .map(this::toAvailablePlayerData)
+                .sorted(Comparator.comparing(AvailablePlayerData::surname))
+                .toList();
     }
 
     public void deleteAvailablePlayer(Integer zps, Integer memberNumber) {

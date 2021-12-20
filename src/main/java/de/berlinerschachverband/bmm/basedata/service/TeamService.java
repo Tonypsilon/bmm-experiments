@@ -126,6 +126,14 @@ public class TeamService {
         return highestTeamNumber.equals(team.getNumber());
     }
 
+    private List<Integer> getBoardNumbersOfAssignedPlayers(Long teamId) {
+        return teamRepository.findById(teamId).get().getPlayers()
+                .stream()
+                .map(Player::getBoardNumber)
+                .sorted()
+                .toList();
+    }
+
     /**
      * Convert a Team to TeamData.
      *
@@ -136,6 +144,7 @@ public class TeamService {
         return new TeamData(team.getId(),
                 clubService.toClubData(team.getClub()),
                 team.getDivision().isPresent() ? Optional.of(divisionService.toDivisionData(team.getDivision().get())) : Optional.empty(),
-                team.getNumber());
+                team.getNumber(),
+                team.getNumberOfBoards());
     }
 }
