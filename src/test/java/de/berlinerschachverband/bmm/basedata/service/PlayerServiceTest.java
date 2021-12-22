@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 class PlayerServiceTest {
 
-    private final TeamService teamService = mock(TeamService.class);
+    private final TeamDataAccessService teamDataAccessService = mock(TeamDataAccessService.class);
     private final AvailablePlayerService availablePlayerService = mock(AvailablePlayerService.class);
     private final PlayerRepository playerRepository = mock(PlayerRepository.class);
 
@@ -28,7 +28,7 @@ class PlayerServiceTest {
 
     @BeforeEach
     private void setUp() {
-        playerService = new PlayerService(teamService, availablePlayerService, playerRepository);
+        playerService = new PlayerService(teamDataAccessService, availablePlayerService, playerRepository);
         club = new ClubData(1L, "club", true, 1);
         availablePlayerData = new AvailablePlayerData(
           1L,
@@ -75,7 +75,7 @@ class PlayerServiceTest {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
         team.setDivision(new Division());
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
 
         BmmException exception = assertThrows(BmmException.class,
                 () -> {
@@ -100,7 +100,7 @@ class PlayerServiceTest {
     void testAssignPlayerToTeamNUmberAlreadyOnTeam() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
         when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.of(new Player()));
 
         BmmException exception = assertThrows(BmmException.class,
@@ -121,7 +121,7 @@ class PlayerServiceTest {
         when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.empty());
         Team team = new Team();
         team.setId(1L);
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
         BmmException exception = assertThrows(BmmException.class,
                 () -> {
             playerService.assignPlayerToTeam(
@@ -137,7 +137,7 @@ class PlayerServiceTest {
     void testAssignPlayerToTeamNotInClub() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
         when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
         when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.empty());
 
@@ -156,7 +156,7 @@ class PlayerServiceTest {
     void testAssignPlayerToTeamPlayerAlreadyAssigned() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
         when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
         when(playerRepository.findByZpsAndAndMemberNumber(1,1)).thenReturn(Optional.of(new Player()));
 
@@ -175,7 +175,7 @@ class PlayerServiceTest {
     void testAssignPlayerToTeamSuccess() {
         when(availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(1,1))
                 .thenReturn(availablePlayerData);
-        when(teamService.getTeamById(1L)).thenReturn(team);
+        when(teamDataAccessService.getTeamById(1L)).thenReturn(team);
         when(playerRepository.findByTeam_IdAndBoardNumber(1L,2)).thenReturn(Optional.empty());
 
         playerService.assignPlayerToTeam(

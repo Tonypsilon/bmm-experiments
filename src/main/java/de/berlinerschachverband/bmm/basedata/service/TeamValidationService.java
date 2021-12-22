@@ -10,17 +10,17 @@ import java.util.List;
 @Service
 public class TeamValidationService {
 
-    private final TeamService teamService;
+    private final TeamDataAccessService teamDataAccessService;
     private final PlayerService playerService;
 
-    public TeamValidationService(TeamService teamService,
+    public TeamValidationService(TeamDataAccessService teamDataAccessService,
                                  PlayerService playerService) {
-        this.teamService = teamService;
+        this.teamDataAccessService = teamDataAccessService;
         this.playerService = playerService;
     }
 
     public List<ValidatedTeamData> getTeamsOfClubValidated(String clubName) {
-        return teamService.getTeamsOfClub(clubName)
+        return teamDataAccessService.getTeamsOfClub(clubName)
                 .stream()
                 .map(teamData -> new ValidatedTeamData(teamData,
                                 isValidTeam(teamData.id())))
@@ -40,7 +40,7 @@ public class TeamValidationService {
         if(playerNumbers.size() > 32 ) {
             return false;
         }
-        if(playerNumbers.size()>16 && Boolean.FALSE.equals(teamService.isLastTeam(teamId))) {
+        if(playerNumbers.size()>16 && Boolean.FALSE.equals(teamDataAccessService.isLastTeam(teamId))) {
             return false;
         }
 

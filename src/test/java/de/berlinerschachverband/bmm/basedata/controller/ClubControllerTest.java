@@ -3,7 +3,8 @@ package de.berlinerschachverband.bmm.basedata.controller;
 import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
-import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.basedata.service.TeamCrudService;
+import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
@@ -43,7 +44,7 @@ class ClubControllerTest {
     private ClubAdminService clubAdminService;
 
     @MockBean
-    private TeamService teamService;
+    private TeamCrudService teamCrudService;
 
     @BeforeEach
     private void setUp() {

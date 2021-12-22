@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * the number of teams may no longer change.
  */
 @Service
-public class TeamService {
+public class TeamDataAccessService {
 
     private final TeamRepository teamRepository;
 
@@ -25,9 +25,9 @@ public class TeamService {
 
     private final ClubService clubService;
 
-    public TeamService(TeamRepository teamRepository,
-                       DivisionService divisionService,
-                       ClubService clubService) {
+    public TeamDataAccessService(TeamRepository teamRepository,
+                                 DivisionService divisionService,
+                                 ClubService clubService) {
         this.teamRepository = teamRepository;
         this.divisionService = divisionService;
         this.clubService = clubService;
@@ -92,25 +92,10 @@ public class TeamService {
         }
     }
 
-    /**
-     * Given a club and a number, removes this many teams for the club.
-     *
-     * @param removeTeamsData
-     */
-    public void removeTeams(RemoveTeamsData removeTeamsData) {
-        int currentNumberOfTeams = teamRepository.findByClub_NameAndDivisionIsNull(removeTeamsData.getClubName()).size();
-        for(int teamNumber = currentNumberOfTeams;
-            teamNumber > currentNumberOfTeams - removeTeamsData.getNumberOfTeamsToDelete();
-            teamNumber--) {
-            teamRepository.findByClub_NameAndNumberAndDivisionIsNull(
-                    removeTeamsData.getClubName(),
-                    teamNumber
-            ).ifPresent(
-                    team -> {
-                        teamRepository.delete(team);
-                        teamRepository.flush();
-                    });
-        }
+    public void removeTeam(TeamData teamToDelete) {
+        teamRepository.delete(teamRepository.findById(teamToDelete.id()).orElseThrow(
+                () -> new TeamNotFoundException(teamToDelete.id())
+        ));
     }
 
     @NonNull

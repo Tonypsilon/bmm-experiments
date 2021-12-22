@@ -13,16 +13,16 @@ import java.util.List;
 @Service
 public class EditTeamService {
 
-    private final TeamService teamService;
+    private final TeamDataAccessService teamDataAccessService;
     private final PlayerService playerService;
 
-    public EditTeamService(TeamService teamService, PlayerService playerService) {
-        this.teamService = teamService;
+    public EditTeamService(TeamDataAccessService teamDataAccessService, PlayerService playerService) {
+        this.teamDataAccessService = teamDataAccessService;
         this.playerService = playerService;
     }
 
     public EditTeamData getTeamForEditing(String clubName, Integer teamNumber) {
-        TeamData teamData = teamService.getTeamsOfClub(clubName).stream()
+        TeamData teamData = teamDataAccessService.getTeamsOfClub(clubName).stream()
                 .filter(teamData1 -> teamData1.number().equals(teamNumber))
                 .findFirst().orElseThrow(() -> new TeamNotFoundException(clubName,teamNumber));
         List<PlayerData> playersOfTeam = playerService.getAllPlayersOfTeam(teamData.id());

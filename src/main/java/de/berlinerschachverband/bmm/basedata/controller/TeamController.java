@@ -3,7 +3,7 @@ package de.berlinerschachverband.bmm.basedata.controller;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.EditTeamService;
-import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.basedata.service.TeamValidationService;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
@@ -22,20 +22,20 @@ import javax.annotation.security.RolesAllowed;
 public class TeamController {
 
     private final NavbarService navbarService;
-    private final TeamService teamService;
+    private final TeamDataAccessService teamDataAccessService;
     private final ClubService clubService;
     private final TeamValidationService teamValidationService;
     private final EditTeamService editTeamService;
     private final ClubAdminService clubAdminService;
 
     public TeamController(NavbarService navbarService,
-                          TeamService teamService,
+                          TeamDataAccessService teamDataAccessService,
                           ClubService clubService,
                           TeamValidationService teamValidationService,
                           EditTeamService editTeamService,
                           ClubAdminService clubAdminService) {
         this.navbarService = navbarService;
-        this.teamService = teamService;
+        this.teamDataAccessService = teamDataAccessService;
         this.clubService = clubService;
         this.teamValidationService = teamValidationService;
         this.editTeamService = editTeamService;

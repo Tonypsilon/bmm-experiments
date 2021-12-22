@@ -17,7 +17,7 @@ class TeamServiceTest {
     private final TeamRepository teamRepository = mock(TeamRepository.class);
     private final DivisionService divisionService = mock(DivisionService.class);
     private final ClubService clubService = mock(ClubService.class);
-    private TeamService teamService;
+    private TeamDataAccessService teamDataAccessService;
     private SeasonData season1;
     private Season season;
     private Division division;
@@ -26,7 +26,7 @@ class TeamServiceTest {
 
     @BeforeEach
     private void setUp() {
-        teamService = new TeamService(teamRepository, divisionService, clubService);
+        teamDataAccessService = new TeamDataAccessService(teamRepository, divisionService, clubService);
         season1 = new SeasonData(1L, "season1", false);
         season = new Season();
         season.setName("season1");
@@ -78,7 +78,7 @@ class TeamServiceTest {
         when(clubService.toClubData(club2)).thenReturn(new ClubData(2L, "club2", true, 2));
         when(divisionService.toDivisionData(division)).thenReturn(new DivisionData(1L, "division1", 1, 8, season1));
 
-        assertEquals(expected, teamService.getTeamsOfDivision(new DivisionData(1L, "division1", 1, 8, season1)));
+        assertEquals(expected, teamDataAccessService.getTeamsOfDivision(new DivisionData(1L, "division1", 1, 8, season1)));
     }
 
     @Test
@@ -99,13 +99,13 @@ class TeamServiceTest {
                         2,
                         8)
                 ),
-                teamService.getTeamsOfClub("club1"));
+                teamDataAccessService.getTeamsOfClub("club1"));
     }
 
     @Test
     void testGetNumberOfTeamsOfDivision() {
         when(teamRepository.findByDivision_Id(1L)).thenReturn(Set.of(team1,team2));
-        assertEquals(2, teamService.getNumberOfTeamsOfDivision(new DivisionData(1L, "division1", 1, 8, season1)));
+        assertEquals(2, teamDataAccessService.getNumberOfTeamsOfDivision(new DivisionData(1L, "division1", 1, 8, season1)));
     }
 
 
@@ -121,7 +121,7 @@ class TeamServiceTest {
                 .thenReturn(Optional.empty())
                 .thenReturn(Optional.of(team3));
 
-        teamService.createTeams(createTeamsData);
+        teamDataAccessService.createTeams(createTeamsData);
 
         verify(teamRepository, times(1)).findByClub_NameAndDivisionIsNull("club1");
         verify(teamRepository, times(2)).saveAndFlush(any());

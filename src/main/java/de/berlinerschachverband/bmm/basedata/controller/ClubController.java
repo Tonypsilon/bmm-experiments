@@ -1,11 +1,11 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
-import de.berlinerschachverband.bmm.basedata.data.ClubData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
-import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.basedata.service.TeamCrudService;
+import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.ClubAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
@@ -13,8 +13,6 @@ import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
 import de.berlinerschachverband.bmm.security.service.ClubAdminService;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +25,13 @@ public class ClubController {
     private final ClubService clubService;
     private final ClubAdminService clubAdminService;
     private final NavbarService navbarService;
-    private final TeamService teamService;
+    private final TeamCrudService teamCrudService;
 
-    public ClubController(ClubService clubService, NavbarService navbarService, TeamService teamService,
+    public ClubController(ClubService clubService, NavbarService navbarService, TeamCrudService teamCrudService,
                           ClubAdminService clubAdminService) {
         this.clubService = clubService;
         this.navbarService = navbarService;
-        this.teamService = teamService;
+        this.teamCrudService = teamCrudService;
         this.clubAdminService = clubAdminService;
     }
 
@@ -123,7 +121,7 @@ public class ClubController {
         clubAdminService.validateClubAdminHasClubAccess(clubName);
         try {
             createTeamsData.setClubName(clubName);
-            teamService.createTeams(createTeamsData);
+            teamCrudService.createTeams(createTeamsData);
             model.addAttribute("state", "success");
         } catch (BmmException ex) {
             model.addAttribute("state", "failure");
@@ -150,7 +148,7 @@ public class ClubController {
         clubAdminService.validateClubAdminHasClubAccess(clubName);
         try {
             removeTeamsData.setClubName(clubName);
-            teamService.removeTeams(removeTeamsData);
+            teamCrudService.removeTeams(removeTeamsData);
             model.addAttribute("state", "success");
         } catch (BmmException ex) {
             model.addAttribute("state", "failure");

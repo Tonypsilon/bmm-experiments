@@ -16,14 +16,14 @@ import java.util.List;
 @Service
 public class PlayerService {
 
-    private final TeamService teamService;
+    private final TeamDataAccessService teamDataAccessService;
     private final AvailablePlayerService availablePlayerService;
     private final PlayerRepository playerRepository;
 
-    public PlayerService(TeamService teamService,
+    public PlayerService(TeamDataAccessService teamDataAccessService,
                          AvailablePlayerService availablePlayerService,
                          PlayerRepository playerRepository) {
-        this.teamService = teamService;
+        this.teamDataAccessService = teamDataAccessService;
         this.availablePlayerService = availablePlayerService;
         this.playerRepository = playerRepository;
     }
@@ -36,6 +36,13 @@ public class PlayerService {
                 .toList();
     }
 
+    public void deletePlayerById(PlayerData playerData) {
+        playerRepository.findById(playerData.id()).ifPresent(
+                player -> {
+           playerRepository.delete(player);
+        });
+    }
+
     public void assignPlayerToTeam(PlayerAssignmentData playerAssignmentData, TeamData teamData) {
         if(playerAssignmentData.boardNumber() < 1) {
             throw new BmmException("board boardNumber < 1");
@@ -45,7 +52,7 @@ public class PlayerService {
         }
         AvailablePlayerData availablePlayerData = availablePlayerService.getAvailablePlayerByZpsAndMemberNumber(
                 playerAssignmentData.zps(), playerAssignmentData.memberNumber());
-        Team team = teamService.getTeamById(teamData.id());
+        Team team = teamDataAccessService.getTeamById(teamData.id());
         if(team.getDivision().isPresent()) {
             throw new BmmException("Player can not be assigned to team that already is in a division.");
         }
@@ -55,7 +62,7 @@ public class PlayerService {
         if (Boolean.TRUE.equals(playerExistsByZpsAndNumber(playerAssignmentData.zps(), playerAssignmentData.memberNumber()))) {
             throw new BmmException("This player is already on a team.");
         }
-        if(playerAssignmentData.boardNumber() > 16 && Boolean.FALSE.equals(teamService.isLastTeam(teamData.id()))) {
+        if(playerAssignmentData.boardNumber() > 16 && Boolean.FALSE.equals(teamDataAccessService.isLastTeam(teamData.id()))) {
             throw new BmmException("Only last team of club can have more than 16 members.");
         }
         if(!playerAssignmentData.zps().equals(teamData.clubData().zps())) {
@@ -87,7 +94,7 @@ public class PlayerService {
                 player.getFullName(),
                 player.getSurname(),
                 player.getFideId(),
-                teamService.toTeamData(player.getTeam()),
+                teamDataAccessService.toTeamData(player.getTeam()),
                 player.getBoardNumber(),
                 player.getDwz(),
                 player.getElo(),

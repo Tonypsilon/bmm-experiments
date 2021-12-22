@@ -4,7 +4,7 @@ import de.berlinerschachverband.bmm.basedata.data.Division;
 import de.berlinerschachverband.bmm.basedata.data.DivisionData;
 import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.service.DivisionService;
-import de.berlinerschachverband.bmm.basedata.service.TeamService;
+import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.exceptions.MatchDayAlreadyExistsException;
 import de.berlinerschachverband.bmm.resultdata.data.MatchDay;
 import de.berlinerschachverband.bmm.resultdata.data.MatchDayRepository;
@@ -21,16 +21,16 @@ public class MatchDayService {
 
     private final DivisionService divisionService;
 
-    private final TeamService teamService;
+    private final TeamDataAccessService teamDataAccessService;
 
     private final MatchDayRepository matchDayRepository;
 
     public MatchDayService(DivisionService divisionService,
                            MatchDayRepository matchDayRepository,
-                           TeamService teamService) {
+                           TeamDataAccessService teamDataAccessService) {
         this.divisionService = divisionService;
         this.matchDayRepository = matchDayRepository;
-        this.teamService = teamService;
+        this.teamDataAccessService = teamDataAccessService;
     }
 
     /**
@@ -52,7 +52,7 @@ public class MatchDayService {
     public void createRoundRobinMatchDaysForDivisions(Collection<DivisionData> divisions) {
         for(DivisionData division : divisions) {
             try {
-                createMatchDaysForDivision(division, numberOfMatchDays(teamService.getNumberOfTeamsOfDivision(division)));
+                createMatchDaysForDivision(division, numberOfMatchDays(teamDataAccessService.getNumberOfTeamsOfDivision(division)));
             } catch (MatchDayAlreadyExistsException ex) {
                 // TODO: Log warning properly.
                 System.out.println("WARNING: " + ex.getMessage());
