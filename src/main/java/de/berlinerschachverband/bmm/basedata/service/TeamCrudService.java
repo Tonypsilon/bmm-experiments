@@ -53,6 +53,7 @@ public class TeamCrudService {
             for(PlayerData playerToDelete: playerService.getAllPlayersOfTeam(teamToDelete.id())) {
                 playerService.deletePlayerById(playerToDelete);
             }
+            teamDataAccessService.removeTeam(teamToDelete);
         }
     }
 
