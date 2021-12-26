@@ -2,6 +2,7 @@ package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
+import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-class TeamServiceTest {
+class TeamDataAccessServiceTest {
 
     private final TeamRepository teamRepository = mock(TeamRepository.class);
     private final DivisionService divisionService = mock(DivisionService.class);
@@ -82,6 +83,18 @@ class TeamServiceTest {
     }
 
     @Test
+    void testGetTeamById() {
+        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
+        when(teamRepository.findById(5L)).thenReturn(Optional.empty());
+
+        assertEquals(team1, teamDataAccessService.getTeamById(1L));
+        TeamNotFoundException exception = assertThrows(TeamNotFoundException.class, () -> {
+            teamDataAccessService.getTeamById(5L);
+        });
+        assertEquals("Team not found with id 5.", exception.getMessage());
+    }
+
+    @Test
     void testGetTeamsOfClub() {
         when(clubService.toClubData(club1)).thenReturn(new ClubData(1L, "club1", true, 1));
         when(teamRepository.findByClub_NameAndDivisionIsNull("club1")).thenReturn(Set.of(team1, team3));
@@ -126,5 +139,47 @@ class TeamServiceTest {
         verify(teamRepository, times(1)).findByClub_NameAndDivisionIsNull("club1");
         verify(teamRepository, times(2)).saveAndFlush(any());
     }
-    
+
+    @Test
+    void testRemoveTeam() {
+        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
+        when(teamRepository.findById(5L)).thenReturn(Optional.empty());
+
+        teamDataAccessService.removeTeam(new TeamData(1L,
+                new ClubData(1L, "club1", true, 1),
+                Optional.empty(),
+                1,
+                8));
+        verify(teamRepository, times(1)).delete(team1);
+
+        TeamNotFoundException exception = assertThrows(TeamNotFoundException.class, () -> {
+            teamDataAccessService.removeTeam(new TeamData(5L,
+                    new ClubData(1L, "club1", true, 1),
+                    Optional.empty(),
+                    5,
+                    8));
+        });
+        assertEquals("Team not found with id 5.", exception.getMessage());
+    }
+
+    @Test
+    void testIsLastTeam() {
+        when(teamRepository.findById(1L)).thenReturn(Optional.of(team1));
+        when(teamRepository.findById(3L)).thenReturn(Optional.of(team3));
+        when(teamRepository.findByClub_NameAndDivisionIsNull("club1")).thenReturn(Set.of(team1,team3));
+
+        when(divisionService.toDivisionData(division))
+                .thenReturn(new DivisionData(
+                        1L,
+                        "division1",
+                        1,
+                        8,
+                        new SeasonData(
+                                1L,
+                                "season1",
+                                false)));
+
+        assertEquals(Boolean.TRUE, teamDataAccessService.isLastTeam(3L));
+        assertEquals(Boolean.FALSE, teamDataAccessService.isLastTeam(1L));
+    }
 }

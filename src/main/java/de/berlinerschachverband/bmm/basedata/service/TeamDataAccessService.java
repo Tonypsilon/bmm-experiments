@@ -111,14 +111,6 @@ public class TeamDataAccessService {
         return highestTeamNumber.equals(team.getNumber());
     }
 
-    private List<Integer> getBoardNumbersOfAssignedPlayers(Long teamId) {
-        return teamRepository.findById(teamId).get().getPlayers()
-                .stream()
-                .map(Player::getBoardNumber)
-                .sorted()
-                .toList();
-    }
-
     /**
      * Convert a Team to TeamData.
      *
