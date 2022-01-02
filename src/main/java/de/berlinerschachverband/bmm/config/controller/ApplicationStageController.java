@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.annotation.security.RolesAllowed;
-import java.util.Arrays;
+import java.util.Set;
 
 @Controller
 public class ApplicationStageController {
 
     private final NavbarService navbarService;
     private final ApplicationParameterService applicationParameterService;
-    private final String[] stages = {"teamCreation", "seasonCreation", "seasonRunning"};
+    private final Set<String> stages = Set.of("teamCreation", "seasonCreation", "seasonRunning");
 
     public ApplicationStageController(NavbarService navbarService,
                                       ApplicationParameterService applicationParameterService) {
@@ -37,7 +37,7 @@ public class ApplicationStageController {
     @PostMapping(value = "config/applicationStage")
     public String setApplicationStage(@ModelAttribute String stage, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
-        if (Arrays.stream(stages).anyMatch(stage::equals)) {
+        if (stages.contains(stage)) {
             SetApplicationParameterData setApplicationParameterData = new SetApplicationParameterData();
             setApplicationParameterData.setKey("applicationStage");
             setApplicationParameterData.setValue(stage);

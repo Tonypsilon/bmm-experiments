@@ -3,7 +3,6 @@ package de.berlinerschachverband.bmm.config.service;
 import de.berlinerschachverband.bmm.config.data.ApplicationParameter;
 import de.berlinerschachverband.bmm.config.data.ApplicationParameterRepository;
 import de.berlinerschachverband.bmm.config.data.thymeleaf.SetApplicationParameterData;
-import org.springframework.expression.spel.ast.BooleanLiteral;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
