@@ -22,7 +22,6 @@ public class AdministrationService {
 
     public List<AdministrationButtonData> getAdministrationButtonData(String username, Collection<String> roles) {
         List<AdministrationButtonData> administrationButtons = new ArrayList();
-        administrationButtons.add(new AdministrationButtonData("/logout", "Logout"));
         if(roles.contains(Roles.ADMINISTRATOR)) {
             administrationButtons.addAll(getAdministratorButtons());
         }
@@ -32,6 +31,8 @@ public class AdministrationService {
         if(roles.contains(Roles.TEAM_ADMIN)) {
             administrationButtons.addAll(getTeamAdminButtons(username));
         }
+        administrationButtons.add(new AdministrationButtonData("/administration/changePassword", "Passwort ändern"));
+        administrationButtons.add(new AdministrationButtonData("/logout", "Logout"));
         return administrationButtons;
     }
 
