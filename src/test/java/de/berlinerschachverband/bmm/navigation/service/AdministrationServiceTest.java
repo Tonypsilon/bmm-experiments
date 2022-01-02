@@ -28,42 +28,46 @@ class AdministrationServiceTest {
 
     @Test
     void testGetAdministrationButtonDataAllRoles() {
-        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
-                        new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
+        assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                         new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
                         new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen"),
-                        new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
+                        new AdministrationButtonData("/administration/club/club","Verein club verwalten"),
+                        new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
+                        new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(
                         Roles.CLUB_ADMIN, Roles.TEAM_ADMIN, Roles.ADMINISTRATOR)));
     }
 
     @Test
     void testGetAdministrationButtonDataAdministrator() {
-        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
-                        new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
+        assertEquals(List.of(new AdministrationButtonData("/administration/createSeason", "Neue Saison erstellen"),
                         new AdministrationButtonData("/administration/createDivision", "Neue Staffel erstellen"),
                         new AdministrationButtonData("/clubs", "Alle Vereine anzeigen"),
                         new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
-                        new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen")),
+                        new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen"),
+                        new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
+                        new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.ADMINISTRATOR)));
     }
 
     @Test
     void testGetAdministrationButtonDataClubAdmin() {
-        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout"),
-                        new AdministrationButtonData("/administration/club/club","Verein club verwalten")),
+        assertEquals(List.of(new AdministrationButtonData("/administration/club/club","Verein club verwalten"),
+                        new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
+                        new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.CLUB_ADMIN)));
     }
 
     @Test
     void testGetAdministrationButtonDataTeamAdmin() {
-        assertEquals(List.of(new AdministrationButtonData("/logout", "Logout")),
+        assertEquals(List.of(new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
+                        new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.TEAM_ADMIN)));
     }
 }
