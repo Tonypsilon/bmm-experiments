@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{~/webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div class="container">
+    <h1>Stadium der Anwendung ändern</h1>
+    <form th:action="@{/config/applicationStage}" th:object="${setStageData}" method="post">
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="radioTeamCreation"
+                   id="radioTeamCreation"
+                   th:field="*{stage}" th:value="teamCreation">
+            <label class="form-check-label" for="radioTeamCreation">
+                Mannschaften werden erstellt und modifiziert.
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="radioSeasonCreation"
+                   id="radioSeasonCreation"
+                   th:field="*{stage}" th:value="seasonCreation">
+            <label class="form-check-label" for="radioSeasonCreation">
+                Die Saison wird initialisiert.
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="radioSeasonRunning"
+                   id="radioSeasonRunning"
+                   th:field="*{stage}" th:value="seasonRunning ">
+            <label class="form-check-label" for="radioSeasonRunning">
+                Die Saison läuft.
+            </label>
+        </div>
+
+        <!--<div>
+          <select class="form-control" id="boardOneSelect" th:field="*{numberOfTeamsToCreate}">
+          </select>
+        </div>-->
+
+
+        <button type="submit" class="btn btn-primary">OK</button>
+        <a class="btn btn-secondary" href="/home" role="button">Home</a>
+    </form>
+</div>
+
+</body>
+</html>

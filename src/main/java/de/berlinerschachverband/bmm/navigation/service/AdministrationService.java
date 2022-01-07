@@ -44,7 +44,8 @@ public class AdministrationService {
                 new AdministrationButtonData("/club/create", "Neuen Verein erstellen"),
                 new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                 new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
-                new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen")
+                new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen"),
+                new AdministrationButtonData("/config/applicationStage", "Stadium der Anwendung ändern")
         );
     }
 

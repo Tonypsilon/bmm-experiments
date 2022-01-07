@@ -5,6 +5,7 @@ import de.berlinerschachverband.bmm.config.data.ApplicationParameterRepository;
 import de.berlinerschachverband.bmm.config.data.thymeleaf.SetApplicationParameterData;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -17,22 +18,25 @@ public class ApplicationParameterService {
         this.applicationParameterRepository = applicationParameterRepository;
     }
 
+    @Transactional
     public void setApplicationParameter(SetApplicationParameterData setApplicationParameterData) {
-        applicationParameterRepository.findByKey(setApplicationParameterData.getKey()).ifPresentOrElse(
-                applicationParameter -> applicationParameter.setValue(setApplicationParameterData.getValue()),
+        applicationParameterRepository.findByApplicationParameterKey(setApplicationParameterData.getKey()).ifPresentOrElse(
+                applicationParameter ->  {
+                    applicationParameter.setApplicationParameterValue(setApplicationParameterData.getValue());
+                },
                 () -> {
                     ApplicationParameter applicationParameter = new ApplicationParameter();
-                    applicationParameter.setKey(setApplicationParameterData.getKey());
-                    applicationParameter.setValue(setApplicationParameterData.getValue());
-                    applicationParameterRepository.saveAndFlush(applicationParameter);
+                    applicationParameter.setApplicationParameterKey(setApplicationParameterData.getKey());
+                    applicationParameter.setApplicationParameterValue(setApplicationParameterData.getValue());
                 }
         );
     }
 
+    @Transactional(readOnly = true)
     public Optional<String> getApplicationParameter(String key) {
-        Optional<ApplicationParameter> applicationParameter = applicationParameterRepository.findByKey(key);
+        Optional<ApplicationParameter> applicationParameter = applicationParameterRepository.findByApplicationParameterKey(key);
         if (applicationParameter.isPresent()) {
-            return Optional.of(applicationParameter.get().getValue());
+            return Optional.of(applicationParameter.get().getApplicationParameterValue());
         } else {
             return Optional.empty();
         }

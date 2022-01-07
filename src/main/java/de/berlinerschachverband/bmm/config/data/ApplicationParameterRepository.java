@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface ApplicationParameterRepository extends JpaRepository<ApplicationParameter, Long> {
 
-    Optional<ApplicationParameter> findByKey(String key);
+    Optional<ApplicationParameter> findByApplicationParameterKey(String key);
 }

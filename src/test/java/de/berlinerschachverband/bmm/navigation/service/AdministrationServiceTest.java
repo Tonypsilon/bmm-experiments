@@ -35,6 +35,7 @@ class AdministrationServiceTest {
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
                         new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen"),
+                        new AdministrationButtonData("/config/applicationStage", "Stadium der Anwendung ändern"),
                         new AdministrationButtonData("/administration/club/club","Verein club verwalten"),
                         new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
                         new AdministrationButtonData("/logout", "Logout")),
@@ -51,6 +52,7 @@ class AdministrationServiceTest {
                         new AdministrationButtonData("/administration/createUser", "Neuen Benutzer erstellen"),
                         new AdministrationButtonData("/roles/addUserRole", "Benutzer eine Rolle zuweisen"),
                         new AdministrationButtonData("/roles/removeUserRole", "Benutzer eine Rolle entziehen"),
+                        new AdministrationButtonData("/config/applicationStage", "Stadium der Anwendung ändern"),
                         new AdministrationButtonData("/administration/changePassword", "Passwort ändern"),
                         new AdministrationButtonData("/logout", "Logout")),
                 administrationService.getAdministrationButtonData("testuser", List.of(Roles.ADMINISTRATOR)));

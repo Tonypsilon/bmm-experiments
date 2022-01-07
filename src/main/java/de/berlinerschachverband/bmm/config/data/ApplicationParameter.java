@@ -2,21 +2,20 @@ package de.berlinerschachverband.bmm.config.data;
 
 import org.springframework.lang.NonNull;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ApplicationParameter {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String key;
+    private String applicationParameterKey;
 
     @Column(unique = false, nullable = false)
-    private String value;
+    private String applicationParameterValue;
 
     @NonNull
     public Long getId() {
@@ -28,20 +27,20 @@ public class ApplicationParameter {
     }
 
     @NonNull
-    public String getKey() {
-        return key;
+    public String getApplicationParameterKey() {
+        return applicationParameterKey;
     }
 
-    public void setKey(@NonNull String key) {
-        this.key = key;
+    public void setApplicationParameterKey(@NonNull String key) {
+        this.applicationParameterKey = key;
     }
 
     @NonNull
-    public String getValue() {
-        return value;
+    public String getApplicationParameterValue() {
+        return applicationParameterValue;
     }
 
-    public void setValue(@NonNull String value) {
-        this.value = value;
+    public void setApplicationParameterValue(@NonNull String value) {
+        this.applicationParameterValue = value;
     }
 }
