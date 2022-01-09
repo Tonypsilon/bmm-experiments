@@ -7,6 +7,7 @@ import de.berlinerschachverband.bmm.basedata.data.SeasonData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateDivisionData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateSeasonData;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
+import de.berlinerschachverband.bmm.security.Roles;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -30,7 +31,7 @@ class BmmApplicationTests {
     private MockMvc mockMvc;
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void bmmSystemTest() throws Exception {
         CreateSeasonData createSeasonData = new CreateSeasonData();
         createSeasonData.setSeasonName("season1");

@@ -7,6 +7,7 @@ import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
+import de.berlinerschachverband.bmm.security.Roles;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class DivisionControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testGetCreateDivision() throws Exception {
         this.mockMvc.perform(get("/administration/createDivision"))
                 .andExpect(status().isOk())
@@ -53,7 +54,7 @@ public class DivisionControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testPostCreateDivisionSuccess() throws Exception {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");
@@ -73,7 +74,7 @@ public class DivisionControllerTest {
     }
 
     @Test
-    @WithMockUser
+    @WithMockUser(authorities = Roles.ADMINISTRATOR)
     void testPostCreateDivisionFailure() throws Exception {
         CreateDivisionData createDivisionData = new CreateDivisionData();
         createDivisionData.setName("division1");

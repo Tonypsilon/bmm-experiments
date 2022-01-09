@@ -5,6 +5,8 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateClubData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.TeamCrudService;
 import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
+import de.berlinerschachverband.bmm.config.controller.ApplicationStageController;
+import de.berlinerschachverband.bmm.config.service.ApplicationParameterService;
 import de.berlinerschachverband.bmm.navigation.data.NavbarData;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
@@ -19,6 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -45,6 +48,9 @@ class ClubControllerTest {
 
     @MockBean
     private TeamCrudService teamCrudService;
+
+    @MockBean
+    private ApplicationParameterService applicationParameterService;
 
     @BeforeEach
     private void setUp() {
@@ -90,6 +96,7 @@ class ClubControllerTest {
         createClubData.setClubName("club1");
         createClubData.setZps(1);
         when(clubService.createClub("club1", 1)).thenReturn(new ClubData(1L, "club1", true, 1));
+        when(applicationParameterService.getApplicationParameter("applicationStage")).thenReturn(Optional.of("teamCreation"));
 
         this.mockMvc.perform(post("/club/create")
                         .with(csrf())

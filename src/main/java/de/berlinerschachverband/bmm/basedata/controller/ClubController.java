@@ -5,7 +5,7 @@ import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.TeamCrudService;
-import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
+import de.berlinerschachverband.bmm.config.service.ApplicationParameterService;
 import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.exceptions.ClubAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.ClubNotFoundException;
@@ -26,13 +26,18 @@ public class ClubController {
     private final ClubAdminService clubAdminService;
     private final NavbarService navbarService;
     private final TeamCrudService teamCrudService;
+    private final ApplicationParameterService applicationParameterService;
 
-    public ClubController(ClubService clubService, NavbarService navbarService, TeamCrudService teamCrudService,
-                          ClubAdminService clubAdminService) {
+    public ClubController(ClubService clubService,
+                          NavbarService navbarService,
+                          TeamCrudService teamCrudService,
+                          ClubAdminService clubAdminService,
+                          ApplicationParameterService applicationParameterService) {
         this.clubService = clubService;
         this.navbarService = navbarService;
         this.teamCrudService = teamCrudService;
         this.clubAdminService = clubAdminService;
+        this.applicationParameterService = applicationParameterService;
     }
 
     @RolesAllowed({Roles.ADMINISTRATOR})
@@ -107,6 +112,9 @@ public class ClubController {
     public String createTeams(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").get())) {
+            return "wrongApplicationStage";
+        }
         model.addAttribute("createTeamsData", new CreateTeamsData());
         model.addAttribute("club", clubName);
         return "createTeams";
@@ -119,6 +127,9 @@ public class ClubController {
                               final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
+            return "wrongApplicationStage";
+        }
         try {
             createTeamsData.setClubName(clubName);
             teamCrudService.createTeams(createTeamsData);
@@ -134,6 +145,9 @@ public class ClubController {
     public String removeTeams(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
+            return "wrongApplicationStage";
+        }
         model.addAttribute("removeTeamsData", new RemoveTeamsData());
         model.addAttribute("club", clubName);
         return "removeTeams";
@@ -146,6 +160,9 @@ public class ClubController {
                               final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
+            return "wrongApplicationStage";
+        }
         try {
             removeTeamsData.setClubName(clubName);
             teamCrudService.removeTeams(removeTeamsData);

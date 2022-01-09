@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>BMM</title>
+
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link th:href="@{~/webjars/bootstrap/4.6.0/css/bootstrap.min.css} " th:rel="stylesheet"/>
+</head>
+<body class="bg-light">
+
+<nav th:replace="~{navbar :: navbar}"/>
+
+<div class="container">
+    <div class="alert alert-danger" role="alert">
+        <h2>Fehler</h2>
+        <p>Diese Operation kann aktuell nicht durchgeführt werden.</p>
+    </div>
+</div>
+
+</body>
+</html>

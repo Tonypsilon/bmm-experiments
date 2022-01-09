@@ -5,6 +5,7 @@ import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.EditTeamService;
 import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.basedata.service.TeamValidationService;
+import de.berlinerschachverband.bmm.config.service.ApplicationParameterService;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
 import de.berlinerschachverband.bmm.security.service.ClubAdminService;
@@ -27,19 +28,22 @@ public class TeamController {
     private final TeamValidationService teamValidationService;
     private final EditTeamService editTeamService;
     private final ClubAdminService clubAdminService;
+    private final ApplicationParameterService applicationParameterService;
 
     public TeamController(NavbarService navbarService,
                           TeamDataAccessService teamDataAccessService,
                           ClubService clubService,
                           TeamValidationService teamValidationService,
                           EditTeamService editTeamService,
-                          ClubAdminService clubAdminService) {
+                          ClubAdminService clubAdminService,
+                          ApplicationParameterService applicationParameterService) {
         this.navbarService = navbarService;
         this.teamDataAccessService = teamDataAccessService;
         this.clubService = clubService;
         this.teamValidationService = teamValidationService;
         this.editTeamService = editTeamService;
         this.clubAdminService = clubAdminService;
+        this.applicationParameterService = applicationParameterService;
     }
 
     @RolesAllowed({Roles.CLUB_ADMIN})
@@ -59,6 +63,9 @@ public class TeamController {
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage"))) {
+            return "wrongApplicationStage";
+        }
         model.addAttribute("editTeamData", editTeamService.getTeamForEditing(clubName, teamNumber));
         return "editTeam";
     }
@@ -71,6 +78,9 @@ public class TeamController {
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage"))) {
+            return "wrongApplicationStage";
+        }
         return "editedTeam";
     }
 }

@@ -5,11 +5,14 @@ import de.berlinerschachverband.bmm.basedata.service.DivisionService;
 import de.berlinerschachverband.bmm.exceptions.DivisionAlreadyExistsException;
 import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
+import de.berlinerschachverband.bmm.security.Roles;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.annotation.security.RolesAllowed;
 
 @Controller
 public class DivisionController {
@@ -22,6 +25,7 @@ public class DivisionController {
         this.divisionService = divisionService;
     }
 
+    @RolesAllowed({Roles.ADMINISTRATOR})
     @GetMapping(value="/administration/createDivision")
     public String createDivision(final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
@@ -29,6 +33,7 @@ public class DivisionController {
         return "createDivision";
     }
 
+    @RolesAllowed({Roles.ADMINISTRATOR})
     @PostMapping(value = "administration/createDivision")
     public String createDivision(@ModelAttribute CreateDivisionData createDivisionData, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
