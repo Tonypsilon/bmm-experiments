@@ -63,7 +63,7 @@ public class TeamController {
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
-        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage"))) {
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
             return "wrongApplicationStage";
         }
         model.addAttribute("editTeamData", editTeamService.getTeamForEditing(clubName, teamNumber));
@@ -78,7 +78,7 @@ public class TeamController {
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
-        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage"))) {
+        if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
             return "wrongApplicationStage";
         }
         return "editedTeam";
