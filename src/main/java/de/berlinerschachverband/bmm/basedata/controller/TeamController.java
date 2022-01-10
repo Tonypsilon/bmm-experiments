@@ -1,6 +1,6 @@
 package de.berlinerschachverband.bmm.basedata.controller;
 
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
+import de.berlinerschachverband.bmm.basedata.data.thymeleaf.PrepareEditTeamData;
 import de.berlinerschachverband.bmm.basedata.service.ClubService;
 import de.berlinerschachverband.bmm.basedata.service.EditTeamService;
 import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
@@ -66,7 +66,7 @@ public class TeamController {
         if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
             return "wrongApplicationStage";
         }
-        model.addAttribute("editTeamData", editTeamService.getTeamForEditing(clubName, teamNumber));
+        model.addAttribute("prepareEditTeamData", editTeamService.getTeamForEditing(clubName, teamNumber));
         return "editTeam";
     }
 
@@ -74,7 +74,7 @@ public class TeamController {
     @PostMapping(value ="club/{clubName}/teams/{teamNumber}/edit")
     public String editTeamOfClub(@PathVariable final String clubName,
                                  @PathVariable final Integer teamNumber,
-                                 @ModelAttribute EditTeamData editTeamData,
+                                 @ModelAttribute PrepareEditTeamData prepareEditTeamData,
                                  final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);

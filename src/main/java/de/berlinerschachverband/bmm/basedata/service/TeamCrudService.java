@@ -29,14 +29,17 @@ public class TeamCrudService {
      * @param createTeamsData
      */
     public void createTeams(CreateTeamsData createTeamsData) {
-        TeamData currentLastTeam = Iterables.getLast(teamDataAccessService.getTeamsOfClub(createTeamsData.getClubName()));
-        teamDataAccessService.createTeams(createTeamsData);
-        List<PlayerData> playersOfFormerLastTeam = playerService.getAllPlayersOfTeam(currentLastTeam.id());
-        for(PlayerData player : playersOfFormerLastTeam) {
-            if (player.boardNumber() > 16) {
-                playerService.deletePlayerById(player);
+        List<TeamData> currentTeams = teamDataAccessService.getTeamsOfClub(createTeamsData.getClubName());
+        if (!currentTeams.isEmpty()) {
+            TeamData currentLastTeam = Iterables.getLast(currentTeams);
+            List<PlayerData> playersOfFormerLastTeam = playerService.getAllPlayersOfTeam(currentLastTeam.id());
+            for(PlayerData player : playersOfFormerLastTeam) {
+                if (player.boardNumber() > 16) {
+                    playerService.deletePlayerById(player);
+                }
             }
         }
+        teamDataAccessService.createTeams(createTeamsData);
     }
 
     /**

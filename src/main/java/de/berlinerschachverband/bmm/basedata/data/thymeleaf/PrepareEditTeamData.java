@@ -2,11 +2,11 @@ package de.berlinerschachverband.bmm.basedata.data.thymeleaf;
 
 import java.util.List;
 
-public class EditTeamData {
+public class PrepareEditTeamData {
 
     private List<AddPlayerData> availablePlayers;
 
-    private List<AddPlayerData> teamPlayers;
+    private List<PlayerThymeleafData> teamPlayers;
 
     private String clubName;
 
@@ -24,16 +24,12 @@ public class EditTeamData {
         this.availablePlayers = availablePlayers;
     }
 
-    public List<AddPlayerData> getTeamPlayers() {
+    public List<PlayerThymeleafData> getTeamPlayers() {
         return teamPlayers;
     }
 
-    public void setTeamPlayers(List<AddPlayerData> teamPlayers) {
+    public void setTeamPlayers(List<PlayerThymeleafData> teamPlayers) {
         this.teamPlayers = teamPlayers;
-    }
-
-    public void addTeamPlayer(AddPlayerData addPlayerData) {
-        teamPlayers.add(addPlayerData);
     }
 
     public void setClubName(String clubName) {

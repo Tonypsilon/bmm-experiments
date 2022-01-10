@@ -2,8 +2,6 @@ package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.CreateTeamsData;
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.EditTeamData;
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.RemoveTeamsData;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -88,6 +86,7 @@ public class TeamDataAccessService {
             Team team = new Team();
             team.setClub(clubService.getClub(createTeamsData.getClubName()));
             team.setNumber(teamNumber + currentNumberOfTeams);
+            team.setNumberOfBoards(8);
             teamRepository.saveAndFlush(team);
         }
     }

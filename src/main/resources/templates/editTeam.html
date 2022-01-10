@@ -19,10 +19,12 @@
 </div>
 
 <div class="container">
+
   <h1>Team ändern</h1>
   <form th:action="@{/club/{clubName}/teams/{teamNumber}/edit
-                     (clubName=${editTeamData.clubName},
-                      teamNumber=${editTeamData.teamNumber})}" th:object="${editTeamData}" method="post">
+                     (clubName=${prepareEditTeamData.clubName},
+                      teamNumber=${prepareEditTeamData.teamNumber})}" th:object="${prepareEditTeamData}" method="post">
+    <div class="form-group">
     <div class="form-check">
       <input class="form-check-input" type="radio" name="radio8boards" id="radio8boards" checked th:field="*{numberOfBoards}" th:value="8">
       <label class="form-check-label" for="radio8boards">
@@ -35,16 +37,23 @@
         Mannschaft spielt an 6 Brettern.
       </label>
     </div>
-
-    <!--<div>
-      <select class="form-control" id="boardOneSelect" th:field="*{numberOfTeamsToCreate}">
+    </div>
+    <div th:each="i: ${#numbers.sequence(1, {prepareEditTeamData.numberOfBoards})}" class="form-group">
+      <label for="boardSelect">Brett <span th:text="${i}"></span></label>
+      <select class="form-select"
+              id="boardSelect"
+              th:field="*{teamPlayers[__${i}__].memberNumber}"
+              aria-label="Brett ${i}">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"><span th:text="${availablePlayer.fullName}"></span></option>
       </select>
-    </div>-->
+    </div>
 
 
     <button type="submit" class="btn btn-primary">OK</button>
     <a class="btn btn-secondary" href="/home" role="button">Home</a>
   </form>
+
 </div>
 
 </body>
