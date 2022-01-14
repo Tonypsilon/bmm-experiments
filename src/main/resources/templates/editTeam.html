@@ -38,12 +38,13 @@
       </label>
     </div>
     </div>
-    <div th:each="i: ${#numbers.sequence(1, {prepareEditTeamData.numberOfBoards})}" class="form-group">
+    <div th:each="i: ${#numbers.sequence(1, {prepareEditTeamData.maxNumberOfPlayers})}" class="form-group">
       <label for="boardSelect">Brett <span th:text="${i}"></span></label>
       <select class="form-select"
               id="boardSelect"
-              th:field="*{teamPlayers[__${i}__].memberNumber}"
+              th:field="*{futureTeamPlayersMemberNumbers[__${i-1}__]}"
               aria-label="Brett ${i}">
+        <option th:value="-1"> </option>
         <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
                 th:value="${availablePlayer.memberNumber}"><span th:text="${availablePlayer.fullName}"></span></option>
       </select>

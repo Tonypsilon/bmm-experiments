@@ -6,7 +6,9 @@ public class PrepareEditTeamData {
 
     private List<AddPlayerData> availablePlayers;
 
-    private List<PlayerThymeleafData> teamPlayers;
+    private List<PlayerThymeleafData> currentTeamPlayers;
+
+    private List<Integer> futureTeamPlayersMemberNumbers;
 
     private String clubName;
 
@@ -14,22 +16,30 @@ public class PrepareEditTeamData {
 
     private Integer numberOfBoards;
 
-    private Boolean isLastTeam;
+    private Integer maxNumberOfPlayers;
 
-    public List<AddPlayerData> getAvailablePlayers() {
-        return availablePlayers;
-    }
+    private Boolean isLastTeam;
 
     public void setAvailablePlayers(List<AddPlayerData> availablePlayers) {
         this.availablePlayers = availablePlayers;
     }
-
-    public List<PlayerThymeleafData> getTeamPlayers() {
-        return teamPlayers;
+    public List<AddPlayerData> getAvailablePlayers() {
+        return availablePlayers;
     }
 
-    public void setTeamPlayers(List<PlayerThymeleafData> teamPlayers) {
-        this.teamPlayers = teamPlayers;
+    public void setCurrentTeamPlayers(List<PlayerThymeleafData> currentTeamPlayers) {
+        this.currentTeamPlayers = currentTeamPlayers;
+    }
+    public List<PlayerThymeleafData> getCurrentTeamPlayers() {
+        return currentTeamPlayers;
+    }
+
+    public void setFutureTeamPlayersMemberNumbers(List<Integer> futureTeamPlayersMemberNumbers) {
+        this.futureTeamPlayersMemberNumbers = futureTeamPlayersMemberNumbers;
+    }
+
+    public List<Integer> getFutureTeamPlayersMemberNumbers() {
+        return futureTeamPlayersMemberNumbers;
     }
 
     public void setClubName(String clubName) {
@@ -54,6 +64,14 @@ public class PrepareEditTeamData {
 
     public Integer getNumberOfBoards() {
         return numberOfBoards;
+    }
+
+    public void setMaxNumberOfPlayers(Integer maxNumberOfPlayers) {
+        this.maxNumberOfPlayers = maxNumberOfPlayers;
+    }
+
+    public Integer getMaxNumberOfPlayers() {
+        return maxNumberOfPlayers;
     }
 
     public void setLastTeam(Boolean lastTeam) {

@@ -81,6 +81,7 @@ public class TeamController {
         if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
             return "wrongApplicationStage";
         }
+        editTeamService.editTeam(prepareEditTeamData);
         return "editedTeam";
     }
 }

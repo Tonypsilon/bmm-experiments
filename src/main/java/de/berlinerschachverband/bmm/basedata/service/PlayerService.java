@@ -36,7 +36,7 @@ public class PlayerService {
                 .toList();
     }
 
-    public void deletePlayerById(PlayerData playerData) {
+    public void deletePlayer(PlayerData playerData) {
         playerRepository.findById(playerData.id()).ifPresent(
                 player -> {
            playerRepository.delete(player);

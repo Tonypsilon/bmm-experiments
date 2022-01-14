@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class TeamCrudServiceTest {
@@ -61,8 +60,8 @@ class TeamCrudServiceTest {
 
         teamCrudService.createTeams(createTeamsData);
         verify(teamDataAccessService, times(1)).createTeams(eq(createTeamsData));
-        verify(playerService, never()).deletePlayerById(eq(playerData1));
-        verify(playerService, times(1)).deletePlayerById(eq(playerData2));
+        verify(playerService, never()).deletePlayer(eq(playerData1));
+        verify(playerService, times(1)).deletePlayer(eq(playerData2));
     }
 
     @Test
@@ -76,8 +75,8 @@ class TeamCrudServiceTest {
         teamCrudService.removeTeams(removeTeamsData);
         verify(teamDataAccessService, times(1)).removeTeam(eq(teamData2));
         verify(teamDataAccessService, never()).removeTeam(eq(teamData1));
-        verify(playerService, times(1)).deletePlayerById(eq(playerData1));
-        verify(playerService, times(1)).deletePlayerById(eq(playerData2));
+        verify(playerService, times(1)).deletePlayer(eq(playerData1));
+        verify(playerService, times(1)).deletePlayer(eq(playerData2));
     }
 
 }

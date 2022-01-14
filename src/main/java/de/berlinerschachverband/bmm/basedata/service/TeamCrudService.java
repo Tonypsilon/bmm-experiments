@@ -35,7 +35,7 @@ public class TeamCrudService {
             List<PlayerData> playersOfFormerLastTeam = playerService.getAllPlayersOfTeam(currentLastTeam.id());
             for(PlayerData player : playersOfFormerLastTeam) {
                 if (player.boardNumber() > 16) {
-                    playerService.deletePlayerById(player);
+                    playerService.deletePlayer(player);
                 }
             }
         }
@@ -54,7 +54,7 @@ public class TeamCrudService {
                 allTeamsOfClub.size());
         for(TeamData teamToDelete : teamsToDelete) {
             for(PlayerData playerToDelete: playerService.getAllPlayersOfTeam(teamToDelete.id())) {
-                playerService.deletePlayerById(playerToDelete);
+                playerService.deletePlayer(playerToDelete);
             }
             teamDataAccessService.removeTeam(teamToDelete);
         }
