@@ -6,6 +6,7 @@ import de.berlinerschachverband.bmm.basedata.service.EditTeamService;
 import de.berlinerschachverband.bmm.basedata.service.TeamDataAccessService;
 import de.berlinerschachverband.bmm.basedata.service.TeamValidationService;
 import de.berlinerschachverband.bmm.config.service.ApplicationParameterService;
+import de.berlinerschachverband.bmm.exceptions.BmmException;
 import de.berlinerschachverband.bmm.navigation.service.NavbarService;
 import de.berlinerschachverband.bmm.security.Roles;
 import de.berlinerschachverband.bmm.security.service.ClubAdminService;
@@ -81,7 +82,12 @@ public class TeamController {
         if(!"teamCreation".equals(applicationParameterService.getApplicationParameter("applicationStage").orElse(""))) {
             return "wrongApplicationStage";
         }
-        editTeamService.editTeam(prepareEditTeamData);
+        try {
+            editTeamService.editTeam(prepareEditTeamData);
+            model.addAttribute("state", "success");
+        } catch(BmmException ex) {
+            model.addAttribute("state", "failure");
+        }
         return "editedTeam";
     }
 }

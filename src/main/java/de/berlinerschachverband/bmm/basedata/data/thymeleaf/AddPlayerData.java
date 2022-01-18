@@ -9,6 +9,7 @@ public class AddPlayerData {
     private String fullName;
     private String surname;
     private Integer dwz;
+    private Integer currentBoardNumber;
 
     public Integer getZps() {
         return zps;
@@ -48,5 +49,17 @@ public class AddPlayerData {
 
     public void setDwz(Integer dwz) {
         this.dwz = dwz;
+    }
+
+    public Integer getCurrentBoardNumber() {
+        return currentBoardNumber;
+    }
+
+    public void setCurrentBoardNumber(Integer currentBoardNumber) {
+        this.currentBoardNumber = currentBoardNumber;
+    }
+
+    public Boolean isSelectedOption(Integer boardNumber) {
+        return boardNumber.equals(currentBoardNumber);
     }
 }

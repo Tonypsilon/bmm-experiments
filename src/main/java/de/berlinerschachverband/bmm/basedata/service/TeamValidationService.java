@@ -43,6 +43,9 @@ public class TeamValidationService {
         if(playerNumbers.size()>16 && Boolean.FALSE.equals(teamDataAccessService.isLastTeam(teamId))) {
             return false;
         }
+        if(playerNumbers.size() < teamDataAccessService.getTeamById(teamId).getNumberOfBoards()) {
+            return false;
+        }
 
         return true;
     }
@@ -50,7 +53,7 @@ public class TeamValidationService {
     @NonNull
     private Boolean isPlayerNumberSequenceValid(List<Integer> sortedPlayerNumbers) {
         for(int i=1; i<= sortedPlayerNumbers.size(); i++) {
-            if(!sortedPlayerNumbers.get(i).equals(i)) {
+            if(!sortedPlayerNumbers.get(i-1).equals(i)) {
                 return false;
             }
         }
