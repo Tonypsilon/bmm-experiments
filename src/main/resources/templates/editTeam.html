@@ -38,18 +38,358 @@
       </label>
     </div>
     </div>
-    <div th:each="i: ${#numbers.sequence(1, {prepareEditTeamData.maxNumberOfPlayers})}" class="form-group">
-      <label for="boardSelect">Brett <span th:text="${i}"></span></label>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 0">
+      <label for="futureTeamPlayersMemberNumber1">Brett&nbsp;&nbsp;1</label>
       <select class="form-select"
-              id="boardSelect"
-              th:field="*{futureTeamPlayersMemberNumbers[__${i-1}__]}"
-              aria-label="Brett ${i}">
-        <option th:value="-1"> </option>
+              id="futureTeamPlayersMemberNumber1"
+              name="futureTeamPlayersMemberNumber1"
+              aria-label="Brett 1">
         <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
-                th:value="${availablePlayer.memberNumber}"><span th:text="${availablePlayer.fullName}"></span></option>
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(1)}"><span th:text="${availablePlayer.fullName}"></span></option>
       </select>
     </div>
-
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 1">
+      <label for="futureTeamPlayersMemberNumber2">Brett&nbsp;&nbsp;2</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber2"
+              name="futureTeamPlayersMemberNumber2"
+              aria-label="Brett 2">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(2)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 2">
+      <label for="futureTeamPlayersMemberNumber3">Brett&nbsp;&nbsp;3</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber3"
+              name="futureTeamPlayersMemberNumber3"
+              aria-label="Brett 3">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(3)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 3">
+      <label for="futureTeamPlayersMemberNumber4">Brett&nbsp;&nbsp;4</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber4"
+              name="futureTeamPlayersMemberNumber4"
+              aria-label="Brett 4">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(4)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 4">
+      <label for="futureTeamPlayersMemberNumber5">Brett&nbsp;&nbsp;5</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber5"
+              name="futureTeamPlayersMemberNumber5"
+              aria-label="Brett 5">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(5)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 5">
+      <label for="futureTeamPlayersMemberNumber6">Brett&nbsp;&nbsp;6</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber6"
+              name="futureTeamPlayersMemberNumber6"
+              aria-label="Brett 6">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(6)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 6">
+      <label for="futureTeamPlayersMemberNumber7">Brett&nbsp;&nbsp;7</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber7"
+              name="futureTeamPlayersMemberNumber7"
+              aria-label="Brett 6">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(7)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 7">
+      <label for="futureTeamPlayersMemberNumber8">Brett&nbsp;&nbsp;8</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber8"
+              name="futureTeamPlayersMemberNumber8"
+              aria-label="Brett 8">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(8)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 8">
+      <label for="futureTeamPlayersMemberNumber9">Brett&nbsp;&nbsp;9</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber9"
+              name="futureTeamPlayersMemberNumber9"
+              aria-label="Brett 9">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(9)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 9">
+      <label for="futureTeamPlayersMemberNumber10">Brett 10</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber10"
+              name="futureTeamPlayersMemberNumber10"
+              aria-label="Brett 10">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(10)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 10">
+      <label for="futureTeamPlayersMemberNumber11">Brett 11</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber11"
+              name="futureTeamPlayersMemberNumber11"
+              aria-label="Brett 11">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(11)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 11">
+      <label for="futureTeamPlayersMemberNumber12">Brett 12</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber12"
+              name="futureTeamPlayersMemberNumber12"
+              aria-label="Brett 12">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(12)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 12">
+      <label for="futureTeamPlayersMemberNumber13">Brett 13</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber13"
+              name="futureTeamPlayersMemberNumber13"
+              aria-label="Brett 13">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(13)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 13">
+      <label for="futureTeamPlayersMemberNumber14">Brett 14</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber14"
+              name="futureTeamPlayersMemberNumber14"
+              aria-label="Brett 14">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(14)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 14">
+      <label for="futureTeamPlayersMemberNumber15">Brett 15</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber15"
+              name="futureTeamPlayersMemberNumber15"
+              aria-label="Brett 15">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(15)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 15">
+      <label for="futureTeamPlayersMemberNumber16">Brett 16</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber16"
+              name="futureTeamPlayersMemberNumber16"
+              aria-label="Brett 16">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(16)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 16">
+      <label for="futureTeamPlayersMemberNumber17">Brett 17</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber17"
+              name="futureTeamPlayersMemberNumber17"
+              aria-label="Brett 17">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(17)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 17">
+      <label for="futureTeamPlayersMemberNumber18">Brett 18</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber18"
+              name="futureTeamPlayersMemberNumber18"
+              aria-label="Brett 18">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(18)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 18">
+      <label for="futureTeamPlayersMemberNumber19">Brett 19</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber19"
+              name="futureTeamPlayersMemberNumber19"
+              aria-label="Brett 12">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(19)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 19">
+      <label for="futureTeamPlayersMemberNumber20">Brett 20</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber20"
+              name="futureTeamPlayersMemberNumber20"
+              aria-label="Brett 20">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(20)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 20">
+      <label for="futureTeamPlayersMemberNumber21">Brett 21</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber21"
+              name="futureTeamPlayersMemberNumber21"
+              aria-label="Brett 21">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(21)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 21">
+      <label for="futureTeamPlayersMemberNumber22">Brett 22</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber22"
+              name="futureTeamPlayersMemberNumber22"
+              aria-label="Brett 22">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(22)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 22">
+      <label for="futureTeamPlayersMemberNumber23">Brett 23</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber23"
+              name="futureTeamPlayersMemberNumber23"
+              aria-label="Brett 23">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(23)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 23">
+      <label for="futureTeamPlayersMemberNumber24">Brett 24</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber24"
+              name="futureTeamPlayersMemberNumber24"
+              aria-label="Brett 24">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(24)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 24">
+      <label for="futureTeamPlayersMemberNumber25">Brett 25</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber25"
+              name="futureTeamPlayersMemberNumber25"
+              aria-label="Brett 25">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(25)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 25">
+      <label for="futureTeamPlayersMemberNumber26">Brett 26</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber26"
+              name="futureTeamPlayersMemberNumber26"
+              aria-label="Brett 26">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(26)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 26">
+      <label for="futureTeamPlayersMemberNumber27">Brett 27</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber27"
+              name="futureTeamPlayersMemberNumber27"
+              aria-label="Brett 27">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(27)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 27">
+      <label for="futureTeamPlayersMemberNumber28">Brett 28</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber28"
+              name="futureTeamPlayersMemberNumber28"
+              aria-label="Brett 28">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(28)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 28">
+      <label for="futureTeamPlayersMemberNumber29">Brett 29</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber29"
+              name="futureTeamPlayersMemberNumber29"
+              aria-label="Brett 29">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(29)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 29">
+      <label for="futureTeamPlayersMemberNumber30">Brett 30</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber30"
+              name="futureTeamPlayersMemberNumber30"
+              aria-label="Brett 30">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(30)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 30">
+      <label for="futureTeamPlayersMemberNumber31">Brett 31</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber31"
+              name="futureTeamPlayersMemberNumber31"
+              aria-label="Brett 31">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(31)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
+    <div class="form-group" th:if="${prepareEditTeamData.maxNumberOfPlayers} > 31">
+      <label for="futureTeamPlayersMemberNumber32">Brett 32</label>
+      <select class="form-select"
+              id="futureTeamPlayersMemberNumber32"
+              name="futureTeamPlayersMemberNumber32"
+              aria-label="Brett 32">
+        <option th:each="availablePlayer : ${prepareEditTeamData.availablePlayers}"
+                th:value="${availablePlayer.memberNumber}"
+                th:selected="${availablePlayer.isSelectedOption(32)}"><span th:text="${availablePlayer.fullName}"></span></option>
+      </select>
+    </div>
 
     <button type="submit" class="btn btn-primary">OK</button>
     <a class="btn btn-secondary" href="/home" role="button">Home</a>

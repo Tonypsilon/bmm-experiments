@@ -9,7 +9,7 @@ public class AddPlayerData {
     private String fullName;
     private String surname;
     private Integer dwz;
-    private Integer currentBoardNumber;
+    private Integer currentBoardNumber = -1;
 
     public Integer getZps() {
         return zps;
@@ -59,7 +59,7 @@ public class AddPlayerData {
         this.currentBoardNumber = currentBoardNumber;
     }
 
-    public Boolean isSelectedOption(Integer boardNumber) {
-        return boardNumber.equals(currentBoardNumber);
+    public boolean isSelectedOption(int boardNumber) {
+        return Integer.valueOf(boardNumber).equals(currentBoardNumber);
     }
 }
