@@ -44,7 +44,7 @@ public class EditTeamService {
         List<PlayerData> playersOfTeam = playerService.getAllPlayersOfTeam(teamData.id());
         PrepareEditTeamData prepareEditTeamData = new PrepareEditTeamData();
         prepareEditTeamData.setMaxNumberOfPlayers(teamDataAccessService.isLastTeam(teamData.id()) ? 32 : 16);
-        prepareEditTeamData.setNumberOfBoards(8);
+        prepareEditTeamData.setNumberOfBoards(teamData.numberOfBoards());
         prepareEditTeamData.setClubName(clubName);
         prepareEditTeamData.setTeamNumber(teamNumber);
         List<AddPlayerData> defaultAvailablePlayer = new ArrayList<>();
