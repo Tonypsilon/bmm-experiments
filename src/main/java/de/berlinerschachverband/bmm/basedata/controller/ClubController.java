@@ -101,7 +101,7 @@ public class ClubController {
         try {
             model.addAttribute("club", clubService.createClub(createClubData.getClubName(), createClubData.getZps()));
             model.addAttribute("state", "success");
-        } catch (NameBlankException | ClubAlreadyExistsException ex ) {
+        } catch (NameBlankException | ClubAlreadyExistsException | IllegalArgumentException ex ) {
             model.addAttribute("state", "failure");
         }
         return "clubCreated";

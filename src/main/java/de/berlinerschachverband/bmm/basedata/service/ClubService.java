@@ -70,8 +70,11 @@ public class ClubService {
      * @return
      */
     public ClubData createClub(String clubName, Integer zps) {
-        if(clubName.isBlank()) {
+        if(clubName == null || clubName.isBlank()) {
             throw new NameBlankException();
+        }
+        if(zps == null) {
+            throw new IllegalArgumentException("zps");
         }
         if(clubRepository.findByName(clubName).isPresent()) {
             throw new ClubAlreadyExistsException(clubName);
