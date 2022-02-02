@@ -48,7 +48,7 @@ public class TeamController {
     public String getTeamsOfClub(@PathVariable final String clubName, final Model model) {
         model.addAttribute("navbarData", navbarService.getNavbarData());
         clubAdminService.validateClubAdminHasClubAccess(clubName);
-        model.addAttribute("club", clubService.getClub(clubName));
+        model.addAttribute("club", clubService.toClubData(clubService.getClub(clubName)));
         model.addAttribute("teams", teamValidationService.getTeamsOfClubValidated(clubName));
         return "teamsOfClub";
     }

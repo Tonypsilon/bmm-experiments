@@ -76,6 +76,7 @@ class ClubServiceTest {
     @Test
     void testCreateClub() {
         assertThrows(NameBlankException.class, () -> clubService.createClub("",3));
+        assertThrows(IllegalArgumentException.class, () -> clubService.createClub("club", null));
 
         when(clubRepository.findByName("club1")).thenReturn(Optional.of(club1));
         when(clubRepository.findByName("club2"))
