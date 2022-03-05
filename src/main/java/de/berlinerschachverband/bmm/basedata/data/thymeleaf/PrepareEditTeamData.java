@@ -50,8 +50,6 @@ public class PrepareEditTeamData {
 
     private Integer maxNumberOfPlayers;
 
-    private Boolean isLastTeam;
-
     public void setAvailablePlayers(List<AddPlayerData> availablePlayers) {
         this.availablePlayers = availablePlayers;
     }
@@ -131,14 +129,6 @@ public class PrepareEditTeamData {
 
     public Integer getMaxNumberOfPlayers() {
         return maxNumberOfPlayers;
-    }
-
-    public void setLastTeam(Boolean lastTeam) {
-        isLastTeam = lastTeam;
-    }
-
-    public Boolean getLastTeam() {
-        return isLastTeam;
     }
 
     public Integer getFutureTeamPlayersMemberNumber1() {
