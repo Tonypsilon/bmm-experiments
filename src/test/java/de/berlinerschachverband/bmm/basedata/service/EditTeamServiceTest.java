@@ -1,7 +1,6 @@
 package de.berlinerschachverband.bmm.basedata.service;
 
 import de.berlinerschachverband.bmm.basedata.data.*;
-import de.berlinerschachverband.bmm.basedata.data.thymeleaf.PlayerAssignmentData;
 import de.berlinerschachverband.bmm.basedata.data.thymeleaf.PrepareEditTeamData;
 import de.berlinerschachverband.bmm.exceptions.TeamNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

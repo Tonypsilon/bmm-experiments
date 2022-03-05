@@ -10,7 +10,6 @@ import de.berlinerschachverband.bmm.exceptions.NameBlankException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
